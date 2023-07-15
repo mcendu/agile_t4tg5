@@ -1,0 +1,5 @@
+/*
+ * Media-specific styling for medium-sized screens.
+ */
+@media screen and (640px <= width < 800px) {
+}

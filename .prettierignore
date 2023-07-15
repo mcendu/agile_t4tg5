@@ -1,0 +1,6 @@
+# VCS
+**/.git
+
+# Node autogens
+**/node_modules
+**/.webpack

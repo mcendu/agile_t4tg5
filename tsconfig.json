@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "target": "es2015",
+    "allowJs": true
+  },
+  "include": ["./src/**/*", "webpack.config.cjs"]
+}
