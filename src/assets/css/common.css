@@ -14,6 +14,7 @@
   --c-b2: hsl(var(--hue) 10% 90%);
   --c-b3: hsl(var(--hue) 10% 85%);
   --c-b4: hsl(var(--hue) 10% 80%);
+
   --c-a1: hsl(var(--hue) 30% 90%);
   --c-a2: hsl(var(--hue) 30% 80%);
   --c-a3: hsl(var(--hue) 35% 70%);
@@ -49,4 +50,14 @@ body {
 
   background-color: var(--c-b0);
   color: var(--c-text);
+}
+
+button {
+  /* override UA button styles */
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
 }

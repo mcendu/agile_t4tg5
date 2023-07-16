@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PageList from './pagelist.vue';
+import PageList from './pagelist/pagelist.vue';
 
 import Page from '../js/page';
 import PageRow from '../../models/page';
@@ -19,10 +19,9 @@ onBeforeMount(async () => {
 });
 
 async function newPage() {
-  const openNewPage = pages.value.length == 0;
   const page = pageRowToPage(await controllers.page.add());
   pages.value.push(page);
-  if (openNewPage) currentPage.value = page;
+  currentPage.value = page;
 }
 
 function changePage(page: Page) {
@@ -47,7 +46,7 @@ function changePage(page: Page) {
   width: 100%;
   height: 100%;
 
-  grid-template-columns: 10em 1fr;
+  grid-template-columns: minmax(10em, 1fr) 3fr;
   grid-template-rows: 1fr;
   grid-template-areas: 'tabs content';
 }
