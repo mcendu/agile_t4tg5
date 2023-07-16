@@ -7,13 +7,13 @@ contextBridge.exposeInMainWorld('controllers', {
         index: () => ipcRenderer.invoke('page.index'),
         show: (id: unknown) => ipcRenderer.invoke('page.show', id),
         add: () => ipcRenderer.invoke('page.add'),
-        addWidget: (id: unknown, widget: unknown) =>
-            ipcRenderer.invoke('page.addWidget', id, widget),
         rename: (id: unknown, name: unknown) =>
             ipcRenderer.invoke('page.rename', id, name),
         del: (id: unknown) => ipcRenderer.invoke('page.delete', id),
     },
     widget: {
+        add: (page: unknown, widget: unknown) =>
+            ipcRenderer.invoke('widget.add', page, widget),
         edit: (id: unknown, data: unknown) =>
             ipcRenderer.invoke('widget.edit', id, data),
         del: (id: unknown) => ipcRenderer.invoke('widget.delete', id),

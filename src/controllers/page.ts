@@ -18,8 +18,6 @@ export default class PageController extends Controller {
     #deletePage: Statement<bigint>;
 
     #showPage: Statement<bigint>;
-    #addWidget: Statement<{ page: bigint; type: string; data: string }>;
-    #getLastRowid: Statement;
 
     constructor(db: Database) {
         super(db);
@@ -44,14 +42,6 @@ export default class PageController extends Controller {
             'SELECT id,type,data FROM widgets WHERE page=?;',
         );
         this.#showPage.safeIntegers();
-
-        this.#addWidget = db.prepare(
-            'INSERT INTO widgets(page,type,data) VALUES($page,$type,$data);',
-        );
-
-        this.#getLastRowid = db.prepare('SELECT last_insert_rowid();');
-        // "SELECT last_insert_rowid()" don't produce a good column name
-        this.#getLastRowid.raw().safeIntegers();
     }
 
     /**
@@ -100,21 +90,5 @@ export default class PageController extends Controller {
     delete(id: number | bigint) {
         this.#deleteAllWidgetsFromPage.run(BigInt(id));
         this.#deletePage.run(BigInt(id));
-    }
-
-    /**
-     * Add a new widget to a page.
-     * @param id The page to add a widget to.
-     * @param widget The new widget.
-     */
-    addWidget(id: number | bigint, widget: Widget): Widget {
-        // lock db cursor to get consistent results when assinging widget id
-        this.#addWidget.run({
-            page: BigInt(id),
-            type: widget.type,
-            data: JSON.stringify(widget.data),
-        });
-        widget.id = (this.#getLastRowid.get() as [bigint])[0];
-        return widget;
     }
 }
