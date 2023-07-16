@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PageList from './pagelist.vue';
 
-import Page from '../js/components/page';
+import Page from '../js/page';
 import PageRow from '../../models/page';
 import { Ref, onBeforeMount, ref } from 'vue';
 

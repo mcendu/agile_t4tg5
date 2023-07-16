@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Page from '../js/components/page';
+import Page from '../js/page';
 const props = defineProps<{ pages: ReadonlyArray<Page>; selected?: Page }>();
 defineEmits(['pageSelect', 'newPage']);
 </script>
