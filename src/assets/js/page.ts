@@ -1,3 +1,5 @@
+import Widget from "../../models/widget";
+
 export default class Page {
     /**
      * The in-database identifier of the page.
@@ -10,7 +12,7 @@ export default class Page {
     /**
      * A list of widgets on this page.
      */
-    widgets?: unknown[] = undefined;
+    widgets?: Widget[] = undefined;
 
     constructor(id: bigint, name: string) {
         this.id = id;
