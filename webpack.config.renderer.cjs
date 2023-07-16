@@ -1,12 +1,23 @@
-const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader');
 
+/**
+ * @type {import('@electron-forge/plugin-webpack/dist/Config').WebpackConfiguration}
+ */
 const config = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
+            {
                 test: /\.ts(x)?$/,
-                loader: 'ts-loader',
                 exclude: /node_modules/,
+                loader: 'ts-loader',
+                options: {
+                    transpileOnly: true,
+                    appendTsSuffixTo: [/\.vue$/],
+                },
             },
             {
                 test: /\.css$/,
@@ -15,8 +26,9 @@ const config = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.vue'],
     },
+    plugins: [new VueLoaderPlugin()],
 };
 
 module.exports = config;

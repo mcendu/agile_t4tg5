@@ -1,7 +1,7 @@
 import { Database } from 'better-sqlite3';
 
 const upSql =
-"\
+    "\
 BEGIN TRANSACTION; \
 CREATE TABLE sa_metadata(\
     key TEXT PRIMARY KEY, \

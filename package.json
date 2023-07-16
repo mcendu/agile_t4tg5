@@ -3,7 +3,7 @@
   "productName": "prototype",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": ".webpack/main.cjs",
+  "main": "dist/main.cjs",
   "type": "module",
   "scripts": {
     "start": "electron-forge start",
@@ -23,6 +23,7 @@
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
     "@electron-forge/cli": "^6.2.1",
     "@electron-forge/maker-deb": "^6.2.1",
     "@electron-forge/maker-rpm": "^6.2.1",
@@ -32,6 +33,7 @@
     "@electron-forge/plugin-webpack": "^6.2.1",
     "@types/better-sqlite3": "^7.6.4",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "babel-loader": "^9.1.3",
     "better-sqlite3": "^8.4.0",
     "css-loader": "^6.8.1",
     "electron": "^24.6.3",
@@ -40,6 +42,8 @@
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
+    "vue": "^3.3.4",
+    "vue-loader": "^17.2.2",
     "webpack": "^5.88.1"
   }
 }

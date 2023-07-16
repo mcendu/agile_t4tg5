@@ -14,31 +14,34 @@
   --c-b2: hsl(var(--hue) 10% 90%);
   --c-b3: hsl(var(--hue) 10% 85%);
   --c-b4: hsl(var(--hue) 10% 80%);
-
   --c-a1: hsl(var(--hue) 30% 90%);
   --c-a2: hsl(var(--hue) 30% 80%);
   --c-a3: hsl(var(--hue) 35% 70%);
   --c-a4: hsl(var(--hue) 40% 60%);
 
   --c-h0: hsl(var(--hue) 10% 10% / 0.05);
-
   --c-h2: hsl(var(--hue) 20% 93%);
   --c-h3: hsl(var(--hue) 20% 88%);
   --c-h4: hsl(var(--hue) 20% 83%);
+
+  --c-f0: hsl(var(--hue) 10% 20%);
+  --c-f1: hsl(var(--hue) 10% 30%);
+  --c-f2: hsl(var(--hue) 20% 40%);
+  --c-f3: hsl(var(--hue) 20% 50%);
 
   --c-text: hsl(var(--hue) 10% 20%);
   --c-link: hsl(var(--hue) 40% 40%);
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 body {
   margin: auto;
   padding: 1em;
 
-  height: 100vh;
+  min-height: 100vh;
 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
@@ -46,71 +49,4 @@ body {
 
   background-color: var(--c-b0);
   color: var(--c-text);
-}
-
-.sa-root-container {
-  display: grid;
-  width: 100%;
-  height: 100%;
-
-  grid-template-columns: 10em 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: 'tabs content';
-}
-
-menu.sa-tablist {
-  display: flex;
-  margin: 0;
-  padding: 0;
-
-  font-size: 1em;
-
-  grid-area: tabs;
-
-  flex-flow: column nowrap;
-  gap: 0.2em;
-  overflow-y: auto;
-}
-
-menu.sa-tablist > li {
-  display: block;
-
-  height: 2lh;
-  margin: 0;
-  padding-block-start: 0.5lh;
-  padding-block-end: 0.5lh;
-  padding-inline-start: 1em;
-  padding-inline-end: 1em;
-
-  overflow-x: clip;
-
-  transition: background-color 0.3s;
-  border-radius: 0.2em 0 0 0.2em;
-}
-
-menu.sa-tablist > li:hover {
-  background-color: var(--c-h0);
-}
-
-menu.sa-tablist > li.sa-tablist__item--active {
-  background-color: var(--c-b1);
-  box-shadow: 4px 2px 8px hsl(0 0% 0% / 0.2);
-}
-
-.sa-tablist__expand {
-  display: none;
-}
-
-.sa-content {
-  display: grid;
-  margin: 0;
-
-  grid-area: content;
-
-  grid-auto-flow: column;
-  grid-auto-columns: 16em;
-  grid-template-rows: repeat(5, 1fr);
-  overflow-x: auto;
-
-  background-color: var(--c-b1);
 }

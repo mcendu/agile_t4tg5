@@ -14,5 +14,5 @@ export default interface Widget {
      * The widget-type-specific data of the widget. This is serialized
      * to JSON in the database.
      */
-    data: any;
+    data: unknown;
 }

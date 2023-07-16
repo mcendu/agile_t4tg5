@@ -3,7 +3,7 @@ const path = require('path');
 const config = {
     entry: './src/main.ts',
     output: {
-        path: path.resolve(__dirname, '.webpack'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'main.cjs',
     },
     module: {
@@ -27,8 +27,11 @@ const config = {
             },
             {
                 test: /\.ts(x)?$/,
-                loader: 'ts-loader',
                 exclude: /node_modules/,
+                loader: 'ts-loader',
+                options: {
+                    transpileOnly: true,
+                },
             },
         ],
     },
