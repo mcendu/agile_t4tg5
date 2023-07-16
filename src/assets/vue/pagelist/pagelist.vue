@@ -3,7 +3,8 @@ import Page from '../../js/page';
 import Pagetab from './pagetab.vue';
 const props = defineProps<{ pages: ReadonlyArray<Page>; selected?: Page }>();
 defineEmits<{
-  (e: 'pageSelect', page: Page): void;
+  (e: 'pageSelected', page: Page): void;
+  (e: 'pageDeleted', page: Page): void;
   (e: 'newPage'): void;
 }>();
 </script>
@@ -15,7 +16,8 @@ defineEmits<{
         v-for="page in pages"
         :page="page"
         :selected="page === selected"
-        @select="$emit('pageSelect', page)"
+        @select="$emit('pageSelected', page)"
+        @delete="$emit('pageDeleted', page)"
       />
     </menu>
     <hr class="sa-pagebar__divider" />

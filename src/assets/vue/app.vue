@@ -27,6 +27,17 @@ async function newPage() {
 function changePage(page: Page) {
   currentPage.value = page;
 }
+
+async function deletePage(page: Page) {
+  const index = pages.value.indexOf(page);
+  if (page === currentPage.value) {
+    if (pages.value.length == 1) currentPage.value = undefined;
+    else if (index == 0) currentPage.value = pages.value[index + 1];
+    else currentPage.value = pages.value[index - 1];
+  }
+  await controllers.page.del(page.id);
+  pages.value.splice(index, 1);
+}
 </script>
 
 <template>
@@ -34,7 +45,8 @@ function changePage(page: Page) {
     <PageList
       :pages="pages"
       :selected="currentPage"
-      @page-select="changePage"
+      @page-selected="changePage"
+      @page-deleted="deletePage"
       @new-page="newPage"
     />
   </div>
