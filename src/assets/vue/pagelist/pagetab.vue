@@ -16,11 +16,16 @@ function select(e: Event) {
     <button class="sa-pagetab__button" @click="select">
       {{ page.name }}
     </button>
-    <button class="sa-pagetab__edit" :aria-hidden="!selected">
+    <button
+      class="sa-pagetab__edit"
+      aria-label="rename"
+      :aria-hidden="!selected"
+    >
       <span class="material-symbols-outlined">edit</span>
     </button>
     <button
       class="sa-pagetab__edit"
+      aria-label="delete"
       @click="$emit('delete')"
       :aria-hidden="!selected"
     >
@@ -47,7 +52,7 @@ function select(e: Event) {
 
 .sa-pagetab:active,
 .sa-pagetab-like:active {
-  background-color: var(--c-a1);
+  background-color: var(--c-a2);
 }
 
 .sa-pagetab--current,

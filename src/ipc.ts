@@ -11,9 +11,7 @@ export default function setupIpcMainHandles(db: Database) {
     ipcMain.handle('page.delete', (e, id) => page.delete(id));
 
     const widget = new WidgetController(db);
-    ipcMain.handle('widget.add', (e, page, w) =>
-        widget.add(page, w),
-    );
+    ipcMain.handle('widget.add', (e, page, w) => widget.add(page, w));
     ipcMain.handle('widget.edit', (e, id, data) => widget.edit(id, data));
     ipcMain.handle('widget.delete', (e, id) => widget.delete(id));
 }

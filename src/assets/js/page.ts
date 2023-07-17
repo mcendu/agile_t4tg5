@@ -1,4 +1,4 @@
-import Widget from "../../models/widget";
+import Widget from '../../models/widget';
 
 export default class Page {
     /**

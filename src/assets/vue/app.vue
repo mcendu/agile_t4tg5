@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PageList from './pagelist/pagelist.vue';
+import PageView from './page/page.vue';
 
 import Page from '../js/page';
 import PageRow from '../../models/page';
@@ -49,6 +50,7 @@ async function deletePage(page: Page) {
       @page-deleted="deletePage"
       @new-page="newPage"
     />
+    <PageView :page="currentPage" />
   </div>
 </template>
 
@@ -56,7 +58,6 @@ async function deletePage(page: Page) {
 .sa-book {
   display: grid;
   width: 100%;
-  height: 100%;
 
   grid-template-columns: minmax(10em, 1fr) 3fr;
   grid-template-rows: 1fr;
