@@ -18,6 +18,15 @@
   color: var(--color);
 }
 
+.sa-addwidget:hover {
+  background-color: var(--c-h1);
+}
+
+.sa-addwidget:active {
+  --color: var(--c-a4);
+  background-color: var(--c-a2);
+}
+
 .sa-addwidget__icon {
   font-family: 'Material Symbols Outlined';
   font-size: 48px;

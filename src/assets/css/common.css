@@ -21,6 +21,7 @@
   --c-a4: hsl(var(--hue) 40% 60%);
 
   --c-h0: hsl(var(--hue) 10% 10% / 0.05);
+  --c-h1: hsl(var(--hue) 30% 90% / 0.5);
   --c-h2: hsl(var(--hue) 20% 93%);
   --c-h3: hsl(var(--hue) 20% 88%);
   --c-h4: hsl(var(--hue) 20% 83%);

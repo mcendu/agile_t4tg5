@@ -52,7 +52,7 @@ function select(e: Event) {
 
 .sa-pagetab:active,
 .sa-pagetab-like:active {
-  background-color: var(--c-a2);
+  background-color: var(--c-a1);
 }
 
 .sa-pagetab--current,
