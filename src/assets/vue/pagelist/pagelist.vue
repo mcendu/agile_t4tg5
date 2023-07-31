@@ -1,43 +1,75 @@
 <script setup lang="ts">
-import { Ref, ref } from 'vue';
+import { Ref, onBeforeMount, ref } from 'vue';
 import Page from '../../js/page';
+import PageRow from '../../../models/page';
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
-const props = defineProps<{ pages: ReadonlyArray<Page>; selected?: Page }>();
-const emit = defineEmits<{
-  (e: 'pageSelected', page: Page): void;
-  (e: 'pageDeleted', page: Page): void;
-  (e: 'pageRenamed', page: Page, name: string): void;
-  (e: 'newPage'): void;
-}>();
 
+const props = defineProps<{ modelValue?: Page }>();
+const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
+
+const pages: Ref<Page[]> = ref([]);
 const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
 
-function renamePage(page: Page, name: string) {
-  emit('pageRenamed', page, name);
+function pageRowToPage(row: PageRow): Page {
+  return new Page(row.id, row.name);
+}
+
+onBeforeMount(async () => {
+  const rows = await controllers.page.index();
+  pages.value = rows.map(pageRowToPage);
+  if (rows.length) emit('update:modelValue', pages.value[0]);
+});
+
+async function newPage() {
+  const page = pageRowToPage(await controllers.page.add());
+  pages.value.push(page);
+  emit('update:modelValue', page);
+}
+
+function changePage(page: Page) {
+  emit('update:modelValue', page);
+}
+
+async function renamePage(page: Page, name: string) {
+  await controllers.page.rename(page.id, name);
+  page.name = name;
+}
+
+async function deletePage(page: Page) {
+  const index = pages.value.indexOf(page);
+  if (page === props.modelValue) {
+    if (pages.value.length == 1) {
+      emit('update:modelValue', undefined);
+    } else if (index == 0) {
+      emit('update:modelValue', pages.value[index + 1]);
+    } else {
+      emit('update:modelValue', pages.value[index - 1]);
+    }
+  }
+  await controllers.page.del(page.id);
+  pages.value.splice(index, 1);
 }
 </script>
 
 <template>
-  <nav class="sa-pagebar">
+  <nav class="sa-pagebar" v-bind="$attrs">
     <menu class="sa-pagelist">
       <Pagetab
         v-for="page in pages"
         :page="page"
-        :selected="page === selected"
-        @select="$emit('pageSelected', page)"
+        :selected="page === modelValue"
+        @select="changePage(page)"
         @edit="editDialog?.showModal()"
-        @delete="$emit('pageDeleted', page)"
+        @delete="deletePage(page)"
       />
     </menu>
     <hr class="sa-pagebar__divider" />
     <div class="sa-pagetab-like sa-newtab">
-      <button class="sa-newtab__button" @click="$emit('newPage')">
-        Add a page
-      </button>
+      <button class="sa-newtab__button" @click="newPage">Add a page</button>
     </div>
-    <Edit ref="editDialog" :page="selected" @submit="renamePage" />
   </nav>
+  <Edit ref="editDialog" :page="modelValue" @submit="renamePage" />
 </template>
 
 <style>
