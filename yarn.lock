@@ -363,7 +363,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron/rebuild@npm:^3.2.10":
+"@electron/rebuild@npm:^3.2.10, @electron/rebuild@npm:^3.2.13":
   version: 3.2.13
   resolution: "@electron/rebuild@npm:3.2.13"
   dependencies:
@@ -1427,14 +1427,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:^8.4.0":
-  version: 8.4.0
-  resolution: "better-sqlite3@npm:8.4.0"
+"better-sqlite3@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "better-sqlite3@npm:8.5.0"
   dependencies:
     bindings: ^1.5.0
     node-gyp: latest
     prebuild-install: ^7.1.0
-  checksum: f8b180c26428a2d381482e83b4519d0d81a918e00f92cafd255f42eb9583f49b2fed1015121ad49ebe1f3f790cc8c6f4697d1e805193d65e70dacf2e8abbd6af
+  checksum: 98243cb08a410fad0b5c443410428c8ea00376a4eb7d2c9a8a5a695970bc7a2a4007221930460939594d728e7d6bcb1889f46ec11a3bbb2257b996c80fbaacb1
   languageName: node
   linkType: hard
 
@@ -2440,16 +2440,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^24.6.3":
-  version: 24.6.3
-  resolution: "electron@npm:24.6.3"
+"electron@npm:^25.3.2":
+  version: 25.3.2
+  resolution: "electron@npm:25.3.2"
   dependencies:
     "@electron/get": ^2.0.0
     "@types/node": ^18.11.18
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 10f2e99c0b4b41bcd4832319e1a4f46c6d236d83f6280b133c1df39df3a8c5ba48251efedf7b81bf73de6d60ed10412308526abbf9b264a296e0c539b541fbdf
+  checksum: ea30c161cbebc505752d2f7d9ee34a671fbab4b6c140220e1e66c06effdee6cf3295aaadefafa96a1e35b1bb87ddb8fcf7e9d9e3cd4b7c0fd264961793bb7133
   languageName: node
   linkType: hard
 
@@ -5198,11 +5198,12 @@ __metadata:
     "@electron-forge/maker-zip": ^6.2.1
     "@electron-forge/plugin-auto-unpack-natives": ^6.2.1
     "@electron-forge/plugin-webpack": ^6.2.1
+    "@electron/rebuild": ^3.2.13
     "@types/better-sqlite3": ^7.6.4
     "@vercel/webpack-asset-relocator-loader": 1.7.3
-    better-sqlite3: ^8.4.0
+    better-sqlite3: ^8.5.0
     css-loader: ^6.8.1
-    electron: ^24.6.3
+    electron: ^25.3.2
     electron-squirrel-startup: ^1.0.0
     material-symbols: ^0.10.0
     node-loader: ^2.0.0

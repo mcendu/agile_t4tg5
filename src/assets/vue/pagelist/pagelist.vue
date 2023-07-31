@@ -36,7 +36,7 @@ function renamePage(page: Page, name: string) {
         Add a page
       </button>
     </div>
-    <Edit ref="editDialog" :page="selected" @submit="renamePage"/>
+    <Edit ref="editDialog" :page="selected" @submit="renamePage" />
   </nav>
 </template>
 

@@ -4,7 +4,7 @@ import { onBeforeUpdate, ref, Ref } from 'vue';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{
-  (e: 'submit', page: Page, name: string): void
+  (e: 'submit', page: Page, name: string): void;
 }>();
 
 let prevPage = props.page;
@@ -22,10 +22,8 @@ function rename(e: Event) {
   if (!props.page) return;
 
   // validate
-  if (name.value)
-    emit('submit', props.page, name.value);
-  else
-    e.preventDefault();
+  if (name.value) emit('submit', props.page, name.value);
+  else e.preventDefault();
 }
 
 function showModal() {
@@ -48,9 +46,7 @@ defineExpose({
         <button class="form-button submit" type="submit" @click="rename">
           Save
         </button>
-        <button class="form-button" type="submit">
-          Cancel
-        </button>
+        <button class="form-button" type="submit">Cancel</button>
       </p>
     </form>
   </dialog>

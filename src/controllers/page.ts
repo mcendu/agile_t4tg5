@@ -26,9 +26,7 @@ export default class PageController extends Controller {
         this.#addPage = db.prepare(
             "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name;",
         );
-        this.#renamePage = db.prepare(
-            'UPDATE pages SET name=? WHERE id=?;',
-        );
+        this.#renamePage = db.prepare('UPDATE pages SET name=? WHERE id=?;');
         this.#deleteAllWidgetsFromPage = db.prepare(
             'DELETE FROM widgets WHERE page=?;',
         );

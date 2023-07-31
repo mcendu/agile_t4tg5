@@ -8,10 +8,7 @@
       "name": "Electron Main",
       "request": "launch",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron-forge",
-      "args": [
-        "start",
-        "--vscode"
-      ],
+      "args": ["start", "--vscode"],
       "skipFiles": ["<node_internals>/**"],
       "type": "node"
     }
