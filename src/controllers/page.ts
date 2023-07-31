@@ -12,7 +12,6 @@ interface WidgetRow {
 export default class PageController extends Controller {
     #indexPages: Statement;
     #addPage: Statement;
-    #getNewPage: Statement;
     #renamePage: Statement<[string, bigint]>;
     #deleteAllWidgetsFromPage: Statement<bigint>;
     #deletePage: Statement<bigint>;
@@ -25,10 +24,7 @@ export default class PageController extends Controller {
         this.#indexPages = db.prepare('SELECT id,name FROM pages;');
         this.#indexPages.safeIntegers();
         this.#addPage = db.prepare(
-            "INSERT INTO pages(name) VALUES('New Page');",
-        );
-        this.#getNewPage = db.prepare(
-            'SELECT id,name FROM pages WHERE id=last_insert_rowid();',
+            "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name;",
         );
         this.#renamePage = db.prepare(
             'UPDATE pages SET name=? WHERE id=?;',
@@ -79,8 +75,7 @@ export default class PageController extends Controller {
      * Add a new page.
      */
     add(): Page {
-        this.#addPage.run();
-        return this.#getNewPage.get() as Page;
+        return this.#addPage.get() as Page;
     }
 
     /**
