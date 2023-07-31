@@ -31,7 +31,7 @@ export default class PageController extends Controller {
             'SELECT id,name FROM pages WHERE id=last_insert_rowid();',
         );
         this.#renamePage = db.prepare(
-            'UPDATE pages SET name=$name WHERE id=$id;',
+            'UPDATE pages SET name=? WHERE id=?;',
         );
         this.#deleteAllWidgetsFromPage = db.prepare(
             'DELETE FROM widgets WHERE page=?;',

@@ -1,12 +1,21 @@
 <script setup lang="ts">
+import { Ref, ref } from 'vue';
 import Page from '../../js/page';
+import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
 const props = defineProps<{ pages: ReadonlyArray<Page>; selected?: Page }>();
-defineEmits<{
+const emit = defineEmits<{
   (e: 'pageSelected', page: Page): void;
   (e: 'pageDeleted', page: Page): void;
+  (e: 'pageRenamed', page: Page, name: string): void;
   (e: 'newPage'): void;
 }>();
+
+const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
+
+function renamePage(page: Page, name: string) {
+  emit('pageRenamed', page, name);
+}
 </script>
 
 <template>
@@ -17,6 +26,7 @@ defineEmits<{
         :page="page"
         :selected="page === selected"
         @select="$emit('pageSelected', page)"
+        @edit="editDialog?.showModal()"
         @delete="$emit('pageDeleted', page)"
       />
     </menu>
@@ -26,6 +36,7 @@ defineEmits<{
         Add a page
       </button>
     </div>
+    <Edit ref="editDialog" :page="selected" @submit="renamePage"/>
   </nav>
 </template>
 

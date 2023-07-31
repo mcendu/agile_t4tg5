@@ -3,6 +3,7 @@ import Page from '../../js/page';
 const props = defineProps<{ page: Page; selected: boolean }>();
 const emit = defineEmits<{
   (e: 'select'): void;
+  (e: 'edit'): void;
   (e: 'delete'): void;
 }>();
 
@@ -19,6 +20,7 @@ function select(e: Event) {
     <button
       class="sa-pagetab__edit"
       aria-label="rename"
+      @click="$emit('edit')"
       :aria-hidden="!selected"
     >
       <span class="material-symbols-outlined">edit</span>

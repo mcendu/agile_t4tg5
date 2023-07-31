@@ -29,6 +29,11 @@ function changePage(page: Page) {
   currentPage.value = page;
 }
 
+async function renamePage(page: Page, name: string) {
+  await controllers.page.rename(page.id, name);
+  page.name = name;
+}
+
 async function deletePage(page: Page) {
   const index = pages.value.indexOf(page);
   if (page === currentPage.value) {
@@ -47,6 +52,7 @@ async function deletePage(page: Page) {
       :pages="pages"
       :selected="currentPage"
       @page-selected="changePage"
+      @page-renamed="renamePage"
       @page-deleted="deletePage"
       @new-page="newPage"
     />
