@@ -36,59 +36,83 @@ function select(e: Event) {
   </li>
 </template>
 
-<style>
+<style lang="scss">
+@import url(/css/colors.scss);
+
 .sa-pagetab,
 .sa-pagetab-like {
   display: flex;
   align-items: stretch;
   margin: 0;
+  padding: 0 0.5em;
   height: 2lh;
-  border-radius: 8px 0 0 8px;
+
+  border: 0;
+  border-radius: 8px;
   background-color: transparent;
-}
+  font-size: 1em;
 
-.sa-pagetab:hover,
-.sa-pagetab-like:hover {
-  background-color: var(--c-h0);
-}
+  &:hover {
+    background-color: var(--c-bg-t);
+  }
 
-.sa-pagetab:active,
-.sa-pagetab-like:active {
-  background-color: var(--c-a1);
-}
+  &:active {
+    background-color: var(--c-bg-ta);
+  }
 
-.sa-pagetab--current,
-.sa-pagetab--current:hover,
-.sa-pagetab--current:active {
-  background-color: var(--c-b1);
-}
+  &__button {
+    flex-grow: 1;
+    font-size: 1em;
+    border: none;
+    background-color: transparent;
 
-.sa-pagetab__button {
-  padding: 0 1em;
-  flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
 
-  display: flex;
-  align-items: center;
-}
+  &__edit {
+    display: none;
+    background-color: transparent;
+    transition: color 0.2s;
+  }
 
-.sa-pagetab__edit {
-  display: none;
-}
+  &--current {
+    &, &:hover, &:active {
+      background-color: var(--c-bg);
+      box-shadow: var(--shadow);
+    }
 
-.sa-pagetab--current > .sa-pagetab__edit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    .sa-pagetab__edit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  width: 2lh;
-  padding: 0;
-}
+      width: 2lh;
+      padding: 0;
 
-.sa-pagetab__edit:hover {
-  background-color: var(--c-h0);
-}
+      font-size: 1em;
+      border: none;
+      color: var(--c-fg-t);
 
-.sa-pagetab__edit:active {
-  background-color: var(--c-a2);
+      &:active {
+        color: var(--c-fg);
+        background-color: var(--c-bg-ta);
+      }
+    }
+
+    @media (hover: hover) {
+      .sa-pagetab__edit {
+        color: transparent;
+      }
+
+      &:hover .sa-pagetab__edit {
+        color: var(--c-fg-t);
+
+        &:hover {
+          color: var(--c-fg);
+        }
+      }
+    }
+  }
 }
 </style>

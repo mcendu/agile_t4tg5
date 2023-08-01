@@ -36,8 +36,9 @@
     "electron": "^25.3.2",
     "material-symbols": "^0.10.0",
     "prettier": "^3.0.0",
-    "sass-embedded": "^1.64.2",
+    "sass": "^1.64.2",
     "typescript": "^5.1.6",
+    "vite": "^4.4.8",
     "vue": "^3.3.4",
     "vue-tsc": "^1.8.8"
   }

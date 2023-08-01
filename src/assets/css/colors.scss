@@ -1,0 +1,51 @@
+$hue-base: 200;
+$hue-warning: 30;
+$hue-danger: 2;
+
+:root {
+  --hue: #{$hue-base};
+}
+
+@mixin spectrum($code, $saturation) {
+  --c-#{$code}0: hsl(var(--hue) #{$saturation} 95%);
+  --c-#{$code}1: hsl(var(--hue) #{$saturation} 90%);
+  --c-#{$code}2: hsl(var(--hue) #{$saturation} 80%);
+  --c-#{$code}3: hsl(var(--hue) #{$saturation} 70%);
+  --c-#{$code}4: hsl(var(--hue) #{$saturation} 60%);
+  --c-#{$code}5: hsl(var(--hue) #{$saturation} 50%);
+  --c-#{$code}6: hsl(var(--hue) #{$saturation} 40%);
+  --c-#{$code}7: hsl(var(--hue) #{$saturation} 30%);
+  --c-#{$code}8: hsl(var(--hue) #{$saturation} 20%);
+  --c-#{$code}9: hsl(var(--hue) #{$saturation} 10%);
+}
+
+:root {
+  @include spectrum(g, 10%);
+  @include spectrum(l, 20%);
+  @include spectrum(a, 80%);
+
+  --c-tl: hsl(var(--hue) 10% 95% / 0.5);
+  --c-tll: hsl(var(--hue) 10% 95% / 0.1);
+  --c-td: hsl(var(--hue) 10% 10% / 0.5);
+  --c-tdl: hsl(var(--hue) 10% 10% / 0.1);
+}
+
+:root {
+  --c-fg: var(--c-g9);
+  --c-fg-t: var(--c-td);
+  --c-fg-tl: var(--c-tdl);
+  --c-bg: var(--c-g0);
+  --c-bg-t: var(--c-tl);
+  --c-bg-ta: var(--c-tdl);
+
+  --shadow: 0px 1px 4px rgb(0 0 0 / 0.5);
+
+  @media (prefers-color-scheme: dark) {
+    --c-fg: var(--c-g0);
+    --c-fg-t: var(--c-tl);
+    --c-fg-tl: var(--c-tll);
+    --c-bg: var(--c-g8);
+    --c-bg-t: var(--c-td);
+    --c-bg-ta: var(--c-tll);
+  }
+}

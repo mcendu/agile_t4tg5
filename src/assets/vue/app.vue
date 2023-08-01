@@ -15,7 +15,7 @@ const currentPage: Ref<Page | undefined> = ref(undefined);
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .sa-book {
   display: grid;
   width: 100%;
