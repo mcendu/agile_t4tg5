@@ -77,7 +77,9 @@ function select(e: Event) {
   }
 
   &--current {
-    &, &:hover, &:active {
+    &,
+    &:hover,
+    &:active {
       background-color: var(--c-bg);
       box-shadow: var(--shadow);
     }

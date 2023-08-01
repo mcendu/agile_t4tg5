@@ -1,8 +1,8 @@
 {
-  "name": "prototype",
-  "productName": "prototype",
+  "name": "study-assistant",
+  "productName": "study-assistant",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "The university student's ally",
   "main": ".vite/build/main.cjs",
   "type": "module",
   "scripts": {
