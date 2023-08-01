@@ -37,7 +37,7 @@ function select(e: Event) {
 </template>
 
 <style lang="scss">
-@import url(/css/colors.scss);
+@use '/css/colors.scss';
 
 .sa-pagetab,
 .sa-pagetab-like {
@@ -45,7 +45,7 @@ function select(e: Event) {
   align-items: stretch;
   margin: 0;
   padding: 0 0.5em;
-  height: 2lh;
+  height: 32px;
 
   border: 0;
   border-radius: 8px;

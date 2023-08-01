@@ -66,15 +66,17 @@ async function deletePage(page: Page) {
       />
     </menu>
     <hr class="sa-pagebar__divider" />
-    <div class="sa-pagetab-like sa-newtab">
-      <button class="sa-newtab__button" @click="newPage">Add a page</button>
-    </div>
+    <button class="sa-pagetab-like sa-menutab" @click="newPage">
+      <span class="material-symbols-outlined">add</span>
+      Add a page
+    </button>
   </nav>
   <Edit ref="editDialog" :page="modelValue" @submit="renamePage" />
 </template>
 
 <style lang="scss">
-@import url(/css/colors.scss);
+@use '/css/stops.scss';
+@use '/css/colors.scss';
 
 .sa-pagebar {
   display: flex;
@@ -87,7 +89,15 @@ async function deletePage(page: Page) {
   background-color: var(--c-l2);
   font-size: 0.75em;
 
-  grid-area: 'tabs';
+  grid-area: tabs;
+
+  @media (width < stops.$width-s) {
+    grid-area: content;
+    position: absolute;
+    left: -100vw;
+    width: 90vw;
+    box-shadow: var(--shadow);
+  }
 
   &__divider {
     margin: 0;
@@ -105,5 +115,11 @@ async function deletePage(page: Page) {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.sa-menutab {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 </style>
