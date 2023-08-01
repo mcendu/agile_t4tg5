@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { platform, homedir } from 'os';
 import { join } from 'path';
 import migrateDatabase from './migrate';
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 
 let db: Database.Database | undefined = undefined;
 

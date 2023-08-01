@@ -10,9 +10,12 @@ const emit = defineEmits<{
 const name: Ref<string | undefined> = ref(props.page?.name);
 const dialog: Ref<HTMLDialogElement | null> = ref(null);
 
-watch(() => props.page?.name, (newName) => {
-  name.value = newName;
-})
+watch(
+  () => props.page?.name,
+  (newName) => {
+    name.value = newName;
+  },
+);
 
 function rename(e: Event) {
   if (!props.page) return;

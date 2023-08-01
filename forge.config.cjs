@@ -27,22 +27,28 @@ const config = {
             config: {},
         },
         {
-            name: '@electron-forge/plugin-webpack',
+            name: '@electron-forge/plugin-vite',
             config: {
-                mainConfig: './webpack.config.main.cjs',
-                renderer: {
-                    config: './webpack.config.renderer.cjs',
-                    entryPoints: [
-                        {
-                            name: 'main_window',
-                            html: './src/assets/html/index.html',
-                            js: './src/assets/js/index.ts',
-                            preload: {
-                                js: './src/assets/js/preload.ts',
-                            },
-                        },
-                    ],
-                },
+                // `build` can specify multiple entry builds, which can be
+                // Main process, Preload scripts, Worker process, etc.
+                build: [
+                    {
+                        // `entry` is an alias for `build.lib.entry`
+                        // in the corresponding file of `config`.
+                        entry: 'src/main.ts',
+                        config: 'vite.main.config.ts',
+                    },
+                    {
+                        entry: 'src/assets/js/preload.ts',
+                        config: 'vite.preload.config.ts',
+                    },
+                ],
+                renderer: [
+                    {
+                        name: 'main_window',
+                        config: 'vite.renderer.config.ts',
+                    },
+                ],
             },
         },
     ],

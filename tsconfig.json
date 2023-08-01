@@ -3,12 +3,16 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "strict": true,
+    "types": ["vite/client"],
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "module": "CommonJS",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "target": "es2015",
-    "allowJs": true
+    "useDefineForClassFields": true
   },
-  "include": ["./src/**/*", "webpack.config.cjs"]
+  "include": ["./src/**/*", "vite.*.config.ts"]
 }
