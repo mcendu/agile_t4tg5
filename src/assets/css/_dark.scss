@@ -1,0 +1,19 @@
+@use 'sass:selector';
+
+@mixin dark() {
+  @media (prefers-color-scheme: dark) {
+    @if (&) {
+      @at-root #{selector.nest('body:not(.light)', &)} {
+        @content;
+      }
+    } @else {
+      @at-root body:not(.light) {
+        @content;
+      }
+    }
+  }
+
+  @at-root #{if(&, selector.nest('.dark', &), '.dark')} {
+    @content;
+  }
+}

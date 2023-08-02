@@ -37,8 +37,6 @@ function select(e: Event) {
 </template>
 
 <style lang="scss">
-@use '/css/colors.scss';
-
 .sa-pagetab,
 .sa-pagetab-like {
   display: flex;

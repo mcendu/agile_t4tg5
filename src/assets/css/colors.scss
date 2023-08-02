@@ -1,14 +1,11 @@
-@use 'sass:selector';
-
-$hue-base: 200;
-$hue-warning: 30;
-$hue-danger: 2;
+@use 'dark' as *;
+@use 'hues';
 
 :root {
-  --hue: #{$hue-base};
+  --hue: #{hues.$base};
 }
 
-@mixin spectrum($code, $saturation) {
+@mixin _spectrum($code, $saturation) {
   --c-#{$code}0: hsl(var(--hue) #{$saturation} 95%);
   --c-#{$code}1: hsl(var(--hue) #{$saturation} 90%);
   --c-#{$code}2: hsl(var(--hue) #{$saturation} 80%);
@@ -21,28 +18,10 @@ $hue-danger: 2;
   --c-#{$code}9: hsl(var(--hue) #{$saturation} 10%);
 }
 
-@mixin dark() {
-  @media (prefers-color-scheme: dark) {
-    @if (&) {
-      @at-root #{selector.nest('body:not(.light)', &)} {
-        @content;
-      }
-    } @else {
-      @at-root body:not(.light) {
-        @content;
-      }
-    }
-  }
-
-  @at-root #{if(&, selector.nest('.dark', &), '.dark')} {
-    @content;
-  }
-}
-
 :root {
-  @include spectrum(g, 10%);
-  @include spectrum(l, 20%);
-  @include spectrum(a, 80%);
+  @include _spectrum(g, 10%);
+  @include _spectrum(l, 20%);
+  @include _spectrum(a, 80%);
 
   --c-tl: hsl(var(--hue) 10% 95% / 0.5);
   --c-tll: hsl(var(--hue) 10% 95% / 0.25);

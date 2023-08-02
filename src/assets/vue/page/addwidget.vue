@@ -6,7 +6,6 @@
 </template>
 
 <style lang="scss">
-@use '/css/colors.scss';
 .sa-addwidget {
   display: flex;
   flex-direction: column;

@@ -76,7 +76,7 @@ async function deletePage(page: Page) {
 
 <style lang="scss">
 @use '/css/stops.scss';
-@use '/css/colors.scss';
+@use '/css/dark' as *;
 
 .sa-pagebar {
   display: flex;
@@ -91,7 +91,7 @@ async function deletePage(page: Page) {
 
   grid-area: tabs;
 
-  @include colors.dark {
+  @include dark {
     background-color: var(--c-l7);
   }
 
