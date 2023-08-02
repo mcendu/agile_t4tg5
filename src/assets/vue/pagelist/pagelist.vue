@@ -91,6 +91,10 @@ async function deletePage(page: Page) {
 
   grid-area: tabs;
 
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--c-l7);
+  }
+
   @media (width < stops.$width-s) {
     grid-area: content;
     position: absolute;
