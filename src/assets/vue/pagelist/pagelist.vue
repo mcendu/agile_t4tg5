@@ -103,7 +103,7 @@ async function deletePage(page: Page) {
     margin: 0;
     height: 0;
     border: 0;
-    border-top: 1px solid var(--c-fg-t);
+    border-top: 1px solid var(--c-fg-tl);
     background-color: transparent;
   }
 }

@@ -5,26 +5,17 @@
   </button>
 </template>
 
-<style>
+<style lang="scss">
+@use '/css/colors.scss';
 .sa-addwidget {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  --color: var(--c-a3);
-  border: 4px dashed var(--color);
+  border: 4px dashed var(--c-fg-tl);
   border-radius: 8px;
-  color: var(--color);
-}
-
-.sa-addwidget:hover {
-  background-color: var(--c-h1);
-}
-
-.sa-addwidget:active {
-  --color: var(--c-a4);
-  background-color: var(--c-a2);
+  color: var(--c-fg-tl);
 }
 
 .sa-addwidget__icon {

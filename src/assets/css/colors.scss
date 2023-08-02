@@ -25,9 +25,9 @@ $hue-danger: 2;
   @include spectrum(a, 80%);
 
   --c-tl: hsl(var(--hue) 10% 95% / 0.5);
-  --c-tll: hsl(var(--hue) 10% 95% / 0.1);
+  --c-tll: hsl(var(--hue) 10% 95% / 0.25);
   --c-td: hsl(var(--hue) 10% 10% / 0.5);
-  --c-tdl: hsl(var(--hue) 10% 10% / 0.1);
+  --c-tdl: hsl(var(--hue) 10% 10% / 0.25);
 }
 
 :root {
