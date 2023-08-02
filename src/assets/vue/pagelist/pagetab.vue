@@ -72,7 +72,9 @@ function select(e: Event) {
   &__edit {
     display: none;
     background-color: transparent;
-    transition: color 0.2s;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
   }
 
   &--current {

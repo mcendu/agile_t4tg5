@@ -37,7 +37,7 @@ onBeforeUpdate(loadPage);
       Click &ldquo;Add a page&rdquo; on the left to create one.
     </p>
   </main>
-  <main class="sa-page sa-page-content" v-else>
+  <main class="sa-page sa-content" v-else>
     <component
       v-for="w of page.widgets"
       :is="getWidget(w.type)"
@@ -47,20 +47,38 @@ onBeforeUpdate(loadPage);
   </main>
 </template>
 
-<style>
+<style lang="scss">
+@use '/css/stops';
+
 .sa-page {
   height: 100%;
   background-color: var(--c-b1);
   grid-area: content;
 }
 
-.sa-page-content {
+.sa-content {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-auto-flow: column;
   grid-auto-columns: 12em;
 
   padding: 1em;
+
+  @media (height > stops.$height-s) {
+    grid-auto-columns: 16em;
+  }
+
+  @media (stops.$height-m <= height < stops.$height-l) {
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  @media (height >= stops.$height-l) {
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  @media (width < stops.$width-xs) {
+    grid-auto-columns: calc(100vw - 2em);
+  }
 }
 
 .sa-nopages {
@@ -69,15 +87,16 @@ onBeforeUpdate(loadPage);
   align-items: center;
   justify-content: center;
 
-  color: var(--c-a3);
-}
+  color: var(--c-fg-tl);
 
-.sa-nopages__text {
-  font-size: 2em;
-  font-weight: bold;
-}
+  &__text {
+    margin-top: 0;
+    font-size: 2em;
+    font-weight: bold;
+  }
 
-.sa-nopages__tip {
-  margin-top: 1lh;
+  &__tip {
+    margin-top: 1lh;
+  }
 }
 </style>

@@ -86,7 +86,7 @@ input[type='text'] {
   %submit,
   &.submit {
     background-color: var(--c-a5);
-    color: var(--c-fg);
+    color: var(--c-g0); // dark background
 
     &:hover {
       background-color: var(--c-a4);
