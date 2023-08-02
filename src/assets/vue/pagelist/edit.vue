@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Page from '../../js/page';
 import { computed, ref, Ref, watch } from 'vue';
+import '../../css/form.scss';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{
@@ -40,9 +41,9 @@ defineExpose({
 
 <template>
   <dialog class="sa-dialog" ref="dialog">
-    <form method="dialog">
-      <h2 class="form-heading">Editing {{ page?.name }}</h2>
-      <p>
+    <form class="sa-form" method="dialog">
+      <h2 class="sa-form-heading">Editing {{ page?.name }}</h2>
+      <p class="sa-form-field">
         <label>Name</label>
         <input type="text" name="name" v-model="name" />
       </p>

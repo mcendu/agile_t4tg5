@@ -32,9 +32,13 @@ $hue-danger: 2;
 
 :root {
   --c-fg: var(--c-g9);
+  --c-fg-a: var(--c-g9);
   --c-fg-t: var(--c-td);
   --c-fg-tl: var(--c-tdl);
   --c-bg: var(--c-g0);
+  --c-bg-e: var(--c-g1);
+  --c-bg-eh: var(--c-g2);
+  --c-bg-ea: var(--c-g4);
   --c-bg-t: var(--c-tll);
   --c-bg-ta: var(--c-tdl);
 
@@ -42,9 +46,13 @@ $hue-danger: 2;
 
   @media (prefers-color-scheme: dark) {
     --c-fg: var(--c-g0);
+    --c-fg-a: var(--c-g5);
     --c-fg-t: var(--c-tl);
     --c-fg-tl: var(--c-tll);
     --c-bg: var(--c-g8);
+    --c-bg-e: var(--c-g9);
+    --c-bg-eh: var(--c-g7);
+    --c-bg-ea: var(--c-g9);
     --c-bg-t: var(--c-tdl);
     --c-bg-ta: var(--c-tll);
 

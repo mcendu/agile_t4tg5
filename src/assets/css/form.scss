@@ -1,0 +1,98 @@
+@use 'colors';
+
+.sa-dialog {
+  border: none;
+  border-radius: 5px;
+  padding: 1em;
+  background-color: var(--c-bg);
+  box-shadow: var(--shadow);
+
+  width: 50vw;
+  max-width: 320px;
+}
+
+.sa-form-heading {
+  margin-top: 0;
+  font-weight: normal;
+  font-size: 1.25em;
+}
+
+.sa-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2lh;
+}
+
+.sa-form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+label {
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+input[type='text'] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--c-fg-tl);
+  padding: 0.1lh 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+
+  transition: border-bottom-color 0.2s;
+
+  &:focus {
+    border-bottom-color: var(--c-a5);
+    outline: none;
+  }
+}
+
+.form-button {
+  border: none;
+  border-radius: 5px;
+  padding: 0.2lh 0.675em;
+  background-color: var(--c-bg-e);
+  box-shadow: var(--shadow);
+
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+
+  &:hover {
+    background-color: var(--c-bg-eh);
+  }
+
+  &:active {
+    background-color: var(--c-bg-ea);
+    color: var(--c-fg-a);
+  }
+
+  %submit,
+  &.submit {
+    background-color: var(--c-a5);
+    color: var(--c-fg);
+
+    &:hover {
+      background-color: var(--c-a4);
+    }
+
+    &:active {
+      background-color: var(--c-a6);
+    }
+  }
+
+  &.delete {
+    @extend %submit;
+    --hue: colors.$hue-danger;
+  }
+}
