@@ -1,3 +1,5 @@
+@use 'sass:selector';
+
 $hue-base: 200;
 $hue-warning: 30;
 $hue-danger: 2;
@@ -17,6 +19,24 @@ $hue-danger: 2;
   --c-#{$code}7: hsl(var(--hue) #{$saturation} 30%);
   --c-#{$code}8: hsl(var(--hue) #{$saturation} 20%);
   --c-#{$code}9: hsl(var(--hue) #{$saturation} 10%);
+}
+
+@mixin dark() {
+  @media (prefers-color-scheme: dark) {
+    @if (&) {
+      @at-root #{selector.nest('body:not(.light)', &)} {
+        @content;
+      }
+    } @else {
+      @at-root body:not(.light) {
+        @content;
+      }
+    }
+  }
+
+  @at-root #{if(&, selector.nest('.dark', &), '.dark')} {
+    @content;
+  }
 }
 
 :root {
@@ -42,20 +62,22 @@ $hue-danger: 2;
   --c-bg-t: var(--c-tll);
   --c-bg-ta: var(--c-tdl);
 
-  --shadow: 0px 1px 4px rgb(0 0 0 / 0.25);
+  --c-shadow: rgb(0 0 0 / 0.25);
+  --shadow: 0px 1px 4px var(--c-shadow);
+  --shadow-inset: inset 0px 1px 4px var(--c-shadow);
+}
 
-  @media (prefers-color-scheme: dark) {
-    --c-fg: var(--c-g0);
-    --c-fg-a: var(--c-g5);
-    --c-fg-t: var(--c-tl);
-    --c-fg-tl: var(--c-tll);
-    --c-bg: var(--c-g8);
-    --c-bg-e: var(--c-g9);
-    --c-bg-eh: var(--c-g7);
-    --c-bg-ea: var(--c-g9);
-    --c-bg-t: var(--c-tdl);
-    --c-bg-ta: var(--c-tll);
+@include dark {
+  --c-fg: var(--c-g0);
+  --c-fg-a: var(--c-g5);
+  --c-fg-t: var(--c-tl);
+  --c-fg-tl: var(--c-tll);
+  --c-bg: var(--c-g8);
+  --c-bg-e: var(--c-g9);
+  --c-bg-eh: var(--c-g7);
+  --c-bg-ea: var(--c-g9);
+  --c-bg-t: var(--c-tdl);
+  --c-bg-ta: var(--c-tll);
 
-    --shadow: 0px 1px 4px rgb(0 0 0 / 0.5);
-  }
+  --c-shadow: rgb(0 0 0 / 0.5);
 }

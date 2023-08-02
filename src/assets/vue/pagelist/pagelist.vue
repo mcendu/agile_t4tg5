@@ -91,7 +91,7 @@ async function deletePage(page: Page) {
 
   grid-area: tabs;
 
-  @media (prefers-color-scheme: dark) {
+  @include colors.dark {
     background-color: var(--c-l7);
   }
 
