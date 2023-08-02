@@ -26,7 +26,9 @@ body {
 
 button {
   /* override UA button styles */
+  margin: unset;
   border: none;
+  padding: unset;
   background-color: transparent;
   color: inherit;
   font-family: inherit;

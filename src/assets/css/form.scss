@@ -1,4 +1,5 @@
 @use 'colors';
+@use 'common';
 
 .sa-dialog {
   border: none;
@@ -18,6 +19,7 @@
 }
 
 .sa-form-field {
+  @extend p;
   display: flex;
   flex-direction: column;
   gap: 0.2lh;
@@ -28,7 +30,7 @@
   gap: 8px;
 }
 
-label {
+.sa-labeltext {
   font-size: 0.75em;
   font-weight: bold;
   text-transform: uppercase;
@@ -48,6 +50,10 @@ input[type='text'] {
   &:focus {
     border-bottom-color: var(--c-a5);
     outline: none;
+  }
+
+  &:invalid {
+    --hue: colors.$hue-danger;
   }
 }
 

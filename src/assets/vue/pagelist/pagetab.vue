@@ -14,7 +14,7 @@ function select(e: Event) {
 
 <template>
   <li class="sa-pagetab" :class="{ 'sa-pagetab--current': selected }">
-    <button class="sa-pagetab__button" @click="select">
+    <button class="sa-pagetab__button" :disabled="selected" @click="select">
       {{ page.name }}
     </button>
     <button
@@ -64,6 +64,7 @@ function select(e: Event) {
     flex-grow: 1;
     font-size: 1em;
     border: none;
+    padding: 0 0.5em;
     background-color: transparent;
 
     display: flex;
@@ -107,7 +108,8 @@ function select(e: Event) {
         color: transparent;
       }
 
-      &:hover .sa-pagetab__edit {
+      &:hover .sa-pagetab__edit,
+      &:focus-within .sa-pagetab__edit {
         color: var(--c-fg-t);
 
         &:hover {

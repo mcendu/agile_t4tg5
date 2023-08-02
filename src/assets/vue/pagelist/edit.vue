@@ -43,10 +43,16 @@ defineExpose({
   <dialog class="sa-dialog" ref="dialog">
     <form class="sa-form" method="dialog">
       <h2 class="sa-form-heading">Editing {{ page?.name }}</h2>
-      <p class="sa-form-field">
-        <label>Name</label>
-        <input type="text" name="name" v-model="name" />
-      </p>
+      <label class="sa-form-field">
+        <span class="sa-labeltext">Name</span>
+        <input
+          type="text"
+          name="name"
+          min-length="1"
+          placeholder="Page name"
+          v-model="name"
+        />
+      </label>
       <p class="sa-form-actions">
         <button class="form-button submit" type="submit" @click="rename">
           Save
