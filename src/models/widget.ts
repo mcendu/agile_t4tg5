@@ -5,7 +5,7 @@ export default interface Widget {
     /**
      * The numeric identifier of this widget in the database.
      */
-    id: BigInt;
+    id: bigint;
     /**
      * The type of the widget.
      */
