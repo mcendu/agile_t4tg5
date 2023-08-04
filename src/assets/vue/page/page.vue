@@ -38,10 +38,11 @@ onBeforeUpdate(loadPage);
     </p>
   </main>
   <main class="sa-page sa-content" v-else>
+    <!-- Do not define the attribute "is" in any widgets! -->
     <component
       v-for="w of page.widgets"
       :is="getWidget(w.type)"
-      :data="w.data"
+      v-bind="w.data"
     />
     <AddWidget />
   </main>
