@@ -11,6 +11,9 @@ export default defineConfig({
         extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     },
     plugins: [vuePlugin()],
+    build: {
+        target: ['chrome114'],
+    },
     test: {
         include: ['src/assets/tests/**/*.test.?(c)[jt]s?(x)'],
         environment: 'jsdom',

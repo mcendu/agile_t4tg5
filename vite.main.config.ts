@@ -8,6 +8,7 @@ export default defineConfig({
         mainFields: ['module', 'jsnext:main', 'jsnext'],
     },
     build: {
+        target: ['node18'],
         rollupOptions: {
             external: ['better-sqlite3'],
             output: {
