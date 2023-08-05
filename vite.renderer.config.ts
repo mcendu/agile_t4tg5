@@ -2,6 +2,8 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';
 
+/// <reference types="vitest" />
+
 // https://vitejs.dev/config
 export default defineConfig({
     root: 'src/assets',
@@ -9,4 +11,8 @@ export default defineConfig({
         extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     },
     plugins: [vuePlugin()],
+    test: {
+        include: ['src/assets/tests/**/*.test.?(c)[jt]s?(x)'],
+        environment: 'jsdom',
+    },
 });
