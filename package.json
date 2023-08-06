@@ -1,6 +1,6 @@
 {
   "name": "study-assistant",
-  "productName": "study-assistant",
+  "productName": "studyassistant",
   "version": "1.0.0",
   "description": "The university student's ally",
   "main": ".vite/build/main.cjs",
