@@ -1,6 +1,3 @@
-/**
- * @vitest-environment jsdom
- */
 import { beforeAll, afterAll, afterEach, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';

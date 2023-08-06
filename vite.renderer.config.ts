@@ -14,8 +14,4 @@ export default defineConfig({
     build: {
         target: ['chrome114'],
     },
-    test: {
-        include: ['src/assets/tests/**/*.test.?(c)[jt]s?(x)'],
-        environment: 'jsdom',
-    },
 });
