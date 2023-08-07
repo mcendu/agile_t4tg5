@@ -11,6 +11,7 @@ interface WidgetRow {
 
 export default class PageController extends Controller {
     #indexPages: Statement;
+    #indexUserCreatedPages: Statement;
     #addPage: Statement;
     #renamePage: Statement<[string, bigint]>;
     #deleteAllWidgetsFromPage: Statement<bigint>;
@@ -21,10 +22,12 @@ export default class PageController extends Controller {
     constructor(db: Database) {
         super(db);
 
-        this.#indexPages = db.prepare('SELECT id,name FROM pages;');
+        this.#indexPages = db.prepare('SELECT id,name,userCreated FROM pages WHERE userCreated = 0;');
         this.#indexPages.safeIntegers();
+        this.#indexUserCreatedPages = db.prepare('SELECT id,name,userCreated FROM pages WHERE userCreated = 1;');
+        this.#indexUserCreatedPages.safeIntegers();
         this.#addPage = db.prepare(
-            "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name;",
+            "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name,userCreated;",
         );
         this.#renamePage = db.prepare('UPDATE pages SET name=? WHERE id=?;');
         this.#deleteAllWidgetsFromPage = db.prepare(
@@ -39,10 +42,17 @@ export default class PageController extends Controller {
     }
 
     /**
-     * Get a list of pages in the order as dictated by the user.
+     * Get a list of pages native to the app.
      */
     index(): Page[] {
         return this.#indexPages.all() as Page[];
+    }
+
+    /**
+     * Get a list of pages in the order as dictated by the user.
+     */
+    indexUserCreated(): Page[] {
+        return this.#indexUserCreatedPages.all() as Page[];
     }
 
     /**

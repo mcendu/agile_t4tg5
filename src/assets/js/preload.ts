@@ -5,6 +5,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('controllers', {
     page: {
         index: () => ipcRenderer.invoke('page.index'),
+        indexUserCreated: () => ipcRenderer.invoke('page.indexUserCreated'),
         show: (id: unknown) => ipcRenderer.invoke('page.show', id),
         add: () => ipcRenderer.invoke('page.add'),
         rename: (id: unknown, name: unknown) =>
@@ -17,5 +18,8 @@ contextBridge.exposeInMainWorld('controllers', {
         edit: (id: unknown, data: unknown) =>
             ipcRenderer.invoke('widget.edit', id, data),
         del: (id: unknown) => ipcRenderer.invoke('widget.delete', id),
+    },
+    module: {
+        index: () => ipcRenderer.invoke('module.index'),
     },
 });

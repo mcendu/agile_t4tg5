@@ -2,6 +2,8 @@
 import { Ref, onBeforeMount, ref } from 'vue';
 import Page from '../../js/page';
 import PageRow from '../../../models/page';
+import Module from '../../js/module';
+import ModuleRow from '../../../models/module';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
@@ -11,20 +13,32 @@ const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
 
 const pages: Ref<Page[]> = ref([]);
 const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
+const user_pages: Ref<Page[]> = ref([]);
+const modules: Ref<Module[]> = ref([]);
 
 function pageRowToPage(row: PageRow): Page {
-  return new Page(row.id, row.name);
+  return new Page(row.id, row.name, row.userCreated);
+}
+
+function moduleRowToModule(row: ModuleRow): Module {
+  return new Module(row.id, row.name, row.code, row.enabled, row.grades);
 }
 
 onBeforeMount(async () => {
   const rows = await controllers.page.index();
   pages.value = rows.map(pageRowToPage);
   if (rows.length) emit('update:modelValue', pages.value[0]);
+  const user_rows = await controllers.page.indexUserCreated();
+  user_pages.value = user_rows.map(pageRowToPage);
+  console.log(user_pages);
+  const mod_rows = await controllers.module.index();
+  modules.value = mod_rows.map(moduleRowToModule);
+
 });
 
 async function newPage() {
   const page = pageRowToPage(await controllers.page.add());
-  pages.value.push(page);
+  user_pages.value.push(page);
   emit('update:modelValue', page);
 }
 
@@ -38,26 +52,37 @@ async function renamePage(page: Page, name: string) {
 }
 
 async function deletePage(page: Page) {
-  const index = pages.value.indexOf(page);
+  const index = user_pages.value.indexOf(page);
   if (page === props.modelValue) {
-    if (pages.value.length == 1) {
+    if (user_pages.value.length == 1) {
       emit('update:modelValue', undefined);
     } else if (index == 0) {
-      emit('update:modelValue', pages.value[index + 1]);
+      emit('update:modelValue', user_pages.value[index + 1]);
     } else {
-      emit('update:modelValue', pages.value[index - 1]);
+      emit('update:modelValue', user_pages.value[index - 1]);
     }
   }
   await controllers.page.del(page.id);
-  pages.value.splice(index, 1);
+  user_pages.value.splice(index, 1);
 }
 </script>
 
 <template>
   <nav class="sa-pagebar" v-bind="$attrs">
     <menu class="sa-pagelist">
-      <Pagetab
+    <Pagetab
         v-for="page in pages"
+        :page="page"
+        :selected="page === modelValue"
+        @select="changePage(page)"
+        @edit="editDialog?.showModal()"
+        @delete="deletePage(page)"
+      />
+    </menu>
+    <hr class="sa-pagebar__divider" />
+    <menu class="sa-pagelist">
+      <Pagetab
+        v-for="page in user_pages"
         :page="page"
         :selected="page === modelValue"
         @select="changePage(page)"

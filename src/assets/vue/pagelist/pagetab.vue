@@ -18,6 +18,7 @@ function select(e: Event) {
       {{ page.name }}
     </button>
     <button
+      v-if="page.userCreated"
       class="sa-pagetab__edit"
       aria-label="rename"
       @click="$emit('edit')"
@@ -26,6 +27,7 @@ function select(e: Event) {
       <span class="material-symbols-outlined">edit</span>
     </button>
     <button
+      v-if="page.userCreated"
       class="sa-pagetab__edit"
       aria-label="delete"
       @click="$emit('delete')"
