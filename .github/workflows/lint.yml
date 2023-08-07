@@ -23,9 +23,9 @@ jobs:
 
       - name: Check typing
         run: |
-          yarn exec "vue-tsc --noEmit"
+          yarn run vue-tsc --noEmit
 
       - name: Check formatting
         if: always()
         run: |
-          yarn exec "prettier -c ."
+          yarn run prettier -c .
