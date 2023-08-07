@@ -7,6 +7,7 @@ declare global {
     namespace controllers {
         namespace page {
             function index(): Promise<Page[]>;
+            function indexUserCreated(): Promise<Page[]>;
             function show(id: Integer): Promise<Widget[]>;
             function add(): Promise<Page>;
             function rename(id: Integer, name: string): Promise<string>;
