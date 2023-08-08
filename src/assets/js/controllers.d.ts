@@ -19,9 +19,5 @@ declare global {
             function edit(id: Integer, data: unknown): Promise<void>;
             function del(id: Integer): Promise<void>;
         }
-
-        namespace module {
-            function index(): Promise<Module[]>;
-        }
     }
 }
