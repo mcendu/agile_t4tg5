@@ -42,7 +42,7 @@ onBeforeUpdate(loadPage);
     <component
       v-for="w of page.widgets"
       :is="getWidget(w.type)"
-      v-bind="w.data"
+      v-model="w.data"
     />
     <AddWidget />
   </main>
