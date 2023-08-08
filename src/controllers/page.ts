@@ -44,7 +44,7 @@ export default class PageController extends Controller {
     /**
      * Get a list of pages native to the app.
      */
-    index(): Page[] {
+    indexAppCreated(): Page[] {
         return this.#indexPages.all() as Page[];
     }
 
