@@ -11,7 +11,7 @@ export default interface Page {
      */
     name: string;
     /**
-     * The name of this page.
+     * Whether the page is user created.
      */
     userCreated: boolean;
 }
