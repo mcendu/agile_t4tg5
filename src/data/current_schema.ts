@@ -11,7 +11,8 @@ CREATE TABLE pages(\
     id INTEGER PRIMARY KEY, \
     prev INTEGER, \
     name TEXT, \
-    userCreated BOOLEAN DEFAULT TRUE \
+    module INTEGER DEFAULT NULL, \
+    FOREIGN KEY (module) REFERENCES modules(id) \
 ); \
 CREATE INDEX page_list ON pages(prev ASC); \
 CREATE TABLE widgets(\
