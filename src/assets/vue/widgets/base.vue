@@ -24,7 +24,7 @@ function openEditDialog() {
           <span class="material-symbols-outlined">edit</span>
         </button>
       </slot>
-      <button class="sa-widget__action" @click="openEditDialog">
+      <button class="sa-widget__action" @click="$emit('delete')">
         <span class="material-symbols-outlined">delete</span>
       </button>
     </div>
