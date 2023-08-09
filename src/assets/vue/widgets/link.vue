@@ -38,7 +38,7 @@ const data = computed({
 const formState = new FormState(data);
 </script>
 <template>
-  <WidgetBase class="sa-link-widget" @edit="formState.reset">
+  <WidgetBase class="sa-link-widget" @edit="() => formState.reset()">
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
       <p class="sa-link-widget__link">
@@ -73,7 +73,7 @@ const formState = new FormState(data);
         <button
           class="form-button submit"
           type="submit"
-          @click="formState.save"
+          @click="() => formState.save()"
         >
           Save
         </button>
