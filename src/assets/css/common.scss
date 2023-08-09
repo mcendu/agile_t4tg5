@@ -1,4 +1,5 @@
 @use 'colors.scss';
+@use 'typography.scss';
 @import url(lato.css);
 
 :root {
@@ -30,28 +31,4 @@ body {
 
   background-color: var(--c-bg);
   color: var(--c-fg);
-}
-
-button {
-  /* override UA button styles */
-  margin: unset;
-  border: none;
-  padding: unset;
-  background-color: transparent;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  text-align: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label {
-  margin-bottom: 0;
-  margin-top: 0.75lh;
 }

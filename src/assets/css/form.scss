@@ -1,3 +1,15 @@
+button {
+  /* override UA button styles */
+  margin: unset;
+  border: none;
+  padding: unset;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: inherit;
+}
+
 dialog {
   color: var(--c-fg);
 }

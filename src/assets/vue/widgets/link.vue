@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import WidgetBase from './base.vue';
+import '../../css/form.scss';
 
 interface LinkWidgetData {
   /**
@@ -29,10 +31,29 @@ const data = computed({
 });
 </script>
 <template>
-  <div class="sa-widget sa-link-widget">
+  <WidgetBase class="sa-link-widget">
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
       <p class="sa-link-widget__link">{{ data.target }}</p>
     </a>
-  </div>
+  </WidgetBase>
 </template>
+
+<style lang="scss">
+.sa-link-widget {
+  padding: 0;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    padding: 1em;
+  }
+
+  &__link {
+    font-size: 0.75em;
+  }
+}
+</style>
