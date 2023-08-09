@@ -1,4 +1,5 @@
 import { Ref, toRaw, toRef } from 'vue';
+import { cloneDeep } from 'lodash';
 
 export default class FormState<T> {
     #data: Ref<T>;
@@ -6,7 +7,7 @@ export default class FormState<T> {
 
     constructor(data: Ref<T>) {
         this.#data = toRef(data);
-        this.#formdata = structuredClone(toRaw(data.value));
+        this.#formdata = cloneDeep(data.value);
     }
 
     get data() {
@@ -14,7 +15,7 @@ export default class FormState<T> {
     }
 
     reset() {
-        this.#formdata = structuredClone(toRaw(this.#data.value));
+        this.#formdata = cloneDeep(this.#data.value);
     }
 
     save() {
