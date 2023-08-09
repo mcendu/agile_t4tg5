@@ -22,7 +22,7 @@ declare global {
         }
 
         namespace module {
-            function index(): Promise<Module>;
+            function index(): Promise<Module[]>;
         }
     }
 }
