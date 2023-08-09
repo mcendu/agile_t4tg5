@@ -6,12 +6,14 @@ defineOptions({
   name: 'WidgetBase',
 });
 const emit = defineEmits<{
+  edit: [];
   delete: [];
 }>();
 
 const editDialog: Ref<HTMLDialogElement | null> = ref(null);
 
-function openEditDialog() {
+function showEditForm() {
+  emit('edit');
   editDialog.value?.showModal();
 }
 </script>
@@ -20,7 +22,7 @@ function openEditDialog() {
   <div class="sa-widget" v-bind="$attrs">
     <div class="sa-widget__actions">
       <slot name="actions">
-        <button class="sa-widget__action" @click="openEditDialog">
+        <button class="sa-widget__action" @click="showEditForm">
           <span class="material-symbols-outlined">edit</span>
         </button>
       </slot>
@@ -30,7 +32,13 @@ function openEditDialog() {
     </div>
     <slot></slot>
     <dialog class="sa-dialog" ref="editDialog">
-      <slot name="dialog"></slot>
+      <form class="sa-form" method="dialog">
+        <slot name="dialog">
+          <p class="sa-form-actions">
+            <button class="form-button" type="submit">Cancel</button>
+          </p>
+        </slot>
+      </form>
     </dialog>
   </div>
 </template>

@@ -48,7 +48,10 @@ dialog {
   text-transform: uppercase;
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='url'] {
   background-color: transparent;
   border: none;
   border-bottom: 2px solid var(--c-fg-tl);
