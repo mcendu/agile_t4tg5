@@ -18,7 +18,7 @@ export default class WidgetController extends Controller {
             `UPDATE widgets SET data=$data WHERE id=$id
                 RETURNING id,type,data;`,
         );
-        this.#deleteWidget = db.prepare('DELETE FROM widgets WHERE id=$id');
+        this.#deleteWidget = db.prepare('DELETE FROM widgets WHERE id=?');
     }
 
     /**

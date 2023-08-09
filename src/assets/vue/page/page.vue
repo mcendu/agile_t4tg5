@@ -51,6 +51,15 @@ async function addWidget() {
   widgets.value?.push(w);
 }
 
+async function deleteWidget(w: Widget) {
+  if (!widgets.value) return;
+  const index = widgets.value.indexOf(w);
+  if (index == -1) return;
+
+  await controllers.widget.del(w.id);
+  widgets.value.splice(index, 1);
+}
+
 onBeforeMount(loadPage);
 onBeforeUpdate(loadPage);
 </script>
@@ -68,6 +77,7 @@ onBeforeUpdate(loadPage);
       :is="getWidget(w.type)"
       :data="w.data"
       @update="(data: object) => updateWidget(w, data)"
+      @delete="() => deleteWidget(w)"
     />
     <AddWidget @click="addWidget" />
   </main>

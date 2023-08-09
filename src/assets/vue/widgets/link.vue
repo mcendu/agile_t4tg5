@@ -24,6 +24,7 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   update: [value: LinkWidgetData];
+  delete: [];
 }>();
 
 const data = computed({
@@ -43,7 +44,11 @@ function urlSummary(link: URL | string) {
 const formState = new FormState(data);
 </script>
 <template>
-  <WidgetBase class="sa-link-widget" @edit="() => formState.reset()">
+  <WidgetBase
+    class="sa-link-widget"
+    @edit="() => formState.reset()"
+    @delete="$emit('delete')"
+  >
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
       <p class="sa-link-widget__link">
