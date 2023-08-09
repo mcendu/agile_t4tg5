@@ -48,6 +48,7 @@ defineExpose({
         <input
           type="text"
           name="name"
+          required
           min-length="1"
           placeholder="Page name"
           v-model="name"
