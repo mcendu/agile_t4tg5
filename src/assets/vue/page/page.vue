@@ -27,8 +27,9 @@ async function loadPage() {
     props.page.widgets = await controllers.page.show(props.page.id);
 }
 
-async function updateWidget(id: bigint, data: object) {
-  await controllers.widget.edit(id, data);
+async function updateWidget(w: WidgetRow, data: object) {
+  await controllers.widget.edit(w.id, data);
+  w.data = data;
 }
 
 onBeforeMount(loadPage);
@@ -48,7 +49,7 @@ onBeforeUpdate(loadPage);
       v-for="w of page.widgets"
       :is="getWidget(w.type)"
       :data="w.data"
-      @update="(data: object) => updateWidget(w.id, data)"
+      @update="(data: object) => updateWidget(w, data)"
     />
     <AddWidget />
   </main>
