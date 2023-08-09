@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import getDatabase from './data/init';
 import setupIpcMainHandles from './ipc';
 
@@ -66,3 +66,11 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+// Disable navigation and open all links externally.
+app.on('web-contents-created', (event, contents) => {
+    contents.on('will-navigate', (event, url) => {
+        event.preventDefault();
+        shell.openExternal(url);
+    });
+});
