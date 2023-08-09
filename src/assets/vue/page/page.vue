@@ -24,7 +24,9 @@ async function loadPage() {
     return;
   }
 
-  widgets.value = await controllers.page.show(props.page.id);
+  if (!widgets.value) {
+    widgets.value = await controllers.page.show(props.page.id);
+  }
 }
 
 async function updateWidget(w: Widget, data: object) {
