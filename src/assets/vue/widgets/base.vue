@@ -45,25 +45,34 @@ function showEditForm() {
 
 <style lang="scss">
 .sa-widget {
+  position: relative;
   background-color: var(--c-bg);
   box-shadow: var(--shadow);
   border-radius: 5;
 
   &__actions {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 2px;
+    top: 2px;
     z-index: 5;
 
     display: flex;
   }
 
   &__action {
-    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px;
+    border-radius: 4px;
 
     font-size: 1em;
     border: none;
     color: var(--c-fg-t);
+    transition:
+      color 0.2s,
+      background-color 0.2s;
 
     &:active {
       color: var(--c-fg);
@@ -73,7 +82,7 @@ function showEditForm() {
 
   @media (hover: hover) {
     &__action {
-      background-color: transparent;
+      color: transparent;
     }
 
     &:hover &__action,
