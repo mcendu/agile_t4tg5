@@ -5,6 +5,7 @@ import Page from '../../js/page';
 import WidgetRow from '../../../models/widget';
 import widgetTable from '../widgets/index';
 import { Ref, onBeforeMount, onBeforeUpdate, ref } from 'vue';
+import { BluetoothPairingHandlerHandlerDetails } from 'electron';
 
 const props = defineProps<{ page?: Page }>();
 
@@ -26,6 +27,10 @@ async function loadPage() {
     props.page.widgets = await controllers.page.show(props.page.id);
 }
 
+async function updateWidget(id: bigint, data: object) {
+  await controllers.widget.edit(id, data);
+}
+
 onBeforeMount(loadPage);
 onBeforeUpdate(loadPage);
 </script>
@@ -42,7 +47,8 @@ onBeforeUpdate(loadPage);
     <component
       v-for="w of page.widgets"
       :is="getWidget(w.type)"
-      v-model="w.data"
+      :data="w.data"
+      @update="(data: object) => updateWidget(w.id, data)"
     />
     <AddWidget />
   </main>

@@ -4,6 +4,10 @@ import FormState from '../../js/composables/formstate';
 import WidgetBase from './base.vue';
 import '../../css/form.scss';
 
+defineOptions({
+  name: 'LinkWidget',
+});
+
 interface LinkWidgetData {
   /**
    * The title of the link widget.
@@ -16,18 +20,18 @@ interface LinkWidgetData {
 }
 
 const props = defineProps<{
-  modelValue: LinkWidgetData;
+  data: LinkWidgetData;
 }>();
 const emit = defineEmits<{
-  'update:modelValue': [value: LinkWidgetData];
+  update: [value: LinkWidgetData];
 }>();
 
 const data = computed({
   get() {
-    return props.modelValue;
+    return props.data;
   },
   set(value) {
-    emit('update:modelValue', value);
+    emit('update', value);
   },
 });
 
