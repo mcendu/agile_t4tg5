@@ -87,6 +87,7 @@ onBeforeUpdate(loadPage);
   grid-template-rows: repeat(2, 1fr);
   grid-auto-flow: column;
   grid-auto-columns: 12em;
+  gap: 8px;
 
   padding: 1em;
 

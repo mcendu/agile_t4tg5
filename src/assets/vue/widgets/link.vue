@@ -41,7 +41,9 @@ const formState = new FormState(data);
   <WidgetBase class="sa-link-widget" @edit="formState.reset">
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
-      <p class="sa-link-widget__link">{{ data.target }}</p>
+      <p class="sa-link-widget__link">
+        <a :href="data.target">{{ data.target }}</a>
+      </p>
     </a>
 
     <template #dialog>
@@ -88,10 +90,14 @@ const formState = new FormState(data);
   &__content {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
 
     padding: 1em;
+    color: inherit;
+    text-decoration: inherit;
   }
 
   &__link {

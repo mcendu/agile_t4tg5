@@ -20,6 +20,7 @@ function showEditForm() {
 
 <template>
   <div class="sa-widget" v-bind="$attrs">
+    <slot></slot>
     <div class="sa-widget__actions">
       <slot name="actions">
         <button class="sa-widget__action" @click="showEditForm">
@@ -30,7 +31,6 @@ function showEditForm() {
         <span class="material-symbols-outlined">delete</span>
       </button>
     </div>
-    <slot></slot>
     <dialog class="sa-dialog" ref="editDialog">
       <form class="sa-form" method="dialog">
         <slot name="dialog">
