@@ -35,6 +35,11 @@ const data = computed({
   },
 });
 
+function urlSummary(link: URL | string) {
+  const url = new URL(link);
+  return url.origin;
+}
+
 const formState = new FormState(data);
 </script>
 <template>
@@ -42,7 +47,7 @@ const formState = new FormState(data);
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
       <p class="sa-link-widget__link">
-        <a :href="data.target">{{ data.target }}</a>
+        <a :href="data.target">{{ urlSummary(data.target) }}</a>
       </p>
     </a>
 
@@ -96,12 +101,16 @@ const formState = new FormState(data);
     height: 100%;
 
     padding: 1em;
+    overflow: clip;
+    text-overflow: ellipsis;
     color: inherit;
     text-decoration: inherit;
   }
 
   &__link {
     font-size: 0.75em;
+    max-width: max-content;
+    white-space: nowrap;
   }
 }
 </style>

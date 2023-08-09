@@ -57,7 +57,7 @@ a {
     color: var(--c-a4);
   }
 
-  :hover {
+  &:hover {
     text-decoration: underline solid;
   }
 }
