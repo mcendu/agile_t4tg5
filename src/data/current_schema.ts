@@ -75,12 +75,14 @@ const modules = [
 export default function createCurrentSchema(db: Database) {
     db.exec(currentSchemaSql);
     // Insert all the UoL Computer Science modules into modules db upon creation
-    const module_insert = db.prepare('INSERT INTO modules(name, code, page) VALUES (?,?,?)'); 
+    const module_insert = db.prepare(
+        'INSERT INTO modules(name, code, page) VALUES (?,?,?)',
+    );
     const page_maker = db.prepare(
-        "INSERT INTO pages(name, userCreated) VALUES (?, ?) RETURNING id;",
+        'INSERT INTO pages(name, userCreated) VALUES (?, ?) RETURNING id;',
     );
     modules.forEach((module) => {
         const page_id = page_maker.run(module.name, 0);
-        module_insert.run(module.name,module.code, page_id.lastInsertRowid);
+        module_insert.run(module.name, module.code, page_id.lastInsertRowid);
     });
 }

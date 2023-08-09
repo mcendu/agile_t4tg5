@@ -17,7 +17,7 @@ function getDataDir(appName: string) {
     switch (platform()) {
         case 'win32':
             baseDataDir = join(homedir(), 'AppData', 'Roaming');
-            console.log(baseDataDir)
+            console.log(baseDataDir);
             break;
         case 'darwin':
             baseDataDir = join(homedir(), 'Library', 'Application Support');

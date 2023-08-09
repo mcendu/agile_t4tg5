@@ -22,9 +22,13 @@ export default class PageController extends Controller {
     constructor(db: Database) {
         super(db);
 
-        this.#indexPages = db.prepare('SELECT id,name,userCreated FROM pages WHERE userCreated = 0;');
+        this.#indexPages = db.prepare(
+            'SELECT id,name,userCreated FROM pages WHERE userCreated = 0;',
+        );
         this.#indexPages.safeIntegers();
-        this.#indexUserCreatedPages = db.prepare('SELECT id,name,userCreated FROM pages WHERE userCreated = 1;');
+        this.#indexUserCreatedPages = db.prepare(
+            'SELECT id,name,userCreated FROM pages WHERE userCreated = 1;',
+        );
         this.#indexUserCreatedPages.safeIntegers();
         this.#addPage = db.prepare(
             "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name,userCreated;",

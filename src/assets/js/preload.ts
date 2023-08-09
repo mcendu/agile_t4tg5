@@ -4,7 +4,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('controllers', {
     page: {
-        index: () => ipcRenderer.invoke('page.index'),
+        indexAppCreated: () => ipcRenderer.invoke('page.indexAppCreated'),
         indexUserCreated: () => ipcRenderer.invoke('page.indexUserCreated'),
         show: (id: unknown) => ipcRenderer.invoke('page.show', id),
         add: () => ipcRenderer.invoke('page.add'),

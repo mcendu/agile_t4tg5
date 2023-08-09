@@ -33,7 +33,6 @@ onBeforeMount(async () => {
   console.log(user_pages);
   const mod_rows = await controllers.module.index();
   modules.value = mod_rows.map(moduleRowToModule);
-
 });
 
 async function newPage() {
@@ -70,7 +69,7 @@ async function deletePage(page: Page) {
 <template>
   <nav class="sa-pagebar" v-bind="$attrs">
     <menu class="sa-pagelist">
-    <Pagetab
+      <Pagetab
         v-for="page in pages"
         :page="page"
         :selected="page === modelValue"
