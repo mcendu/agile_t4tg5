@@ -4,7 +4,7 @@ import AddWidget from './addwidget.vue';
 import Page from '../../js/page';
 import Widget from '../../../models/widget';
 import widgetTable from '../widgets/index';
-import { Ref, onBeforeMount, onBeforeUpdate, ref } from 'vue';
+import { Ref, onBeforeMount, onBeforeUpdate, ref, watch } from 'vue';
 
 const props = defineProps<{ page?: Page }>();
 const widgets: Ref<Widget[] | undefined> = ref(undefined);
@@ -24,9 +24,7 @@ async function loadPage() {
     return;
   }
 
-  if (!widgets.value) {
-    widgets.value = await controllers.page.show(props.page.id);
-  }
+  widgets.value = await controllers.page.show(props.page.id);
 }
 
 async function updateWidget(w: Widget, data: object) {
@@ -61,7 +59,7 @@ async function deleteWidget(w: Widget) {
 }
 
 onBeforeMount(loadPage);
-onBeforeUpdate(loadPage);
+watch(() => props.page?.id, loadPage);
 </script>
 
 <template>
