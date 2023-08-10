@@ -105,6 +105,10 @@ const formState = new FormState(data);
     text-overflow: ellipsis;
     color: inherit;
     text-decoration: inherit;
+
+    &:hover {
+      text-decoration: inherit;
+    }
   }
 
   &__link {
