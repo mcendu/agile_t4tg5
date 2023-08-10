@@ -28,11 +28,9 @@ function moduleRowToModule(row: ModuleRow): Module {
 onBeforeMount(async () => {
   const rows = await controllers.page.indexAppCreated();
   pages.value = rows.map(pageRowToPage);
-  console.log(pages);
   if (rows.length) emit('update:modelValue', pages.value[0]);
   const user_rows = await controllers.page.indexUserCreated();
   user_pages.value = user_rows.map(pageRowToPage);
-  console.log(user_pages);
   const mod_rows = await controllers.module.index();
   modules.value = mod_rows.map(moduleRowToModule);
 });
