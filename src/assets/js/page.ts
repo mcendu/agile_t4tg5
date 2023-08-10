@@ -10,7 +10,7 @@ export default class Page {
      */
     name: string;
     /**
-     * The name of the page.
+     * Whether this is a special page.
      */
     special: boolean;
     /**
