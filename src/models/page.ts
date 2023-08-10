@@ -11,7 +11,7 @@ export default interface Page {
      */
     name: string;
     /**
-     * The name of this page.
+     * The module associated with this page.
      */
-    module: bigint;
+    module?: bigint;
 }
