@@ -41,7 +41,7 @@ function changePage(page: Page) {
 
 function isModelPage(page: Page) {
   if (props.modelValue === undefined) return false;
-  return page.id === props.modelValue.id
+  return page.id === props.modelValue.id;
 }
 
 async function renamePage(page: Page, name: string) {

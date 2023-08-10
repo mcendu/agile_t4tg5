@@ -40,7 +40,7 @@ onBeforeUpdate(loadPage);
     </p>
   </main>
   <main class="sa-page sa-content" v-else-if="page.special === true">
-    <HomePage v-if="page.name == 'Home'"/>
+    <HomePage v-if="page.name == 'Home'" />
     <GradesPage v-else-if="page.name == 'Grades'" />
   </main>
   <main class="sa-page sa-content" v-else>
