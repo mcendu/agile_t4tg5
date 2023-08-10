@@ -1,8 +1,9 @@
 import { Database } from 'better-sqlite3';
+import modules from '../config/modules';
+import { insertModules } from '../utils/insert_modules';
 
 const currentSchemaSql =
     "\
-BEGIN TRANSACTION; \
 CREATE TABLE sa_metadata(\
     key TEXT PRIMARY KEY, \
     value BLOB \
@@ -10,7 +11,9 @@ CREATE TABLE sa_metadata(\
 CREATE TABLE pages(\
     id INTEGER PRIMARY KEY, \
     prev INTEGER, \
-    name TEXT \
+    name TEXT, \
+    module INTEGER DEFAULT NULL, \
+    FOREIGN KEY (module) REFERENCES modules(id) \
 ); \
 CREATE INDEX page_list ON pages(prev ASC); \
 CREATE TABLE widgets(\
@@ -21,13 +24,24 @@ CREATE TABLE widgets(\
     FOREIGN KEY(page) REFERENCES pages(id) \
 ); \
 CREATE INDEX page_widgets ON widgets(page); \
-INSERT INTO sa_metadata(key, value) VALUES('schema_version', 0); \
-COMMIT TRANSACTION;";
+CREATE TABLE modules(\
+    id INTEGER PRIMARY KEY, \
+    name TEXT, \
+    code TEXT, \
+    enabled BOOLEAN DEFAULT TRUE, \
+    grades TEXT DEFAULT NULL \
+); \
+CREATE INDEX module_list ON modules(id ASC); \
+\
+INSERT INTO sa_metadata(key, value) VALUES('schema_version', 1);";
 
 /**
  * Create a SQLite database with the latest schema revision.
  * @param db The database to initialize.
  */
 export default function createCurrentSchema(db: Database) {
+    db.exec('BEGIN IMMEDIATE;');
     db.exec(currentSchemaSql);
+    insertModules(db);
+    db.exec('COMMIT;');
 }

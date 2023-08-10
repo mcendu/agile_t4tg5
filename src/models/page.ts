@@ -10,4 +10,8 @@ export default interface Page {
      * The name of this page.
      */
     name: string;
+    /**
+     * The name of this page.
+     */
+    module: bigint;
 }

@@ -10,12 +10,17 @@ export default class Page {
      */
     name: string;
     /**
+     * Whether this is a special page.
+     */
+    special: boolean;
+    /**
      * A list of widgets on this page.
      */
     widgets?: Widget[] = undefined;
 
-    constructor(id: bigint, name: string) {
+    constructor(id: bigint, name: string, special?: boolean) {
         this.id = id;
         this.name = name;
+        this.special = special ?? false;
     }
 }
