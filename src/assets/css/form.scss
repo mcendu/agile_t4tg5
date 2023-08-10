@@ -1,3 +1,17 @@
+@use 'hues';
+
+button {
+  /* override UA button styles */
+  margin: unset;
+  border: none;
+  padding: unset;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: inherit;
+}
+
 dialog {
   color: var(--c-fg);
 }
@@ -10,7 +24,8 @@ dialog {
   box-shadow: var(--shadow);
 
   width: 50vw;
-  max-width: 320px;
+  min-width: 320px;
+  max-width: 400px;
 }
 
 .sa-form-heading {
@@ -36,7 +51,10 @@ dialog {
   text-transform: uppercase;
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='url'] {
   background-color: transparent;
   border: none;
   border-bottom: 2px solid var(--c-fg-tl);
@@ -53,7 +71,8 @@ input[type='text'] {
   }
 
   &:invalid {
-    --hue: colors.$hue-danger;
+    --hue: #{hues.$danger};
+    border-bottom-color: var(--c-d5);
   }
 }
 

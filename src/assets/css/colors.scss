@@ -5,23 +5,25 @@
   --hue: #{hues.$base};
 }
 
-@mixin _spectrum($code, $saturation) {
-  --c-#{$code}0: hsl(var(--hue) #{$saturation} 95%);
-  --c-#{$code}1: hsl(var(--hue) #{$saturation} 90%);
-  --c-#{$code}2: hsl(var(--hue) #{$saturation} 80%);
-  --c-#{$code}3: hsl(var(--hue) #{$saturation} 70%);
-  --c-#{$code}4: hsl(var(--hue) #{$saturation} 60%);
-  --c-#{$code}5: hsl(var(--hue) #{$saturation} 50%);
-  --c-#{$code}6: hsl(var(--hue) #{$saturation} 40%);
-  --c-#{$code}7: hsl(var(--hue) #{$saturation} 30%);
-  --c-#{$code}8: hsl(var(--hue) #{$saturation} 20%);
-  --c-#{$code}9: hsl(var(--hue) #{$saturation} 10%);
+@mixin _spectrum($code, $saturation, $hue: var(--hue)) {
+  --c-#{$code}0: hsl(#{$hue} #{$saturation} 95%);
+  --c-#{$code}1: hsl(#{$hue} #{$saturation} 90%);
+  --c-#{$code}2: hsl(#{$hue} #{$saturation} 80%);
+  --c-#{$code}3: hsl(#{$hue} #{$saturation} 70%);
+  --c-#{$code}4: hsl(#{$hue} #{$saturation} 60%);
+  --c-#{$code}5: hsl(#{$hue} #{$saturation} 50%);
+  --c-#{$code}6: hsl(#{$hue} #{$saturation} 40%);
+  --c-#{$code}7: hsl(#{$hue} #{$saturation} 30%);
+  --c-#{$code}8: hsl(#{$hue} #{$saturation} 20%);
+  --c-#{$code}9: hsl(#{$hue} #{$saturation} 10%);
 }
 
 :root {
   @include _spectrum(g, 10%);
   @include _spectrum(l, 20%);
   @include _spectrum(a, 80%);
+  @include _spectrum(w, 80%, hues.$warning);
+  @include _spectrum(d, 80%, hues.$danger);
 
   --c-tl: hsl(var(--hue) 10% 95% / 0.5);
   --c-tll: hsl(var(--hue) 10% 95% / 0.25);

@@ -2,11 +2,12 @@
 import AddWidget from './addwidget.vue';
 
 import Page from '../../js/page';
-import WidgetRow from '../../../models/widget';
+import Widget from '../../../models/widget';
 import widgetTable from '../widgets/index';
-import { Ref, onBeforeMount, onBeforeUpdate, ref } from 'vue';
+import { Ref, onBeforeMount, ref, watch } from 'vue';
 
 const props = defineProps<{ page?: Page }>();
+const widgets: Ref<Widget[] | undefined> = ref(undefined);
 
 function getWidget(type: string) {
   if (type in widgetTable) {
@@ -22,12 +23,43 @@ async function loadPage() {
   if (props.page === undefined) {
     return;
   }
-  if (props.page.widgets === undefined)
-    props.page.widgets = await controllers.page.show(props.page.id);
+
+  widgets.value = await controllers.page.show(props.page.id);
+}
+
+async function updateWidget(w: Widget, data: object) {
+  await controllers.widget.edit(w.id, data);
+  w.data = data;
+}
+
+async function addWidget() {
+  if (props.page === undefined) {
+    return;
+  }
+
+  const w: Widget = {
+    id: -1n,
+    type: 'LinkWidget',
+    data: {
+      title: 'New link',
+      target: 'https://example.com/',
+    },
+  };
+  w.id = (await controllers.widget.add(props.page.id, w)).id;
+  widgets.value?.push(w);
+}
+
+async function deleteWidget(w: Widget) {
+  if (!widgets.value) return;
+  const index = widgets.value.indexOf(w);
+  if (index == -1) return;
+
+  await controllers.widget.del(w.id);
+  widgets.value.splice(index, 1);
 }
 
 onBeforeMount(loadPage);
-onBeforeUpdate(loadPage);
+watch(() => props.page?.id, loadPage);
 </script>
 
 <template>
@@ -38,13 +70,14 @@ onBeforeUpdate(loadPage);
     </p>
   </main>
   <main class="sa-page sa-content" v-else>
-    <!-- Do not define the attribute "is" in any widgets! -->
     <component
-      v-for="w of page.widgets"
+      v-for="w of widgets"
       :is="getWidget(w.type)"
-      v-bind="w.data"
+      :data="w.data"
+      @update="(data: object) => updateWidget(w, data)"
+      @delete="() => deleteWidget(w)"
     />
-    <AddWidget />
+    <AddWidget @click="addWidget" />
   </main>
 </template>
 
@@ -62,6 +95,7 @@ onBeforeUpdate(loadPage);
   grid-template-rows: repeat(2, 1fr);
   grid-auto-flow: column;
   grid-auto-columns: 12em;
+  gap: 8px;
 
   padding: 1em;
 

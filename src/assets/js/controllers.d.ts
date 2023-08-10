@@ -15,7 +15,7 @@ declare global {
 
         namespace widget {
             function add(page: Integer, w: Widget): Promise<Widget>;
-            function edit(id: Integer, data: unknown): Promise<void>;
+            function edit(id: Integer, data: unknown): Promise<Widget>;
             function del(id: Integer): Promise<void>;
         }
     }
