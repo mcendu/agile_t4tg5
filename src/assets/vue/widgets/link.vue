@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed, Ref } from 'vue';
 import FormState from '../../js/composables/formstate';
 import WidgetBase from './base.vue';
 import '../../css/form.scss';
@@ -34,16 +34,35 @@ const data = computed({
     emit('update', value);
   },
 });
+const widgetBase: Ref<typeof WidgetBase | undefined> = ref(undefined);
 
 function urlSummary(link: URL | string) {
-  const url = new URL(link);
-  return url.origin;
+  try {
+    const url = new URL(link);
+    return url.origin;
+  } catch (e) {
+    return 'invalid URL';
+  }
+}
+
+function formValid(data: LinkWidgetData): boolean {
+  if (!data.title) return false;
+  try {
+    new URL(data.target);
+  } catch {
+    return false;
+  }
+  return true;
 }
 
 const formState = new FormState(data);
 </script>
 <template>
-  <WidgetBase class="sa-link-widget" @edit="() => formState.reset()">
+  <WidgetBase
+    ref="widgetBase"
+    class="sa-link-widget"
+    @edit="() => formState.reset()"
+  >
     <a class="sa-link-widget__content" :href="data.target">
       <h3 class="sa-link-widget__title">{{ data.title }}</h3>
       <p class="sa-link-widget__link">
@@ -82,7 +101,9 @@ const formState = new FormState(data);
         >
           Save
         </button>
-        <button class="form-button" type="submit">Cancel</button>
+        <button class="form-button" @click="() => widgetBase?.closeEditForm()">
+          Cancel
+        </button>
       </p>
     </template>
   </WidgetBase>

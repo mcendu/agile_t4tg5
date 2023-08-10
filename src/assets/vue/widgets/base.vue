@@ -16,6 +16,14 @@ function showEditForm() {
   emit('edit');
   editDialog.value?.showModal();
 }
+
+function closeEditForm() {
+  editDialog.value?.close();
+}
+
+defineExpose({
+  closeEditForm,
+});
 </script>
 
 <template>
