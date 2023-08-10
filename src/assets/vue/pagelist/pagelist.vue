@@ -2,8 +2,6 @@
 import { Ref, onBeforeMount, ref } from 'vue';
 import Page from '../../js/page';
 import PageRow from '../../../models/page';
-import Module from '../../js/module';
-import ModuleRow from '../../../models/module';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
@@ -12,27 +10,23 @@ import EditablePagetab from './editablepagetab.vue';
 const props = defineProps<{ modelValue?: Page }>();
 const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
 
+const homePage = new Page(BigInt(-1), 'Home', true);
+const gradesPage = new Page(BigInt(-2), 'Grades', true);
+
 const pages: Ref<Page[]> = ref([]);
 const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
 const user_pages: Ref<Page[]> = ref([]);
-const modules: Ref<Module[]> = ref([]);
 
 function pageRowToPage(row: PageRow): Page {
   return new Page(row.id, row.name);
 }
 
-function moduleRowToModule(row: ModuleRow): Module {
-  return new Module(row.id, row.name, row.code, row.enabled, row.grades);
-}
-
 onBeforeMount(async () => {
   const rows = await controllers.page.indexAppCreated();
   pages.value = rows.map(pageRowToPage);
-  if (rows.length) emit('update:modelValue', pages.value[0]);
+  emit('update:modelValue', pages.value[0]);
   const user_rows = await controllers.page.indexUserCreated();
   user_pages.value = user_rows.map(pageRowToPage);
-  const mod_rows = await controllers.module.index();
-  modules.value = mod_rows.map(moduleRowToModule);
 });
 
 async function newPage() {
@@ -43,6 +37,11 @@ async function newPage() {
 
 function changePage(page: Page) {
   emit('update:modelValue', page);
+}
+
+function isModelPage(page: Page) {
+  if (props.modelValue === undefined) return false;
+  return page.id === props.modelValue.id
 }
 
 async function renamePage(page: Page, name: string) {
@@ -70,9 +69,22 @@ async function deletePage(page: Page) {
   <nav class="sa-pagebar" v-bind="$attrs">
     <menu class="sa-pagelist">
       <Pagetab
+        :page="homePage"
+        :selected="isModelPage(homePage)"
+        @select="changePage(homePage)"
+      />
+      <Pagetab
+        :page="gradesPage"
+        :selected="isModelPage(gradesPage)"
+        @select="changePage(gradesPage)"
+      />
+    </menu>
+    <hr class="sa-pagebar__divider" />
+    <menu class="sa-pagelist">
+      <Pagetab
         v-for="page in pages"
         :page="page"
-        :selected="page === modelValue"
+        :selected="isModelPage(page)"
         @select="changePage(page)"
       />
     </menu>
@@ -81,7 +93,7 @@ async function deletePage(page: Page) {
       <EditablePagetab
         v-for="page in user_pages"
         :page="page"
-        :selected="page === modelValue"
+        :selected="isModelPage(page)"
         @select="changePage(page)"
         @edit="editDialog?.showModal()"
         @delete="deletePage(page)"

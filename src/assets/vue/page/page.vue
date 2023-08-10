@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import HomePage from '../home/home.vue';
+import GradesPage from '../grades/grades.vue';
 import AddWidget from './addwidget.vue';
 
 import Page from '../../js/page';
@@ -36,6 +38,10 @@ onBeforeUpdate(loadPage);
     <p class="sa-nopages__tip">
       Click &ldquo;Add a page&rdquo; on the left to create one.
     </p>
+  </main>
+  <main class="sa-page sa-content" v-else-if="page.special === true">
+    <HomePage v-if="page.name == 'Home'"/>
+    <GradesPage v-else-if="page.name == 'Grades'" />
   </main>
   <main class="sa-page sa-content" v-else>
     <!-- Do not define the attribute "is" in any widgets! -->
