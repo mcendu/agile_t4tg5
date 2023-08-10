@@ -7,6 +7,7 @@ import ModuleRow from '../../../models/module';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
+import EditablePagetab from './editablepagetab.vue';
 
 const props = defineProps<{ modelValue?: Page }>();
 const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
@@ -17,7 +18,7 @@ const user_pages: Ref<Page[]> = ref([]);
 const modules: Ref<Module[]> = ref([]);
 
 function pageRowToPage(row: PageRow): Page {
-  return new Page(row.id, row.name, row.userCreated);
+  return new Page(row.id, row.name);
 }
 
 function moduleRowToModule(row: ModuleRow): Module {
@@ -25,8 +26,9 @@ function moduleRowToModule(row: ModuleRow): Module {
 }
 
 onBeforeMount(async () => {
-  const rows = await controllers.page.index();
+  const rows = await controllers.page.indexAppCreated();
   pages.value = rows.map(pageRowToPage);
+  console.log(pages);
   if (rows.length) emit('update:modelValue', pages.value[0]);
   const user_rows = await controllers.page.indexUserCreated();
   user_pages.value = user_rows.map(pageRowToPage);
@@ -74,13 +76,11 @@ async function deletePage(page: Page) {
         :page="page"
         :selected="page === modelValue"
         @select="changePage(page)"
-        @edit="editDialog?.showModal()"
-        @delete="deletePage(page)"
       />
     </menu>
     <hr class="sa-pagebar__divider" />
     <menu class="sa-pagelist">
-      <Pagetab
+      <EditablePagetab
         v-for="page in user_pages"
         :page="page"
         :selected="page === modelValue"

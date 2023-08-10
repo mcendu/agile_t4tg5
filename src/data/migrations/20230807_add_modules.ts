@@ -2,21 +2,16 @@ import { Database } from 'better-sqlite3';
 import { insertModules } from '../../utils/insert_modules';
 
 const upSql = `
-SAVEPOINT 20230807_add_modules_alter_schema;
-
 CREATE TABLE modules(
     id INTEGER PRIMARY KEY,
     name TEXT,
     code TEXT,
     enabled BOOLEAN DEFAULT TRUE,
-    grades TEXT,
-    page INTEGER
+    grades TEXT DEFAULT NULL
 );
 
 ALTER TABLE pages
     ADD COLUMN module INTEGER DEFAULT NULL REFERENCES modules(id);
-
-RELEASE 20230807_add_modules_alter_schema;
 `;
 
 const downSql = `

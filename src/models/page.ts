@@ -11,7 +11,7 @@ export default interface Page {
      */
     name: string;
     /**
-     * Whether the page is user created.
+     * The name of this page.
      */
-    userCreated: boolean;
+    module: bigint;
 }

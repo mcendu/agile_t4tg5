@@ -10,17 +10,12 @@ export default class Page {
      */
     name: string;
     /**
-     * Whether the page was created by user.
-     */
-    userCreated: boolean;
-    /**
      * A list of widgets on this page.
      */
     widgets?: Widget[] = undefined;
 
-    constructor(id: bigint, name: string, userCreated: boolean) {
+    constructor(id: bigint, name: string) {
         this.id = id;
         this.name = name;
-        this.userCreated = userCreated;
     }
 }

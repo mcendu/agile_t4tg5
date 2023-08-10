@@ -11,27 +11,31 @@ interface WidgetRow {
 
 export default class PageController extends Controller {
     #indexPages: Statement;
+    #indexAppCreatedPages: Statement;
     #indexUserCreatedPages: Statement;
     #addPage: Statement;
     #renamePage: Statement<[string, bigint]>;
     #deleteAllWidgetsFromPage: Statement<bigint>;
     #deletePage: Statement<bigint>;
-
     #showPage: Statement<bigint>;
 
     constructor(db: Database) {
         super(db);
-
-        this.#indexPages = db.prepare(
-            'SELECT id,name,userCreated FROM pages WHERE userCreated = 0;',
-        );
+        this.#indexPages = db.prepare('SELECT id,name FROM pages;');
         this.#indexPages.safeIntegers();
+
+        this.#indexAppCreatedPages = db.prepare(
+            'SELECT pages.id,pages.name FROM pages INNER JOIN modules ON pages.module=modules.id WHERE modules.enabled = 1;',
+        );
+        this.#indexAppCreatedPages.safeIntegers();
+
         this.#indexUserCreatedPages = db.prepare(
-            'SELECT id,name,userCreated FROM pages WHERE userCreated = 1;',
+            'SELECT id,name FROM pages WHERE module IS NULL;',
         );
         this.#indexUserCreatedPages.safeIntegers();
+
         this.#addPage = db.prepare(
-            "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name,userCreated;",
+            "INSERT INTO pages(name) VALUES('New Page') RETURNING id,name;",
         );
         this.#renamePage = db.prepare('UPDATE pages SET name=? WHERE id=?;');
         this.#deleteAllWidgetsFromPage = db.prepare(
@@ -46,14 +50,21 @@ export default class PageController extends Controller {
     }
 
     /**
-     * Get a list of pages native to the app.
+     * Get a list of all app pages.
      */
-    indexAppCreated(): Page[] {
+    index(): Page[] {
         return this.#indexPages.all() as Page[];
     }
 
     /**
-     * Get a list of pages in the order as dictated by the user.
+     * Get a list of pages native to the app.
+     */
+    indexAppCreated(): Page[] {
+        return this.#indexAppCreatedPages.all() as Page[];
+    }
+
+    /**
+     * Get a list of pages created by the user.
      */
     indexUserCreated(): Page[] {
         return this.#indexUserCreatedPages.all() as Page[];

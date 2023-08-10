@@ -7,14 +7,18 @@ import modules from '../config/modules';
 export function insertModules(db: Database) {
     db.exec('SAVEPOINT insert_modules');
     const insertModule = db.prepare(
-        'INSERT INTO modules(name, code, page) VALUES (?,?,?)',
+        'INSERT INTO modules(name, code, enabled) VALUES (?,?,?) RETURNING id',
     );
     const generatePage = db.prepare(
-        'INSERT INTO pages(name, userCreated) VALUES (?, ?) RETURNING id;',
+        'INSERT INTO pages(name, module) VALUES (?,?);',
     );
     modules.forEach((module) => {
-        const page_id = generatePage.run(module.name, 0);
-        insertModule.run(module.name, module.code, page_id.lastInsertRowid);
+        const module_id = insertModule.run(
+            module.name,
+            module.code,
+            module.enabled,
+        );
+        generatePage.run(module.name, module_id.lastInsertRowid);
     });
     db.exec('RELEASE insert_modules');
 }

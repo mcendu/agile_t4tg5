@@ -8,6 +8,7 @@ import { ipcMain } from 'electron';
 
 export default function setupIpcMainHandles(db: Database) {
     const page = new PageController(db);
+    ipcMain.handle('page.index', () => page.index());
     ipcMain.handle('page.indexAppCreated', () => page.indexAppCreated());
     ipcMain.handle('page.indexUserCreated', () => page.indexUserCreated());
     ipcMain.handle('page.show', (e, id) => page.show(id));

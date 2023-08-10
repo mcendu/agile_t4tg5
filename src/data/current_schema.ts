@@ -29,8 +29,7 @@ CREATE TABLE modules(\
     name TEXT, \
     code TEXT, \
     enabled BOOLEAN DEFAULT TRUE, \
-    grades TEXT, \
-    page INTEGER \
+    grades TEXT DEFAULT NULL \
 ); \
 CREATE INDEX module_list ON modules(id ASC); \
 \
