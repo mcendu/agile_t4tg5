@@ -22,9 +22,9 @@ function pageRowToPage(row: PageRow): Page {
 }
 
 onBeforeMount(async () => {
+  emit('update:modelValue', homePage);
   const rows = await controllers.page.indexAppCreated();
   pages.value = rows.map(pageRowToPage);
-  emit('update:modelValue', pages.value[0]);
   const user_rows = await controllers.page.indexUserCreated();
   user_pages.value = user_rows.map(pageRowToPage);
 });
