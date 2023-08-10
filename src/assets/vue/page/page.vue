@@ -4,7 +4,7 @@ import AddWidget from './addwidget.vue';
 import Page from '../../js/page';
 import Widget from '../../../models/widget';
 import widgetTable from '../widgets/index';
-import { Ref, onBeforeMount, onBeforeUpdate, ref, watch } from 'vue';
+import { Ref, onBeforeMount, ref, watch } from 'vue';
 
 const props = defineProps<{ page?: Page }>();
 const widgets: Ref<Widget[] | undefined> = ref(undefined);
