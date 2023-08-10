@@ -6,7 +6,6 @@ import migrateDatabase from './migrate';
 let db: Database.Database | undefined = undefined;
 
 function getDatabase() {
-    console.log(app.getPath('userData'));
     if (db) return db;
 
     // load and set options
