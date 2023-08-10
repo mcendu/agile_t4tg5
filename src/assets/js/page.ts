@@ -21,10 +21,6 @@ export default class Page {
     constructor(id: bigint, name: string, special?: boolean) {
         this.id = id;
         this.name = name;
-        if (special === undefined) {
-            this.special = false;
-        } else {
-            this.special = special;
-        }
+        this.special = special ?? false;
     }
 }
