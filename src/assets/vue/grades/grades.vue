@@ -16,8 +16,16 @@ onBeforeMount(async () => {
   modules.value = rows.map(moduleRowtoModule);
 });
 
-function addGrade(module: Module) {
-  console.log('done')
+async function addGrade(module: Module) {
+  console.log(module.id);
+  const resp = await controllers.module.addGrade(module.id, '{Midterm: {grade: 50, weight: 50}}')
+  console.log(resp)
+}
+
+async function getGrades(module: Module) {
+  console.log(module.id);
+  const resp = await controllers.module.getGrades(module.id);
+  console.log(resp);
 }
 </script>
 
@@ -29,29 +37,11 @@ function addGrade(module: Module) {
         :module="mod"
         :selected="false"
         @addGrade="addGrade(mod)"
+        @getGrades="getGrades(mod)"
       />
   </main>
 </template>
 
 <style lang="scss">
-.sa-addwidget {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  border: 4px dashed var(--c-fg-tl);
-  border-radius: 8px;
-  color: var(--c-fg-tl);
-}
-
-.sa-addwidget__icon {
-  font-family: 'Material Symbols Outlined';
-  font-size: 48px;
-  margin-top: 0;
-}
-
-.sa-addwidget__text {
-  margin-top: 0.5lh;
-}
 </style>

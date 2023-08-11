@@ -4,43 +4,53 @@ import Module from '../../js/module';
 const props = defineProps<{module: Module, selected: boolean }>();
 const emit = defineEmits<{
   (e: 'addGrade'): void;
+  (e: 'getGrades'): void;
 }>();
 
 function addGrade(e: Event) {
   emit('addGrade');
 }
+
+function getGrades(e: Event) {
+  emit('getGrades');
+}
 </script>
 
 <template>
-  <li class="">
-    <p>{{ module.name }}</p>
-    <p>{{ module.code }}</p>
-    <p>{{ module.grade }}</p>
+  <main class="gc-card gc-card__text">
+    <p>{{ module.name }} - {{ module.code }}</p>
+    <p>{{ module.grades }}</p>
     <button class="" @click="addGrade">
       Add
     </button>
-  </li>
+    <button class="" @click="getGrades">
+      get
+    </button>
+  </main>
 </template>
 
 <style lang="scss">
-.sa-addwidget {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  border: 4px dashed var(--c-fg-tl);
-  border-radius: 8px;
+.gc-card {
+  text-align: center;
+  border: 2px solid var(--c-fg-tl);
+  border-radius: 5px;
   color: var(--c-fg-tl);
+
+  &__text {
+    margin-top: 0;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+  }
 }
 
-.sa-addwidget__icon {
+.gc-card__icon {
   font-family: 'Material Symbols Outlined';
   font-size: 48px;
   margin-top: 0;
 }
 
-.sa-addwidget__text {
+.gc-card__text {
   margin-top: 0.5lh;
 }
 </style>

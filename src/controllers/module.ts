@@ -4,8 +4,8 @@ import Controller from './controller';
 
 export default class ModuleController extends Controller {
     #indexModules: Statement;
-    #getGrades: Statement;
-    #addGrade: Statement;
+    #getGradesModules: Statement;
+    #addGradeModules: Statement;
 
     constructor(db: Database) {
         super(db);
@@ -13,11 +13,11 @@ export default class ModuleController extends Controller {
         this.#indexModules = db.prepare('SELECT id,name,code FROM modules;');
         this.#indexModules.safeIntegers();
 
-        this.#getGrades = db.prepare(
+        this.#getGradesModules = db.prepare(
             'SELECT grades FROM modules WHERE id=?;'
         );
 
-        this.#addGrade = db.prepare(
+        this.#addGradeModules = db.prepare(
             "UPDATE modules SET grades=? WHERE id=?;",
         );
     }
@@ -34,13 +34,14 @@ export default class ModuleController extends Controller {
      * Get a modules current grades.
      */
     getGrades(id: number | bigint) {
-        return this.#getGrades.get(BigInt(id));
+        return this.#getGradesModules.get(BigInt(id));
     }
 
     /**
      * Add a grade to a module.
      */
-    addGrade(id: number | bigint, grades: any) {
-        return this.#addGrade.get(BigInt(id), grades);
+    addGrade(id: number | bigint, grades: any): string{
+        this.#addGradeModules.run(grades, BigInt(id));
+        return grades
     }
 }
