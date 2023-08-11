@@ -21,5 +21,5 @@ export default interface Module {
     /**
      * Modules grades for grade page.
      */
-    grades: unknown;
+    grades: string;
 }

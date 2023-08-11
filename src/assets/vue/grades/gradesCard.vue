@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import Module from '../../js/module';
 
-const props = defineProps<{module: Module, selected: boolean }>();
+const props = defineProps<{
+  module: Module, 
+  selected: boolean
+}>();
 const emit = defineEmits<{
   (e: 'addGrade'): void;
   (e: 'getGrades'): void;

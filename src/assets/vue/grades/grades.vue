@@ -18,7 +18,7 @@ onBeforeMount(async () => {
 
 async function addGrade(module: Module) {
   console.log(module.id);
-  const resp = await controllers.module.addGrade(module.id, '{Midterm: {grade: 50, weight: 50}}')
+  const resp = await controllers.module.addGrade(module.id, '{midterm: {grade: 50, weight: 50}}')
   console.log(resp)
 }
 
