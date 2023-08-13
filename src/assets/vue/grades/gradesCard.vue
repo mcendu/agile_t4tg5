@@ -2,7 +2,7 @@
 import Module from '../../js/module';
 
 const props = defineProps<{
-  module: Module, 
+  module: Module,
   selected: boolean
 }>();
 const emit = defineEmits<{
@@ -22,7 +22,7 @@ function getGrades(e: Event) {
 <template>
   <main class="gc-card gc-card__text">
     <p>{{ module.name }} - {{ module.code }}</p>
-    <p>{{ module.grades }}</p>
+    <p v-for="row in module.grades">{{ row.type }}, {{ row.grade }}, {{ row.weight }}, {{ row.id }}</p>
     <button class="" @click="addGrade">
       Add
     </button>

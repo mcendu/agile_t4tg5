@@ -18,14 +18,14 @@ export default class Module {
     /**
      * Grade data for the module.
      */
-    grades: string;
+    grades: any;
 
     constructor(
         id: bigint,
         name: string,
         code: string,
         enabled: boolean,
-        grades: string,
+        grades: any,
     ) {
         this.id = id;
         this.name = name;

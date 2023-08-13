@@ -12,20 +12,17 @@ function moduleRowtoModule(row: ModuleRow): Module {
 }
 
 onBeforeMount(async () => {
-  const rows = await controllers.module.index();
+  const rows = await controllers.module.index() as ModuleRow[];
   modules.value = rows.map(moduleRowtoModule);
+
 });
 
 async function addGrade(module: Module) {
-  console.log(module.id);
-  const resp = await controllers.module.addGrade(module.id, '{midterm: {grade: 50, weight: 50}}')
-  console.log(resp)
+  const resp = await controllers.module.addGrade(module.id, JSON.parse('{"session":"final", "grade": 50, "weight": 50}'))
 }
 
 async function getGrades(module: Module) {
-  console.log(module.id);
   const resp = await controllers.module.getGrades(module.id);
-  console.log(resp);
 }
 </script>
 
