@@ -2,8 +2,8 @@
 import Module from '../../js/module';
 
 const props = defineProps<{
-  module: Module,
-  selected: boolean
+  module: Module;
+  selected: boolean;
 }>();
 const emit = defineEmits<{
   (e: 'addGrade'): void;
@@ -22,22 +22,28 @@ function getGrades(e: Event) {
 <template>
   <main class="gc-card gc-card__text">
     <p>{{ module.name }} - {{ module.code }}</p>
-    <p v-for="row in module.grades">{{ row.type }}, {{ row.grade }}, {{ row.weight }}, {{ row.id }}</p>
-    <button class="" @click="addGrade">
-      Add
-    </button>
-    <button class="" @click="getGrades">
-      get
-    </button>
+    <table>
+      <tr v-for="row in module.grades">
+        <td>{{ row.type }}</td>
+        <td>{{ row.grade }}</td>
+        <td>{{ row.weight }}</td>
+        <td>{{ row.id }}</td>
+      </tr>
+    </table>
+    <button class="btn btn-primary" @click="addGrade">Add</button>
+    <button class="btn btn-primary" @click="getGrades">get</button>
   </main>
 </template>
 
 <style lang="scss">
 .gc-card {
-  text-align: center;
+  text-align: left;
+  margin: 10px;
+  padding: 10px;
   border: 2px solid var(--c-fg-tl);
   border-radius: 5px;
   color: var(--c-fg-tl);
+  background-color: var(--c-bg);
 
   &__text {
     margin-top: 0;
@@ -45,15 +51,20 @@ function getGrades(e: Event) {
     font-weight: bold;
     color: white;
   }
-}
 
-.gc-card__icon {
-  font-family: 'Material Symbols Outlined';
-  font-size: 48px;
-  margin-top: 0;
-}
+  &__table {
+    width: 100%;
+  }
 
-.gc-card__text {
-  margin-top: 0.5lh;
+  &__table td {
+    width: 25%;
+    background-color: grey;
+  }
+
+  &__icon {
+    font-family: 'Material Symbols Outlined';
+    font-size: 48px;
+    margin-top: 0;
+  }
 }
 </style>

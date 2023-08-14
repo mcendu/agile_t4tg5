@@ -126,7 +126,7 @@ watch(() => props.page?.id, loadPage);
   margin: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: inherit;
 
   color: var(--c-fg-tl);

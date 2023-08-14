@@ -1,4 +1,4 @@
-import { Integer } from "../assets/js/controllers";
+import { Integer } from '../assets/js/controllers';
 
 /**
  * Represents a computer science module.

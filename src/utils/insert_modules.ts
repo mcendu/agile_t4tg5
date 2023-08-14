@@ -6,7 +6,7 @@ import modules from '../config/modules';
  */
 export function insertModules(db: Database) {
     db.exec('SAVEPOINT insert_modules');
-    const num_entries = db.prepare('SELECT count(*) FROM modules')
+    const num_entries = db.prepare('SELECT count(*) FROM modules');
     const insertModule = db.prepare(
         'INSERT INTO modules(name, code, enabled) VALUES (?,?,?) RETURNING id',
     );

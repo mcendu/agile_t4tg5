@@ -2,33 +2,35 @@ import type { Database, Statement } from 'better-sqlite3';
 import type Module from '../models/module';
 import type Grade from '../models/grade';
 import Controller from './controller';
-import { Integer } from '../assets/js/controllers';
-
-interface GradeRow {
-    id: bigint;
-    type: string;
-    grade: Integer;
-    weight: Integer;
-}
 
 export default class ModuleController extends Controller {
     #indexModules: Statement;
     #getGradesModules: Statement;
     #addGradeModules: Statement;
+    #editGradeModules: Statement;
+    #deleteGradeModules: Statement;
 
     constructor(db: Database) {
         super(db);
 
-        this.#indexModules = db.prepare('SELECT id,name,code,enabled,grades FROM modules;');
+        this.#indexModules = db.prepare(
+            'SELECT id,name,code,enabled,grades FROM modules;',
+        );
         this.#indexModules.safeIntegers();
 
         this.#getGradesModules = db.prepare(
-            'SELECT * FROM grades WHERE module_id=?;'
+            'SELECT * FROM grades WHERE module_id=?;',
         );
 
         this.#addGradeModules = db.prepare(
-            "INSERT INTO grades(module_id, type, grade, weight) VALUES(?,?,?,?) RETURNING *;"
+            'INSERT INTO grades(module_id, type, grade, weight) VALUES(?,?,?,?) RETURNING *;',
         );
+
+        this.#editGradeModules = db.prepare(
+            'UPDATE grades SET grade=?, weight=? WHERE id=? RETURNING *;',
+        );
+
+        this.#deleteGradeModules = db.prepare('DELETE FROM grades WHERE id=?;');
     }
 
     /**
@@ -44,20 +46,36 @@ export default class ModuleController extends Controller {
         });
     }
 
-        
     /**
      * Get a modules current grades as JSON.
      */
-    getGrades(id: number | bigint) {
-        const res = this.#getGradesModules.all(BigInt(id));
-        return "got"
+    getGrades(id: number | bigint): Grade[] {
+        return this.#getGradesModules.all(BigInt(id)) as Grade[];
     }
 
     /**
      * Add a grade to a module.
      */
-    addGrade(id: number | bigint, grades: any): string{
-        const rows = this.#addGradeModules.run(BigInt(id), "Midterm", 50, 50);
-        return "success"
+    addGrade(id: number | bigint, grades: any): Grade[] {
+        return this.#addGradeModules.get(
+            BigInt(id),
+            'Midterm',
+            50,
+            50,
+        ) as Grade[];
+    }
+
+    /**
+     * Delete a grade from a module.
+     */
+    editGrade(id: number | bigint, grade: Number, weight: Number): Grade[] {
+        return this.#editGradeModules.get(grade, weight, BigInt(id)) as Grade[];
+    }
+
+    /**
+     * Delete a grade from a module.
+     */
+    deleteGrade(id: number | bigint): void {
+        this.#deleteGradeModules.run(BigInt(id));
     }
 }
