@@ -17,11 +17,11 @@ export default interface Grade {
      */
     type: string;
     /**
-     * Whether the module should be displayed or not.
+     *  grade
      */
-    grade: Integer;
+    grade: Number;
     /**
-     * Modules grades for grade page.
+     * weight.
      */
-    grades: Integer;
+    weight: Number;
 }

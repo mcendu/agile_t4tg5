@@ -25,5 +25,10 @@ contextBridge.exposeInMainWorld('controllers', {
         getGrades: (id: unknown) => ipcRenderer.invoke('module.getGrades', id),
         addGrade: (id: unknown, grades: unknown) =>
             ipcRenderer.invoke('module.addGrade', id, grades),
+        editGrade: (id: unknown, grade: unknown, weight: unknown) =>
+            ipcRenderer.invoke('module.editGrade', id, grade, weight),
+        deleteGrade: (id: unknown) =>
+            ipcRenderer.invoke('module.deleteGrade', id),
+        
     },
 });
