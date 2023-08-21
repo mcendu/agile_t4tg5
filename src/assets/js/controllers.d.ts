@@ -26,7 +26,11 @@ declare global {
             function index(): Promise<Module[]>;
             function getGrades(id: Integer): Promise<string>;
             function addGrade(id: Integer, grades: string): Promise<string>;
-            function editGrade(id: Integer, grade: Number, weight: Number): Promise<string>;
+            function editGrade(
+                id: Integer,
+                grade: Number,
+                weight: Number,
+            ): Promise<string>;
             function deleteGrade(id: Integer): Promise<void>;
         }
     }

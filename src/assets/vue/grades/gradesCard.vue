@@ -7,7 +7,13 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (e: 'addGrade'): void;
-  (e: 'editGrade', id: bigint, type: string, grade: Number, weight: Number): void;
+  (
+    e: 'editGrade',
+    id: bigint,
+    type: string,
+    grade: Number,
+    weight: Number,
+  ): void;
 }>();
 
 function addGrade(e: Event) {
@@ -17,7 +23,6 @@ function addGrade(e: Event) {
 async function deleteGrade(id: bigint) {
   const resp = await controllers.module.deleteGrade(id);
 }
-
 </script>
 
 <template>
@@ -29,14 +34,25 @@ async function deleteGrade(id: bigint) {
         <td>{{ row.grade }}</td>
         <td>{{ row.weight }}</td>
         <td>{{ row.id }}</td>
-        <td><button class="btn btn-primary" @click="$emit('editGrade', row.id, row.type, row.grade, row.weight)">Edit</button></td>
-        <td><button class="btn btn-primary" @click="deleteGrade(row.id)">Remove</button></td>
+        <td>
+          <button
+            class="btn btn-primary"
+            @click="$emit('editGrade', row.id, row.type, row.grade, row.weight)"
+          >
+            Edit
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-primary" @click="deleteGrade(row.id)">
+            Remove
+          </button>
+        </td>
       </tr>
     </table>
     <hr class="gc-card__divider" />
     <table>
       <tr>
-        <td>Total: </td>
+        <td>Total:</td>
         <td>{{ module.total.overall_grade }}</td>
         <td>{{ module.total.overall_weight }}</td>
       </tr>

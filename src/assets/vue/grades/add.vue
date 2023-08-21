@@ -16,13 +16,11 @@ const dialog: Ref<HTMLDialogElement | null> = ref(null);
 
 function add(e: Event) {
   if (!id.value) return;
-  
+
   // validate
   if (id.value) {
     emit('add', id.value, type.value!, grade.value!, weight.value!);
-  }
-  else e.preventDefault();
-  
+  } else e.preventDefault();
 }
 
 function showModal(module: Module) {
@@ -79,9 +77,7 @@ defineExpose({
         <button class="form-button submit" type="submit" @click="add">
           Save
         </button>
-        <button class="form-button" type="submit" @click="close">
-          Cancel
-        </button>
+        <button class="form-button" type="submit" @click="close">Cancel</button>
       </p>
     </form>
   </dialog>

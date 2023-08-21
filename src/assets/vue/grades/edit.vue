@@ -16,16 +16,19 @@ const dialog: Ref<HTMLDialogElement | null> = ref(null);
 
 function edit(e: Event) {
   if (!id.value) return;
-  
+
   // validate
   if (id.value) {
     emit('edit', id.value, type.value!, grade.value!, weight.value!);
-  }
-  else e.preventDefault();
-  
+  } else e.preventDefault();
 }
 
-function showModal(_id: bigint, _type: string, _grade: Number, _weight: Number) {
+function showModal(
+  _id: bigint,
+  _type: string,
+  _grade: Number,
+  _weight: Number,
+) {
   id.value = _id;
   type.value = _type;
   grade.value = _grade;
@@ -49,7 +52,7 @@ defineExpose({
       <label class="sa-form-field">
         <span class="sa-labeltext">Type</span>
         <select
-          disabled = "true"
+          disabled="true"
           name="type"
           required
           min-length="1"
@@ -83,9 +86,7 @@ defineExpose({
         <button class="form-button submit" type="submit" @click="edit">
           Save
         </button>
-        <button class="form-button" type="submit" @click="close">
-          Cancel
-        </button>
+        <button class="form-button" type="submit" @click="close">Cancel</button>
       </p>
     </form>
   </dialog>

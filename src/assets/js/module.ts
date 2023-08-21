@@ -30,7 +30,7 @@ export default class Module {
         code: string,
         enabled: boolean,
         grades: any,
-        total: any
+        total: any,
     ) {
         this.id = id;
         this.name = name;

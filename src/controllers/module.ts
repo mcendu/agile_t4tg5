@@ -42,13 +42,13 @@ export default class ModuleController extends Controller {
             const grade_result = this.#getGradesModules.all(row.id) as Grade[];
             let overall_grade: Number = 0;
             let overall_weight: Number = 0;
-            grade_result.forEach((g)=> {
-              overall_grade = +overall_grade + (+g.grade*+g.weight/100);
-              overall_weight = +overall_weight + +g.weight;
-            })
+            grade_result.forEach((g) => {
+                overall_grade = +overall_grade + (+g.grade * +g.weight) / 100;
+                overall_weight = +overall_weight + +g.weight;
+            });
             return Object.assign({}, row, {
                 grades: grade_result,
-                total: {overall_grade, overall_weight}
+                total: { overall_grade, overall_weight },
             });
         });
     }
@@ -68,7 +68,7 @@ export default class ModuleController extends Controller {
             id,
             grades.session,
             grades.grade,
-            grades.weight
+            grades.weight,
         ) as Grade[];
     }
 
