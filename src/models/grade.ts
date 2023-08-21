@@ -1,27 +1,27 @@
 import { Integer } from '../assets/js/controllers';
 
 /**
- * Represents a computer science module.
+ * Represents a computer science module grade.
  */
 export default interface Grade {
     /**
-     * The numeric identifier of this module.
+     * The numeric identifier of this grade.
      */
     id: bigint;
     /**
-     * The name of the module.
+     * The module id this grade is associated to.
      */
     module_id: bigint;
     /**
-     * The name of the module.
+     * The type of grade. eg. midterm.
      */
     type: string;
     /**
-     *  grade
+     *  Grade score.
      */
     grade: Number;
     /**
-     * weight.
+     *  Weight of the score.
      */
     weight: Number;
 }
