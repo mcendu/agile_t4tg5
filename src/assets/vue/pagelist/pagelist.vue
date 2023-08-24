@@ -113,12 +113,15 @@ async function deletePage(page: Page) {
 @use '/css/dark' as *;
 
 .sa-pagebar {
+  height: 100vh;
+  margin: 0;
+  padding: 1em;
+  overflow-y: auto;
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 5px;
-  margin: 0;
-  padding: 1em;
 
   background-color: var(--c-l2);
   font-size: 0.75em;

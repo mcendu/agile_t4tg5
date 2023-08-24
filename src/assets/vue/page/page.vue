@@ -91,9 +91,11 @@ watch(() => props.page?.id, loadPage);
 @use '/css/stops';
 
 .sa-page {
-  height: 100%;
+  height: 100vh;
   background-color: var(--c-b1);
   grid-area: content;
+
+  overflow-y: auto;
 }
 
 .sa-content {
