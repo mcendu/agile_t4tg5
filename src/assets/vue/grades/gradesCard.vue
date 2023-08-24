@@ -65,18 +65,15 @@ async function deleteGrade(id: bigint) {
 .gc-card {
   text-align: left;
   width: 100%;
-  margin: 10px;
   padding: 10px;
-  border: 2px solid var(--c-fg-tl);
   border-radius: 5px;
-  color: var(--c-fg-tl);
   background-color: var(--c-bg);
+  box-shadow: var(--shadow);
 
   &__text {
     margin-top: 0;
     font-size: 1em;
     font-weight: bold;
-    color: var(--c-fg);
   }
 
   &__table {

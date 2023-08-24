@@ -70,7 +70,7 @@ async function getGrades(module: Module) {
 </script>
 
 <template>
-  <main>
+  <main class="sa-gradelist">
     <gradesCard
       v-for="mod in modules"
       :module="mod"
@@ -83,4 +83,11 @@ async function getGrades(module: Module) {
   <Edit ref="editDialog" @edit="editGrade" />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.sa-gradelist {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+</style>
