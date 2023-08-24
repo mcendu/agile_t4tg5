@@ -60,8 +60,9 @@ async function editGrade(grade: Grade) {
   reload();
 }
 
-async function getGrades(module: Module) {
-  await controllers.grade.getGrades(module.id);
+async function deleteGrade(grade: Grade) {
+  await controllers.grade.deleteGrade(grade.id);
+  reload();
 }
 </script>
 
@@ -73,6 +74,7 @@ async function getGrades(module: Module) {
       :selected="false"
       @addGrade="addGradeDialog(mod)"
       @editGrade="editGradeDialog"
+      @deleteGrade="deleteGrade"
     />
   </main>
   <Add ref="addDialog" @add="addGrade" />

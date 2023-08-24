@@ -9,14 +9,11 @@ const props = defineProps<{
 const emit = defineEmits<{
   addGrade: [];
   editGrade: [grade: Grade];
+  deleteGrade: [grade: Grade];
 }>();
 
 function addGrade(e: Event) {
   emit('addGrade');
-}
-
-async function deleteGrade(id: bigint) {
-  const resp = await controllers.grade.deleteGrade(id);
 }
 </script>
 
@@ -35,7 +32,7 @@ async function deleteGrade(id: bigint) {
           </button>
         </td>
         <td>
-          <button class="btn btn-primary" @click="deleteGrade(grade.id)">
+          <button class="btn btn-primary" @click="$emit('deleteGrade', grade)">
             Remove
           </button>
         </td>
