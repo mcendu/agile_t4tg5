@@ -5,7 +5,7 @@ import '../../css/form.scss';
 
 const props = defineProps<{ module?: Module }>();
 const emit = defineEmits<{
-  (e: 'add', id: bigint, type: string, grade: number | undefined, weight: number | undefined): void;
+  (e: 'add', id: bigint, type: string, grade: Number, weight: Number): void;
 }>();
 
 const id: Ref<bigint | undefined> = ref(props.module?.id);
