@@ -1,3 +1,6 @@
+import Grade from '../../models/grade';
+import TotalGrade from '../../models/totalGrade';
+
 export default class Module {
     /**
      * The in-database identifier of the Module.
@@ -18,11 +21,11 @@ export default class Module {
     /**
      * Grade data for the module.
      */
-    grades: any;
+    grades?: Grade[];
     /**
      * Total grade data for the module.
      */
-    total: any;
+    total?: TotalGrade;
 
     constructor(
         id: bigint,

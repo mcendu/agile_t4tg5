@@ -28,5 +28,5 @@ export default interface Module {
     /**
      * Modules grades for grade page.
      */
-    total?: TotalGrade[];
+    total?: TotalGrade;
 }

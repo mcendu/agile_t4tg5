@@ -53,8 +53,8 @@ async function deleteGrade(id: bigint) {
     <table>
       <tr>
         <td>Total:</td>
-        <td>{{ module.total.grade }}</td>
-        <td>{{ module.total.weight }}</td>
+        <td>{{ module.total?.grade }}</td>
+        <td>{{ module.total?.weight }}</td>
       </tr>
     </table>
     <button class="btn btn-primary" @click="addGrade">Add</button>
