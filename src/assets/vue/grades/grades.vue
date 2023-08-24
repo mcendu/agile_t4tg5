@@ -32,7 +32,7 @@ onBeforeMount(async () => {
 
 async function addGradeDialog(module: Module) {
   addDialog.value?.showModal(module);
-  await controllers.module.getGrades(module.id);
+  await controllers.grade.getGrades(module.id);
 }
 
 async function addGrade(
@@ -41,7 +41,7 @@ async function addGrade(
   grade: number,
   weight: number,
 ) {
-  await controllers.module.addGrade(id, session, grade, weight);
+  await controllers.grade.addGrade(id, session, grade, weight);
   emit('reload');
 }
 
@@ -60,12 +60,12 @@ async function editGrade(
   grade: number,
   weight: number,
 ) {
-  await controllers.module.editGrade(id, grade, weight);
+  await controllers.grade.editGrade(id, session, grade, weight);
 }
 
 async function getGrades(module: Module) {
   addDialog.value?.showModal(module);
-  await controllers.module.getGrades(module.id);
+  await controllers.grade.getGrades(module.id);
 }
 </script>
 

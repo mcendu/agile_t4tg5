@@ -22,20 +22,22 @@ contextBridge.exposeInMainWorld('controllers', {
     },
     module: {
         index: () => ipcRenderer.invoke('module.index'),
-        getGrades: (id: unknown) => ipcRenderer.invoke('module.getGrades', id),
+    },
+    grade: {
+        getGrades: (id: unknown) => ipcRenderer.invoke('grade.getGrades', id),
         addGrade: (
             id: unknown,
             session: unknown,
             grade: unknown,
             weight: unknown,
-        ) => ipcRenderer.invoke('module.addGrade', id, session, grade, weight),
+        ) => ipcRenderer.invoke('grade.addGrade', id, session, grade, weight),
         editGrade: (
             id: unknown,
             session: unknown,
             grade: unknown,
             weight: unknown,
-        ) => ipcRenderer.invoke('module.editGrade', id, session, grade, weight),
+        ) => ipcRenderer.invoke('grade.editGrade', id, session, grade, weight),
         deleteGrade: (id: unknown) =>
-            ipcRenderer.invoke('module.deleteGrade', id),
+            ipcRenderer.invoke('grade.deleteGrade', id),
     },
 });

@@ -21,7 +21,7 @@ function addGrade(e: Event) {
 }
 
 async function deleteGrade(id: bigint) {
-  const resp = await controllers.module.deleteGrade(id);
+  const resp = await controllers.grade.deleteGrade(id);
 }
 </script>
 
