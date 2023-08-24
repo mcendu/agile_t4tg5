@@ -29,8 +29,12 @@ contextBridge.exposeInMainWorld('controllers', {
             grade: unknown,
             weight: unknown,
         ) => ipcRenderer.invoke('module.addGrade', id, session, grade, weight),
-        editGrade: (id: unknown, grade: unknown, weight: unknown) =>
-            ipcRenderer.invoke('module.editGrade', id, grade, weight),
+        editGrade: (
+            id: unknown,
+            session: unknown,
+            grade: unknown,
+            weight: unknown,
+        ) => ipcRenderer.invoke('module.editGrade', id, session, grade, weight),
         deleteGrade: (id: unknown) =>
             ipcRenderer.invoke('module.deleteGrade', id),
     },

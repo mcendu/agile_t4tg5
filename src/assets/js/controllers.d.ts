@@ -28,13 +28,14 @@ declare global {
             function addGrade(
                 id: Integer,
                 session: string,
-                grade: Number,
-                weight: Number,
+                grade: number,
+                weight: number,
             ): Promise<void>;
             function editGrade(
                 id: Integer,
-                grade: Number,
-                weight: Number,
+                session: string,
+                grade: number,
+                weight: number,
             ): Promise<void>;
             function deleteGrade(id: Integer): Promise<void>;
         }

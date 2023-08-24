@@ -27,8 +27,8 @@ export default function setupIpcMainHandles(db: Database) {
     ipcMain.handle('module.addGrade', (e, id, session, grade, weight) =>
         module.addGrade(id, session, grade, weight),
     );
-    ipcMain.handle('module.editGrade', (e, id, grade, weight) =>
-        module.editGrade(id, grade, weight),
+    ipcMain.handle('module.editGrade', (e, id, session, grade, weight) =>
+        module.editGrade(id, session, grade, weight),
     );
     ipcMain.handle('module.deleteGrade', (e, id) => module.deleteGrade(id));
 }

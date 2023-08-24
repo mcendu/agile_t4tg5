@@ -28,7 +28,10 @@ export default class ModuleController extends Controller {
         );
 
         this.#editGradeModules = db.prepare(
-            'UPDATE grades SET grade=?, weight=? WHERE id=? RETURNING *;',
+            'UPDATE grades \
+                SET type=:type, grade=:grade, weight=:weight \
+                WHERE id=:id \
+                RETURNING *;',
         );
 
         this.#deleteGradeModules = db.prepare('DELETE FROM grades WHERE id=?;');
@@ -58,7 +61,7 @@ export default class ModuleController extends Controller {
     }
 
     /**
-     * Get a modules current grades.
+     * Get a module's current grades.
      */
     getGrades(id: number | bigint): Grade[] {
         return this.#getGradesModules.all(BigInt(id)) as Grade[];
@@ -70,8 +73,8 @@ export default class ModuleController extends Controller {
     addGrade(
         id: number | bigint,
         session: string,
-        grade: Number,
-        weight: Number,
+        grade: number,
+        weight: number,
     ): void {
         this.#addGradeModules.run(id, session, grade, weight);
     }
@@ -79,8 +82,18 @@ export default class ModuleController extends Controller {
     /**
      * Edit a modules grade.
      */
-    editGrade(id: number | bigint, grade: Number, weight: Number): void {
-        this.#editGradeModules.run(grade, weight, BigInt(id));
+    editGrade(
+        id: number | bigint,
+        type: string,
+        grade: number,
+        weight: number,
+    ) {
+        return this.#editGradeModules.get({
+            id,
+            type,
+            grade,
+            weight,
+        });
     }
 
     /**
