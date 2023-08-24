@@ -5,9 +5,9 @@ export default interface TotalGrade {
     /**
      *  Total grade score.
      */
-    grade: Number;
+    grade: number;
     /**
      *  Total weight of the score.
      */
-    weight: Number;
+    weight: number;
 }

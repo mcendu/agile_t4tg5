@@ -5,13 +5,13 @@ import '../../css/form.scss';
 
 const props = defineProps<{ module?: Module }>();
 const emit = defineEmits<{
-  (e: 'add', id: bigint, type: string, grade: Number, weight: Number): void;
+  (e: 'add', id: bigint, type: string, grade: number, weight: number): void;
 }>();
 
 const id: Ref<bigint | undefined> = ref(props.module?.id);
 const session: Ref<string | undefined> = ref();
-const weight: Ref<Number | undefined> = ref();
-const grade: Ref<Number | undefined> = ref();
+const weight: Ref<number | undefined> = ref();
+const grade: Ref<number | undefined> = ref();
 const dialog: Ref<HTMLDialogElement | null> = ref(null);
 
 function add(e: Event) {

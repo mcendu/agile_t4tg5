@@ -11,8 +11,8 @@ const emit = defineEmits<{
     e: 'editGrade',
     id: bigint,
     type: string,
-    grade: Number,
-    weight: Number,
+    grade: number,
+    weight: number,
   ): void;
 }>();
 

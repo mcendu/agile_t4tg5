@@ -19,9 +19,9 @@ export default interface Grade {
     /**
      *  Grade score.
      */
-    grade: Number;
+    grade: number;
     /**
      *  Weight of the score.
      */
-    weight: Number;
+    weight: number;
 }
