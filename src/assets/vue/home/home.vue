@@ -1,7 +1,5 @@
 <template>
-  <main>
-    <p>This is the home page.</p>
-  </main>
+  <p>This is the home page.</p>
 </template>
 
 <style lang="scss">

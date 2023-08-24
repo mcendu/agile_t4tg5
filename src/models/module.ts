@@ -1,6 +1,3 @@
-import Grade from '../models/grade';
-import TotalGrade from '../models/totalGrade';
-
 /**
  * Represents a computer science module.
  */
@@ -24,9 +21,5 @@ export default interface Module {
     /**
      * Modules grades for grade page.
      */
-    grades?: Grade[];
-    /**
-     * Modules grades for grade page.
-     */
-    total?: TotalGrade[];
+    grades: unknown;
 }
