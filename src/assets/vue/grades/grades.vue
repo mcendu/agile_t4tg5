@@ -9,8 +9,6 @@ import Edit from './edit.vue';
 import gradesCard from './gradesCard.vue';
 import Grade from '../../../models/grade';
 
-const emit = defineEmits<{ (e: 'reload'): void }>();
-
 const modules: Ref<Module[]> = ref([]);
 const addDialog: Ref<InstanceType<typeof Add> | null> = ref(null);
 const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
@@ -44,7 +42,7 @@ async function addGrade(
   weight: number,
 ) {
   await controllers.grade.addGrade(id, session, grade, weight);
-  emit('reload');
+  reload();
 }
 
 async function editGradeDialog(grade: Grade) {
