@@ -1,38 +1,34 @@
 <script setup lang="ts">
 import Page from '../../js/page';
 import { computed, ref, Ref, watch } from 'vue';
+import Grade from '../../../models/grade';
 import '../../css/form.scss';
+import FormState from '../../js/composables/formstate';
 
 const props = defineProps<{ page?: Page }>();
-const emit = defineEmits<{
-  (e: 'edit', id: bigint, session: string, grade: number, weight: number): void;
-}>();
+const emit = defineEmits<{ edit: [newGrade: Grade] }>();
 
-const id: Ref<bigint | undefined> = ref();
-const session: Ref<string | undefined> = ref();
-const weight: Ref<number | undefined> = ref();
-const grade: Ref<number | undefined> = ref();
-const dialog: Ref<HTMLDialogElement | null> = ref(null);
-
-function edit(e: Event) {
-  if (!id.value) return;
-
-  // validate
-  if (id.value) {
-    emit('edit', id.value, session.value!, grade.value!, weight.value!);
-  } else e.preventDefault();
+function edit(newGrade?: Grade) {
+  if (!newGrade) return;
+  emit('edit', newGrade);
 }
 
-function showModal(
-  _id: bigint,
-  _session: string,
-  _grade: number,
-  _weight: number,
-) {
-  id.value = _id;
-  session.value = _session;
-  grade.value = _grade;
-  weight.value = _weight;
+const grade: Ref<Grade | undefined> = ref();
+const form = new FormState(
+  computed({
+    get: () =>
+      grade.value ??
+      // sane default to make Vue happy
+      ({ id: 0n, type: '', grade: 0, weight: 0 } as Grade),
+    set: edit,
+  }),
+);
+
+const dialog: Ref<HTMLDialogElement | null> = ref(null);
+
+function showModal(g: Grade) {
+  grade.value = g;
+  form.reset();
   dialog.value?.showModal();
 }
 
@@ -57,7 +53,7 @@ defineExpose({
           required
           min-length="1"
           placeholder="Session"
-          v-model="session"
+          v-model="form.data.type"
         >
           <option value="quiz">Quiz</option>
           <option value="midterm">Midterm</option>
@@ -70,7 +66,7 @@ defineExpose({
           required
           min-length="1"
           placeholder="Grade"
-          v-model="grade"
+          v-model="form.data.grade"
         />
         <span class="sa-labeltext">Weight</span>
         <input
@@ -79,11 +75,15 @@ defineExpose({
           required
           min-length="1"
           placeholder="Weight"
-          v-model="weight"
+          v-model="form.data.weight"
         />
       </label>
       <p class="sa-form-actions">
-        <button class="form-button submit" type="submit" @click="edit">
+        <button
+          class="form-button submit"
+          type="submit"
+          @click="() => form.save()"
+        >
           Save
         </button>
         <button class="form-button" type="submit" @click="close">Cancel</button>

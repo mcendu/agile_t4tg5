@@ -1,19 +1,14 @@
 <script setup lang="ts">
 import Module from '../../js/module';
+import Grade from '../../../models/grade';
 
 const props = defineProps<{
   module: Module;
   selected: boolean;
 }>();
 const emit = defineEmits<{
-  (e: 'addGrade'): void;
-  (
-    e: 'editGrade',
-    id: bigint,
-    type: string,
-    grade: number,
-    weight: number,
-  ): void;
+  addGrade: [];
+  editGrade: [grade: Grade];
 }>();
 
 function addGrade(e: Event) {
@@ -29,21 +24,18 @@ async function deleteGrade(id: bigint) {
   <main class="gc-card gc-card__text">
     <p>{{ module.name }} - {{ module.code }}</p>
     <table>
-      <tr v-for="row in module.grades">
-        <td>{{ row.type }}</td>
-        <td>{{ row.grade }}</td>
-        <td>{{ row.weight }}</td>
-        <td>{{ row.id }}</td>
+      <tr v-for="grade in module.grades">
+        <td>{{ grade.type }}</td>
+        <td>{{ grade.grade }}</td>
+        <td>{{ grade.weight }}</td>
+        <td>{{ grade.id }}</td>
         <td>
-          <button
-            class="btn btn-primary"
-            @click="$emit('editGrade', row.id, row.type, row.grade, row.weight)"
-          >
+          <button class="btn btn-primary" @click="$emit('editGrade', grade)">
             Edit
           </button>
         </td>
         <td>
-          <button class="btn btn-primary" @click="deleteGrade(row.id)">
+          <button class="btn btn-primary" @click="deleteGrade(grade.id)">
             Remove
           </button>
         </td>

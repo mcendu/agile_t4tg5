@@ -7,6 +7,7 @@ import ModuleRow from '../../../models/module';
 import Add from './add.vue';
 import Edit from './edit.vue';
 import gradesCard from './gradesCard.vue';
+import Grade from '../../../models/grade';
 
 const emit = defineEmits<{ (e: 'reload'): void }>();
 
@@ -25,14 +26,15 @@ function moduleRowtoModule(row: ModuleRow): Module {
   );
 }
 
-onBeforeMount(async () => {
+async function reload() {
   const rows = (await controllers.module.index()) as ModuleRow[];
   modules.value = rows.map(moduleRowtoModule);
-});
+}
+
+onBeforeMount(reload);
 
 async function addGradeDialog(module: Module) {
   addDialog.value?.showModal(module);
-  await controllers.grade.getGrades(module.id);
 }
 
 async function addGrade(
@@ -45,26 +47,22 @@ async function addGrade(
   emit('reload');
 }
 
-async function editGradeDialog(
-  id: bigint,
-  session: string,
-  grade: number,
-  weight: number,
-) {
-  editDialog.value?.showModal(id, session, grade, weight);
+async function editGradeDialog(grade: Grade) {
+  editDialog.value?.showModal(grade);
 }
 
-async function editGrade(
-  id: bigint,
-  session: string,
-  grade: number,
-  weight: number,
-) {
-  await controllers.grade.editGrade(id, session, grade, weight);
+async function editGrade(grade: Grade) {
+  await controllers.grade.editGrade(
+    grade.id,
+    grade.type,
+    grade.grade,
+    grade.weight,
+  );
+  // Note: is it possible to just reload a single module?
+  reload();
 }
 
 async function getGrades(module: Module) {
-  addDialog.value?.showModal(module);
   await controllers.grade.getGrades(module.id);
 }
 </script>
