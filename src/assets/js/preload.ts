@@ -23,8 +23,12 @@ contextBridge.exposeInMainWorld('controllers', {
     module: {
         index: () => ipcRenderer.invoke('module.index'),
         getGrades: (id: unknown) => ipcRenderer.invoke('module.getGrades', id),
-        addGrade: (id: unknown, grades: unknown) =>
-            ipcRenderer.invoke('module.addGrade', id, grades),
+        addGrade: (
+            id: unknown,
+            session: unknown,
+            grade: unknown,
+            weight: unknown,
+        ) => ipcRenderer.invoke('module.addGrade', id, session, grade, weight),
         editGrade: (id: unknown, grade: unknown, weight: unknown) =>
             ipcRenderer.invoke('module.editGrade', id, grade, weight),
         deleteGrade: (id: unknown) =>

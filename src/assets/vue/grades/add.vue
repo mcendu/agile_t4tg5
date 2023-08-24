@@ -5,11 +5,11 @@ import '../../css/form.scss';
 
 const props = defineProps<{ module?: Module }>();
 const emit = defineEmits<{
-  (e: 'add', id: bigint, type: string, grade: Number, weight: Number): void;
+  (e: 'add', id: bigint, session: string, grade: Number, weight: Number): void;
 }>();
 
 const id: Ref<bigint | undefined> = ref(props.module?.id);
-const type: Ref<string | undefined> = ref();
+const session: Ref<string | undefined> = ref();
 const weight: Ref<Number | undefined> = ref();
 const grade: Ref<Number | undefined> = ref();
 const dialog: Ref<HTMLDialogElement | null> = ref(null);
@@ -19,7 +19,7 @@ function add(e: Event) {
 
   // validate
   if (id.value) {
-    emit('add', id.value, type.value!, grade.value!, weight.value!);
+    emit('add', id.value, session.value!, grade.value!, weight.value!);
   } else e.preventDefault();
 }
 
@@ -42,14 +42,8 @@ defineExpose({
     <form class="sa-form" method="dialog">
       <h2 class="sa-form-heading">Add Grade {{ id }}</h2>
       <label class="sa-form-field">
-        <span class="sa-labeltext">Type</span>
-        <select
-          name="type"
-          required
-          min-length="1"
-          placeholder="Type"
-          v-model="type"
-        >
+        <span class="sa-labeltext">Session</span>
+        <select name="session" required placeholder="Session" v-model="session">
           <option value="quiz">Quiz</option>
           <option value="midterm">Midterm</option>
           <option value="final">Final</option>
@@ -59,7 +53,6 @@ defineExpose({
           type="number"
           name="grade"
           required
-          min-length="1"
           placeholder="Grade"
           v-model="grade"
         />
@@ -68,7 +61,6 @@ defineExpose({
           type="number"
           name="weight"
           required
-          min-length="1"
           placeholder="Weight"
           v-model="weight"
         />

@@ -1,6 +1,7 @@
 import type { Database, Statement } from 'better-sqlite3';
 import type Module from '../models/module';
 import type Grade from '../models/grade';
+import type TotalGrade from '../models/totalGrade';
 import Controller from './controller';
 
 export default class ModuleController extends Controller {
@@ -23,7 +24,7 @@ export default class ModuleController extends Controller {
         );
 
         this.#addGradeModules = db.prepare(
-            'INSERT INTO grades(module_id, type, grade, weight) VALUES(?,?,?,?) RETURNING *;',
+            'INSERT INTO grades(module_id, type, grade, weight) VALUES(?,?,?,?);',
         );
 
         this.#editGradeModules = db.prepare(
@@ -40,15 +41,18 @@ export default class ModuleController extends Controller {
         const rows = this.#indexModules.all() as Module[];
         return rows.map<Module>((row) => {
             const grade_result = this.#getGradesModules.all(row.id) as Grade[];
-            let overall_grade: Number = 0;
-            let overall_weight: Number = 0;
+            let overall_grade: TotalGrade = {
+                grade: 0,
+                weight: 0,
+            };
             grade_result.forEach((g) => {
-                overall_grade = +overall_grade + (+g.grade * +g.weight) / 100;
-                overall_weight = +overall_weight + +g.weight;
+                overall_grade.grade =
+                    +overall_grade.grade + (+g.grade * +g.weight) / 100;
+                overall_grade.weight = +overall_grade.weight + +g.weight;
             });
             return Object.assign({}, row, {
                 grades: grade_result,
-                total: { overall_grade, overall_weight },
+                total: overall_grade,
             });
         });
     }
@@ -63,20 +67,20 @@ export default class ModuleController extends Controller {
     /**
      * Add a grade to a module.
      */
-    addGrade(id: number | bigint, grades: any): Grade[] {
-        return this.#addGradeModules.get(
-            id,
-            grades.session,
-            grades.grade,
-            grades.weight,
-        ) as Grade[];
+    addGrade(
+        id: number | bigint,
+        session: string,
+        grade: Number,
+        weight: Number,
+    ): void {
+        this.#addGradeModules.run(id, session, grade, weight);
     }
 
     /**
      * Edit a modules grade.
      */
-    editGrade(id: number | bigint, grade: Number, weight: Number): Grade[] {
-        return this.#editGradeModules.get(grade, weight, BigInt(id)) as Grade[];
+    editGrade(id: number | bigint, grade: Number, weight: Number): void {
+        this.#editGradeModules.run(grade, weight, BigInt(id));
     }
 
     /**

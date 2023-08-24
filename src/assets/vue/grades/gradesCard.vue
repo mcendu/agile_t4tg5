@@ -53,8 +53,8 @@ async function deleteGrade(id: bigint) {
     <table>
       <tr>
         <td>Total:</td>
-        <td>{{ module.total.overall_grade }}</td>
-        <td>{{ module.total.overall_weight }}</td>
+        <td>{{ module.total.grade }}</td>
+        <td>{{ module.total.weight }}</td>
       </tr>
     </table>
     <button class="btn btn-primary" @click="addGrade">Add</button>
@@ -76,16 +76,11 @@ async function deleteGrade(id: bigint) {
     margin-top: 0;
     font-size: 1em;
     font-weight: bold;
-    color: white;
+    color: var(--c-fg);
   }
 
   &__table {
     width: inherit;
-  }
-
-  &__table td {
-    width: 25%;
-    background-color: grey;
   }
 
   &__icon {

@@ -37,29 +37,26 @@ async function addGradeDialog(module: Module) {
 
 async function addGrade(
   id: bigint,
-  type: string,
+  session: string,
   grade: Number,
   weight: Number,
 ) {
-  await controllers.module.addGrade(
-    id,
-    JSON.parse(`{"session":"${type}", "grade": ${grade}, "weight": ${weight}}`),
-  );
+  await controllers.module.addGrade(id, session, grade, weight);
   emit('reload');
 }
 
 async function editGradeDialog(
   id: bigint,
-  type: string,
+  session: string,
   grade: Number,
   weight: Number,
 ) {
-  editDialog.value?.showModal(id, type, grade, weight);
+  editDialog.value?.showModal(id, session, grade, weight);
 }
 
 async function editGrade(
   id: bigint,
-  type: string,
+  session: string,
   grade: Number,
   weight: Number,
 ) {

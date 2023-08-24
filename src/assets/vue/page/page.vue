@@ -71,7 +71,7 @@ watch(() => props.page?.id, loadPage);
       Click &ldquo;Add a page&rdquo; on the left to create one.
     </p>
   </main>
-  <main class="sa-special-page" v-else-if="page.special === true">
+  <main class="sa-page sa-special-page" v-else-if="page.special === true">
     <HomePage v-if="page.name == 'Home'" @reload="loadPage" />
     <GradesPage v-else-if="page.name == 'Grades'" @reload="loadPage" />
   </main>
@@ -123,13 +123,11 @@ watch(() => props.page?.id, loadPage);
 }
 
 .sa-special-page {
-  margin: 10px;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: inherit;
-
-  color: var(--c-fg-tl);
 }
 
 .sa-nopages {

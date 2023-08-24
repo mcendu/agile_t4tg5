@@ -5,11 +5,11 @@ import '../../css/form.scss';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{
-  (e: 'edit', id: bigint, type: string, grade: Number, weight: Number): void;
+  (e: 'edit', id: bigint, session: string, grade: Number, weight: Number): void;
 }>();
 
 const id: Ref<bigint | undefined> = ref();
-const type: Ref<string | undefined> = ref();
+const session: Ref<string | undefined> = ref();
 const weight: Ref<Number | undefined> = ref();
 const grade: Ref<Number | undefined> = ref();
 const dialog: Ref<HTMLDialogElement | null> = ref(null);
@@ -19,18 +19,18 @@ function edit(e: Event) {
 
   // validate
   if (id.value) {
-    emit('edit', id.value, type.value!, grade.value!, weight.value!);
+    emit('edit', id.value, session.value!, grade.value!, weight.value!);
   } else e.preventDefault();
 }
 
 function showModal(
   _id: bigint,
-  _type: string,
+  _session: string,
   _grade: Number,
   _weight: Number,
 ) {
   id.value = _id;
-  type.value = _type;
+  session.value = _session;
   grade.value = _grade;
   weight.value = _weight;
   dialog.value?.showModal();
@@ -50,14 +50,14 @@ defineExpose({
     <form class="sa-form" method="dialog">
       <h2 class="sa-form-heading">Editing Grade</h2>
       <label class="sa-form-field">
-        <span class="sa-labeltext">Type</span>
+        <span class="sa-labeltext">Session</span>
         <select
           disabled="true"
-          name="type"
+          name="session"
           required
           min-length="1"
-          placeholder="Type"
-          v-model="type"
+          placeholder="Session"
+          v-model="session"
         >
           <option value="quiz">Quiz</option>
           <option value="midterm">Midterm</option>
