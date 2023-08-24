@@ -18,19 +18,25 @@ export default class Module {
     /**
      * Grade data for the module.
      */
-    grade: unknown;
+    grades: any;
+    /**
+     * Total grade data for the module.
+     */
+    total: any;
 
     constructor(
         id: bigint,
         name: string,
         code: string,
         enabled: boolean,
-        grade: unknown,
+        grades: any,
+        total: any,
     ) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.enabled = enabled;
-        this.grade = grade;
+        this.grades = grades;
+        this.total = total;
     }
 }

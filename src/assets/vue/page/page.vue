@@ -71,9 +71,9 @@ watch(() => props.page?.id, loadPage);
       Click &ldquo;Add a page&rdquo; on the left to create one.
     </p>
   </main>
-  <main class="sa-page sa-content" v-else-if="page.special === true">
-    <HomePage v-if="page.name == 'Home'" />
-    <GradesPage v-else-if="page.name == 'Grades'" />
+  <main class="sa-page sa-special-page" v-else-if="page.special === true">
+    <HomePage v-if="page.name == 'Home'" @reload="loadPage" />
+    <GradesPage v-else-if="page.name == 'Grades'" @reload="loadPage" />
   </main>
   <main class="sa-page sa-content" v-else>
     <component
@@ -120,6 +120,14 @@ watch(() => props.page?.id, loadPage);
   @media (width < stops.$width-xs) {
     grid-auto-columns: calc(100vw - 2em);
   }
+}
+
+.sa-special-page {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: inherit;
 }
 
 .sa-nopages {
