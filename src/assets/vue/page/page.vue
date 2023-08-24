@@ -73,7 +73,7 @@ watch(() => props.page?.id, loadPage);
   </main>
   <main class="sa-page sa-special-page" v-else-if="page.special === true">
     <HomePage v-if="page.name == 'Home'" @reload="loadPage" />
-    <GradesPage v-else-if="page.name == 'Grades'" @reload="loadPage" />
+    <GradesPage v-else-if="page.name == 'Grades'" />
   </main>
   <main class="sa-page sa-content" v-else>
     <component
