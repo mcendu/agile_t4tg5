@@ -1,5 +1,5 @@
 import { expect, it, vi } from 'vitest';
-import { ref, computed, Ref } from 'vue';
+import { ref, computed, Ref, watch, nextTick } from 'vue';
 import FormState from '../js/composables/formstate';
 
 it('constructor', () => {
@@ -42,4 +42,16 @@ it('submit', () => {
     const data = f.data;
     f.save();
     expect(setter).toHaveBeenCalledWith(data);
+});
+
+it('reactivity', async () => {
+    const r = ref({ foo: 'bar' });
+    const f = new FormState(r);
+    const watchCallback = vi.fn<[unknown, unknown, unknown], void>();
+    const watcher = watch(r, watchCallback);
+
+    f.data.foo = 'baz';
+    f.save();
+    await nextTick();
+    expect(watchCallback).toHaveBeenCalledOnce();
 });
