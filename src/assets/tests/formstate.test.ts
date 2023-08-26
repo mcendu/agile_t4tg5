@@ -52,6 +52,7 @@ it('reactivity', async () => {
 
     f.data.foo = 'baz';
     f.save();
+    // watchers does not trigger immediately
     await nextTick();
     expect(watchCallback).toHaveBeenCalledOnce();
 });

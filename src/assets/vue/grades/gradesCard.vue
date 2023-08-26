@@ -18,36 +18,43 @@ function addGrade(e: Event) {
 </script>
 
 <template>
-  <main class="gc-card gc-card__text">
-    <p>{{ module.name }} - {{ module.code }}</p>
-    <table>
-      <tr v-for="grade in module.grades">
-        <td>{{ grade.type }}</td>
-        <td>{{ grade.grade }}</td>
-        <td>{{ grade.weight }}</td>
-        <td>{{ grade.id }}</td>
-        <td>
-          <button class="btn btn-primary" @click="$emit('editGrade', grade)">
-            Edit
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-primary" @click="$emit('deleteGrade', grade)">
-            Remove
-          </button>
-        </td>
-      </tr>
-    </table>
-    <hr class="gc-card__divider" />
-    <table>
-      <tr>
-        <td>Total:</td>
-        <td>{{ module.total?.grade }}</td>
-        <td>{{ module.total?.weight }}</td>
-      </tr>
-    </table>
-    <button class="btn btn-primary" @click="addGrade">Add</button>
-  </main>
+  <div class="gc-card">
+    <h3>{{ module.code }} {{ module.name }}</h3>
+    <p>
+      <table class="gc-card__table">
+        <tbody>
+          <tr v-for="grade in module.grades">
+            <th>{{ grade.type }}</th>
+            <td class="gc-card__table-data">{{ grade.grade }}</td>
+            <td class="gc-card__table-data">{{ grade.weight }}</td>
+            <td>
+              <button class="btn btn-primary" @click="$emit('editGrade', grade)">
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                @click="$emit('deleteGrade', grade)"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total</th>
+            <td class="gc-card__table-data">{{ module.total?.grade }}</td>
+            <td class="gc-card__table-data">{{ module.total?.weight }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </p>
+    <p>
+      <button class="form-button" @click="addGrade">Add grade</button>
+    </p>
+  </div>
 </template>
 
 <style lang="scss">
@@ -66,7 +73,26 @@ function addGrade(e: Event) {
   }
 
   &__table {
-    width: inherit;
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.5vh 0.2em;
+    }
+
+    tfoot {
+      font-weight: bold;
+
+      th,
+      td {
+        border-top: 1px solid var(--c-fg-tl);
+      }
+    }
+  }
+
+  &__table-data {
+    text-align: right;
   }
 
   &__icon {
