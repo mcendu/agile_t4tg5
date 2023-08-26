@@ -18,7 +18,7 @@ function select(e: Event) {
       {{ page.name }}
     </button>
     <button
-      class="sa-pagetab__edit"
+      class="icon-button sa-pagetab__edit"
       aria-label="rename"
       @click="$emit('edit')"
       :aria-hidden="!selected"
@@ -26,7 +26,7 @@ function select(e: Event) {
       <span class="material-symbols-outlined">edit</span>
     </button>
     <button
-      class="sa-pagetab__edit"
+      class="icon-button sa-pagetab__edit"
       aria-label="delete"
       @click="$emit('delete')"
       :aria-hidden="!selected"
@@ -71,10 +71,6 @@ function select(e: Event) {
 
   &__edit {
     display: none;
-    background-color: transparent;
-    transition:
-      color 0.2s,
-      background-color 0.2s;
   }
 
   &--current {
@@ -86,35 +82,18 @@ function select(e: Event) {
     }
 
     .sa-pagetab__edit {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
       width: 2lh;
       padding: 0;
-
-      font-size: 1em;
-      border: none;
-      color: var(--c-fg-t);
-
-      &:active {
-        color: var(--c-fg);
-        background-color: var(--c-bg-ta);
-      }
     }
 
     @media (hover: hover) {
       .sa-pagetab__edit {
-        color: transparent;
+        opacity: 0;
       }
 
       &:hover .sa-pagetab__edit,
       &:focus-within .sa-pagetab__edit {
-        color: var(--c-fg-t);
-
-        &:hover {
-          color: var(--c-fg);
-        }
+        opacity: 1;
       }
     }
   }
