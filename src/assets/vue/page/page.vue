@@ -101,7 +101,7 @@ watch(() => props.page?.id, loadPage);
   background-color: var(--c-b1);
   grid-area: content;
 
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .sa-content {
@@ -113,6 +113,7 @@ watch(() => props.page?.id, loadPage);
   gap: 8px;
 
   padding: 1em;
+  overflow-x: auto;
 
   @media (height >= stops.$height-s) {
     grid-auto-columns: 16em;

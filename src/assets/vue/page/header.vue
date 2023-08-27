@@ -52,6 +52,10 @@ const emit = defineEmits<{
     margin: 0;
     border: 0;
     font-size: 1.2em;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
