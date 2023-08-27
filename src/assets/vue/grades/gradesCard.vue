@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import Module from '../../js/module';
 import Grade from '../../../models/grade';
 
@@ -12,47 +14,58 @@ const emit = defineEmits<{
   deleteGrade: [grade: Grade];
 }>();
 
-function addGrade(e: Event) {
-  emit('addGrade');
-}
+const editing = ref(false);
 </script>
 
 <template>
   <div class="gc-card">
     <h3>{{ module.code }} {{ module.name }}</h3>
     <p>
-      <table class="gc-card__table">
-        <tbody>
-          <tr v-for="grade in module.grades">
-            <th>{{ grade.type }}</th>
-            <td class="gc-card__table-data">{{ grade.grade }}</td>
-            <td class="gc-card__table-data">{{ grade.weight }}</td>
-            <td>
-              <button class="btn btn-primary" @click="$emit('editGrade', grade)">
-                Edit
+    <table class="gc-card__table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="gc-card__data-column">Grade</th>
+          <th class="gc-card__data-column">Weight</th>
+          <th class="gc-card__action-column" v-show="editing"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="grade in module.grades">
+          <th>{{ grade.type }}</th>
+          <td class="gc-card__table-data">{{ grade.grade }}</td>
+          <td class="gc-card__table-data">{{ grade.weight }}</td>
+          <td v-show="editing">
+            <div class="gc-card__actions">
+              <button class="icon-button gc-card__action" @click="$emit('editGrade', grade)">
+                <span class="material-symbols-outlined">edit</span>
               </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                @click="$emit('deleteGrade', grade)"
-              >
-                Remove
+              <button class="icon-button gc-card__action" @click="$emit('deleteGrade', grade)">
+                <span class="material-symbols-outlined">delete</span>
               </button>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Total</th>
-            <td class="gc-card__table-data">{{ module.total?.grade }}</td>
-            <td class="gc-card__table-data">{{ module.total?.weight }}</td>
-          </tr>
-        </tfoot>
-      </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Total</th>
+          <td class="gc-card__table-data">{{ module.total?.grade }}</td>
+          <td class="gc-card__table-data">{{ module.total?.weight }}</td>
+          <td v-show="editing"></td>
+        </tr>
+      </tfoot>
+    </table>
     </p>
-    <p>
-      <button class="form-button" @click="addGrade">Add grade</button>
+    <p class="sa-form-actions">
+      <button class="form-button" :class="{
+        submit: editing
+      }" @click="editing = !editing">
+        {{ editing ? 'Done' : 'Edit' }}
+      </button>
+      <button class="form-button" v-show="editing" @click="$emit('addGrade')">
+        Add grade
+      </button>
     </p>
   </div>
 </template>
@@ -74,11 +87,22 @@ function addGrade(e: Event) {
 
   &__table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
 
     th,
     td {
-      padding: 0.5vh 0.2em;
+      height: 32px;
+      padding: 0 0.2em;
+    }
+
+    thead {
+      font-weight: bold;
+
+      th,
+      td {
+        border-bottom: 1px solid var(--c-fg-tl)
+      }
     }
 
     tfoot {
@@ -95,19 +119,23 @@ function addGrade(e: Event) {
     text-align: right;
   }
 
-  &__icon {
-    font-family: 'Material Symbols Outlined';
-    font-size: 48px;
-    margin-top: 0;
+  &__data-column {
+    text-align: right;
+    width: 5em;
   }
 
-  &__divider {
-    width: 100%;
-    margin: 0;
-    height: 0;
-    border: 0;
-    border-top: 2px solid var(--c-fg-tl);
-    background-color: transparent;
+  &__action-column {
+    width: 64px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__action {
+    padding: 2px;
+    border-radius: 4px;
   }
 }
 </style>
