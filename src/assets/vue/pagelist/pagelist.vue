@@ -86,12 +86,15 @@ async function deletePage(page: Page) {
     }"
     v-bind="$attrs"
   >
-    <button class="sa-pagetab-like sa-menutab" @click="$emit('close')">
-      <span class="material-symbols-outlined">close</span>
-      Close
-    </button>
-    <hr class="sa-pagebar__divider" />
-    <menu class="sa-pagelist">
+    <!-- Mobile -->
+    <section class="sa-pagebar__section sa-pagebar__mobile-controls">
+      <button class="sa-pagetab-like sa-menutab" @click="$emit('close')">
+        <span class="material-symbols-outlined">close</span>
+        Close
+      </button>
+      <hr class="sa-pagebar__divider" />
+    </section>
+    <menu class="sa-pagebar__section">
       <Pagetab
         :page="homePage"
         :selected="isModelPage(homePage)"
@@ -104,7 +107,7 @@ async function deletePage(page: Page) {
       />
     </menu>
     <hr class="sa-pagebar__divider" />
-    <menu class="sa-pagelist">
+    <menu class="sa-pagebar__section">
       <Pagetab
         v-for="page in pages"
         :page="page"
@@ -113,7 +116,7 @@ async function deletePage(page: Page) {
       />
     </menu>
     <hr class="sa-pagebar__divider" />
-    <menu class="sa-pagelist">
+    <menu class="sa-pagebar__section">
       <Pagetab
         v-for="page in user_pages"
         editable
@@ -172,6 +175,15 @@ async function deletePage(page: Page) {
     }
   }
 
+  &__section {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   &__divider {
     margin: 0;
     height: 0;
@@ -201,20 +213,16 @@ async function deletePage(page: Page) {
         opacity 0.3s,
         width 0.3s step-start;
     }
+  }
 
-    @media (width >= stops.$width-s) {
+  @media (width >= stops.$width-s) {
+    &__backdrop {
+      display: none;
+    }
+    &__mobile-controls {
       display: none;
     }
   }
-}
-
-.sa-pagelist {
-  margin: 0;
-  padding: 0;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 
 .sa-menutab {
