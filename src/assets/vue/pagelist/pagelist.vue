@@ -165,13 +165,19 @@ async function deletePage(page: Page) {
     grid-area: content;
     position: absolute;
     left: -100vw;
+    z-index: 50;
+
     width: 90vw;
     max-width: 400px;
-    z-index: 50;
+    opacity: 0;
     box-shadow: var(--shadow);
-    transition: left 0.3s ease-in-out;
+
+    transition:
+      opacity 0.4s,
+      left 0.4s cubic-bezier(0.125, 0.75, 0.375, 1);
 
     &--visible {
+      opacity: 1;
       left: 0vw;
     }
   }
@@ -204,15 +210,15 @@ async function deletePage(page: Page) {
 
     opacity: 0;
     transition:
-      opacity 0.3s,
-      width 0.3s step-end;
+      opacity 0.2s,
+      width 0.2s step-end;
 
     &--visible {
       opacity: 1;
       width: 100vw;
       transition:
-        opacity 0.3s,
-        width 0.3s step-start;
+        opacity 0.4s,
+        width 0s step-start;
     }
   }
 
