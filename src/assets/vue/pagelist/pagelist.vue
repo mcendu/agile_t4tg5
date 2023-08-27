@@ -176,6 +176,10 @@ async function deletePage(page: Page) {
       opacity 0.4s,
       left 0.4s cubic-bezier(0.125, 0.75, 0.375, 1);
 
+    @media (prefers-reduced-motion) {
+      transition: opacity 0.4s;
+    }
+
     &--visible {
       opacity: 1;
       left: 0vw;
