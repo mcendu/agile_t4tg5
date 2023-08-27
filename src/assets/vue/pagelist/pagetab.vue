@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import Page from '../../js/page';
-const props = withDefaults(
-  defineProps<{
-    page: Page;
-    editable: boolean;
-    selected: boolean;
-  }>(),
-  {
-    editable: false,
-  },
-);
+const props = defineProps<{
+  page: Page;
+  editable?: boolean;
+  selected: boolean;
+}>();
 const emit = defineEmits<{
   (e: 'select'): void;
   (e: 'edit'): void;
