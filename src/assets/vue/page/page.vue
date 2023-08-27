@@ -76,10 +76,10 @@ watch(() => props.page?.id, loadPage);
         Click &ldquo;Add a page&rdquo; on the left to create one.
       </p>
     </article>
-    <article class="sa-special-page" v-else-if="page.special === true">
+    <template v-else-if="page.special === true">
       <HomePage v-if="page.name == 'Home'" @reload="loadPage" />
       <GradesPage v-else-if="page.name == 'Grades'" />
-    </article>
+    </template>
     <article class="sa-content" v-else>
       <component
         v-for="w of widgets"
@@ -97,11 +97,13 @@ watch(() => props.page?.id, loadPage);
 @use '/css/stops';
 
 .sa-page {
+  display: flex;
+  flex-direction: column;
+
   height: 100vh;
+  overflow: hidden;
   background-color: var(--c-b1);
   grid-area: content;
-
-  overflow: auto;
 }
 
 .sa-content {
@@ -113,7 +115,7 @@ watch(() => props.page?.id, loadPage);
   gap: 8px;
 
   padding: 1em;
-  overflow-x: auto;
+  overflow: auto;
 
   @media (height >= stops.$height-s) {
     grid-auto-columns: 16em;
@@ -134,14 +136,6 @@ watch(() => props.page?.id, loadPage);
   @media (width < stops.$width-s) {
     height: calc(100vh - 40px);
   }
-}
-
-.sa-special-page {
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: inherit;
 }
 
 .sa-nopages {
