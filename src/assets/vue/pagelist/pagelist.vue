@@ -6,8 +6,14 @@ import PageRow from '../../../models/page';
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
 
-const props = defineProps<{ modelValue?: Page }>();
-const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
+const props = defineProps<{
+  modelValue?: Page;
+  visible?: boolean;
+}>();
+const emit = defineEmits<{
+  'update:modelValue': [value: Page | undefined];
+  close: [];
+}>();
 
 const homePage = new Page(BigInt(-1), 'Home', true);
 const gradesPage = new Page(BigInt(-2), 'Grades', true);
@@ -32,10 +38,12 @@ async function newPage() {
   const page = pageRowToPage(await controllers.page.add());
   user_pages.value.push(page);
   emit('update:modelValue', page);
+  emit('close');
 }
 
 function changePage(page: Page) {
   emit('update:modelValue', page);
+  emit('close');
 }
 
 function isModelPage(page: Page) {
@@ -65,7 +73,24 @@ async function deletePage(page: Page) {
 </script>
 
 <template>
-  <nav class="sa-pagebar" v-bind="$attrs">
+  <div
+    class="sa-pagebar__backdrop"
+    :class="{
+      'sa-pagebar__backdrop--visible': visible,
+    }"
+  ></div>
+  <nav
+    class="sa-pagebar"
+    :class="{
+      'sa-pagebar--visible': visible,
+    }"
+    v-bind="$attrs"
+  >
+    <button class="sa-pagetab-like sa-menutab" @click="$emit('close')">
+      <span class="material-symbols-outlined">close</span>
+      Close
+    </button>
+    <hr class="sa-pagebar__divider" />
     <menu class="sa-pagelist">
       <Pagetab
         :page="homePage"
@@ -137,7 +162,14 @@ async function deletePage(page: Page) {
     position: absolute;
     left: -100vw;
     width: 90vw;
+    max-width: 400px;
+    z-index: 50;
     box-shadow: var(--shadow);
+    transition: left 0.3s ease-in-out;
+
+    &--visible {
+      left: 0vw;
+    }
   }
 
   &__divider {
@@ -146,6 +178,33 @@ async function deletePage(page: Page) {
     border: 0;
     border-top: 1px solid var(--c-fg-tl);
     background-color: transparent;
+  }
+
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background-color: var(--c-td);
+    z-index: 40;
+
+    opacity: 0;
+    transition:
+      opacity 0.3s,
+      width 0.3s step-end;
+
+    &--visible {
+      opacity: 1;
+      width: 100vw;
+      transition:
+        opacity 0.3s,
+        width 0.3s step-start;
+    }
+
+    @media (width >= stops.$width-s) {
+      display: none;
+    }
   }
 }
 
