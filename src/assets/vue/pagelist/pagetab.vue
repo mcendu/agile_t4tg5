@@ -57,6 +57,10 @@ function select(e: Event) {
   background-color: transparent;
   font-size: 1em;
 
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
+
   &:hover {
     background-color: var(--c-bg-t);
   }
