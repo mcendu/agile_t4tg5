@@ -78,6 +78,7 @@ async function deletePage(page: Page) {
     :class="{
       'sa-pagebar__backdrop--visible': visible,
     }"
+    @click="$emit('close')"
   ></div>
   <nav
     class="sa-pagebar"
