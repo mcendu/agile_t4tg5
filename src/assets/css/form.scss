@@ -76,10 +76,35 @@ input[type='url'] {
   }
 }
 
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  border: none;
+
+  color: var(--c-fg-t);
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    opacity 0.2s;
+
+  &:active {
+    color: var(--c-fg);
+    background-color: var(--c-bg-ta);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--c-fg);
+    }
+  }
+}
+
 .form-button {
   border: none;
   border-radius: 5px;
-  padding: 0.2lh 0.675em;
+  padding: 0.1lh 0.675em 0.25lh;
   background-color: var(--c-bg-e);
   box-shadow: var(--shadow);
 

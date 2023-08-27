@@ -5,6 +5,7 @@ import {
     ModuleController,
 } from './controllers';
 import { ipcMain } from 'electron';
+import GradeController from './controllers/grade';
 
 export default function setupIpcMainHandles(db: Database) {
     const page = new PageController(db);
@@ -23,4 +24,14 @@ export default function setupIpcMainHandles(db: Database) {
 
     const module = new ModuleController(db);
     ipcMain.handle('module.index', () => module.index());
+
+    const grade = new GradeController(db);
+    ipcMain.handle('grade.getGrades', (e, id) => grade.getGrades(id));
+    ipcMain.handle('grade.addGrade', (e, id, session, g, weight) =>
+        grade.addGrade(id, session, g, weight),
+    );
+    ipcMain.handle('grade.editGrade', (e, id, session, g, weight) =>
+        grade.editGrade(id, session, g, weight),
+    );
+    ipcMain.handle('grade.deleteGrade', (e, id) => grade.deleteGrade(id));
 }

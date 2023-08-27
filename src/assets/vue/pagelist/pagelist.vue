@@ -5,7 +5,6 @@ import PageRow from '../../../models/page';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
-import EditablePagetab from './editablepagetab.vue';
 
 const props = defineProps<{ modelValue?: Page }>();
 const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
@@ -90,8 +89,9 @@ async function deletePage(page: Page) {
     </menu>
     <hr class="sa-pagebar__divider" />
     <menu class="sa-pagelist">
-      <EditablePagetab
+      <Pagetab
         v-for="page in user_pages"
+        editable
         :page="page"
         :selected="isModelPage(page)"
         @select="changePage(page)"
@@ -113,12 +113,15 @@ async function deletePage(page: Page) {
 @use '/css/dark' as *;
 
 .sa-pagebar {
+  height: 100vh;
+  margin: 0;
+  padding: 1em;
+  overflow-y: auto;
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 5px;
-  margin: 0;
-  padding: 1em;
 
   background-color: var(--c-l2);
   font-size: 0.75em;

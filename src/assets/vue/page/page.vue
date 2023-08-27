@@ -71,8 +71,8 @@ watch(() => props.page?.id, loadPage);
       Click &ldquo;Add a page&rdquo; on the left to create one.
     </p>
   </main>
-  <main class="sa-page sa-content" v-else-if="page.special === true">
-    <HomePage v-if="page.name == 'Home'" />
+  <main class="sa-page sa-special-page" v-else-if="page.special === true">
+    <HomePage v-if="page.name == 'Home'" @reload="loadPage" />
     <GradesPage v-else-if="page.name == 'Grades'" />
   </main>
   <main class="sa-page sa-content" v-else>
@@ -91,9 +91,11 @@ watch(() => props.page?.id, loadPage);
 @use '/css/stops';
 
 .sa-page {
-  height: 100%;
+  height: 100vh;
   background-color: var(--c-b1);
   grid-area: content;
+
+  overflow-y: auto;
 }
 
 .sa-content {
@@ -120,6 +122,14 @@ watch(() => props.page?.id, loadPage);
   @media (width < stops.$width-xs) {
     grid-auto-columns: calc(100vw - 2em);
   }
+}
+
+.sa-special-page {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: inherit;
 }
 
 .sa-nopages {

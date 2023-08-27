@@ -25,5 +25,22 @@ declare global {
         namespace module {
             function index(): Promise<Module[]>;
         }
+
+        namespace grade {
+            function getGrades(id: Integer): Promise<string>;
+            function addGrade(
+                id: Integer,
+                session: string,
+                grade: number,
+                weight: number,
+            ): Promise<void>;
+            function editGrade(
+                id: Integer,
+                session: string,
+                grade: number,
+                weight: number,
+            ): Promise<void>;
+            function deleteGrade(id: Integer): Promise<void>;
+        }
     }
 }
