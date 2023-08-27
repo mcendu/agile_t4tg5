@@ -20,7 +20,6 @@ const editing = ref(false);
 <template>
   <div class="gc-card">
     <h3>{{ module.code }} {{ module.name }}</h3>
-    <p>
     <table class="gc-card__table">
       <thead>
         <tr>
@@ -37,10 +36,16 @@ const editing = ref(false);
           <td class="gc-card__table-data">{{ grade.weight }}</td>
           <td v-show="editing">
             <div class="gc-card__actions">
-              <button class="icon-button gc-card__action" @click="$emit('editGrade', grade)">
+              <button
+                class="icon-button gc-card__action"
+                @click="$emit('editGrade', grade)"
+              >
                 <span class="material-symbols-outlined">edit</span>
               </button>
-              <button class="icon-button gc-card__action" @click="$emit('deleteGrade', grade)">
+              <button
+                class="icon-button gc-card__action"
+                @click="$emit('deleteGrade', grade)"
+              >
                 <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
@@ -56,11 +61,14 @@ const editing = ref(false);
         </tr>
       </tfoot>
     </table>
-    </p>
     <p class="sa-form-actions">
-      <button class="form-button" :class="{
-        submit: editing
-      }" @click="editing = !editing">
+      <button
+        class="form-button"
+        :class="{
+          submit: editing,
+        }"
+        @click="editing = !editing"
+      >
         {{ editing ? 'Done' : 'Edit' }}
       </button>
       <button class="form-button" v-show="editing" @click="$emit('addGrade')">
@@ -101,7 +109,7 @@ const editing = ref(false);
 
       th,
       td {
-        border-bottom: 1px solid var(--c-fg-tl)
+        border-bottom: 1px solid var(--c-fg-tl);
       }
     }
 
