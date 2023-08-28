@@ -6,17 +6,12 @@ import Page from '../js/page';
 import { Ref, ref } from 'vue';
 
 const currentPage: Ref<Page | undefined> = ref(undefined);
-const menuVisible = ref(false);
 </script>
 
 <template>
   <div class="sa-book">
-    <PageList
-      v-model="currentPage"
-      :visible="menuVisible"
-      @close="menuVisible = false"
-    />
-    <PageView :page="currentPage" @menu="menuVisible = true" />
+    <PageList v-model="currentPage" />
+    <PageView :page="currentPage" />
   </div>
 </template>
 
