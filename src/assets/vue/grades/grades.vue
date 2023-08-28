@@ -86,6 +86,9 @@ async function deleteGrade(grade: Grade) {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  padding: 1em;
   gap: 10px;
+  overflow-y: auto;
 }
 </style>

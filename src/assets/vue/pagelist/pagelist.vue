@@ -6,8 +6,14 @@ import PageRow from '../../../models/page';
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
 
-const props = defineProps<{ modelValue?: Page }>();
-const emit = defineEmits<{ 'update:modelValue': [value: Page | undefined] }>();
+const props = defineProps<{
+  modelValue?: Page;
+  visible?: boolean;
+}>();
+const emit = defineEmits<{
+  'update:modelValue': [value: Page | undefined];
+  close: [];
+}>();
 
 const homePage = new Page(BigInt(-1), 'Home', true);
 const gradesPage = new Page(BigInt(-2), 'Grades', true);
@@ -32,10 +38,12 @@ async function newPage() {
   const page = pageRowToPage(await controllers.page.add());
   user_pages.value.push(page);
   emit('update:modelValue', page);
+  emit('close');
 }
 
 function changePage(page: Page) {
   emit('update:modelValue', page);
+  emit('close');
 }
 
 function isModelPage(page: Page) {
@@ -65,8 +73,29 @@ async function deletePage(page: Page) {
 </script>
 
 <template>
-  <nav class="sa-pagebar" v-bind="$attrs">
-    <menu class="sa-pagelist">
+  <div
+    class="sa-pagebar__backdrop"
+    :class="{
+      'sa-pagebar__backdrop--visible': visible,
+    }"
+    @click="$emit('close')"
+  ></div>
+  <nav
+    class="sa-pagebar"
+    :class="{
+      'sa-pagebar--visible': visible,
+    }"
+    v-bind="$attrs"
+  >
+    <!-- Mobile -->
+    <section class="sa-pagebar__section sa-pagebar__mobile-controls">
+      <button class="sa-pagetab-like sa-menutab" @click="$emit('close')">
+        <span class="material-symbols-outlined">close</span>
+        Close
+      </button>
+      <hr class="sa-pagebar__divider" />
+    </section>
+    <menu class="sa-pagebar__section">
       <Pagetab
         :page="homePage"
         :selected="isModelPage(homePage)"
@@ -79,7 +108,7 @@ async function deletePage(page: Page) {
       />
     </menu>
     <hr class="sa-pagebar__divider" />
-    <menu class="sa-pagelist">
+    <menu class="sa-pagebar__section">
       <Pagetab
         v-for="page in pages"
         :page="page"
@@ -88,7 +117,7 @@ async function deletePage(page: Page) {
       />
     </menu>
     <hr class="sa-pagebar__divider" />
-    <menu class="sa-pagelist">
+    <menu class="sa-pagebar__section">
       <Pagetab
         v-for="page in user_pages"
         editable
@@ -136,8 +165,34 @@ async function deletePage(page: Page) {
     grid-area: content;
     position: absolute;
     left: -100vw;
+    z-index: 50;
+
     width: 90vw;
+    max-width: 400px;
+    opacity: 0;
     box-shadow: var(--shadow);
+
+    transition:
+      opacity 0.4s,
+      left 0.4s cubic-bezier(0.125, 0.75, 0.375, 1);
+
+    @media (prefers-reduced-motion) {
+      transition: opacity 0.4s;
+    }
+
+    &--visible {
+      opacity: 1;
+      left: 0vw;
+    }
+  }
+
+  &__section {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 
   &__divider {
@@ -147,15 +202,38 @@ async function deletePage(page: Page) {
     border-top: 1px solid var(--c-fg-tl);
     background-color: transparent;
   }
-}
 
-.sa-pagelist {
-  margin: 0;
-  padding: 0;
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background-color: var(--c-td);
+    z-index: 40;
 
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+    opacity: 0;
+    transition:
+      opacity 0.2s,
+      width 0.2s step-end;
+
+    &--visible {
+      opacity: 1;
+      width: 100vw;
+      transition:
+        opacity 0.4s,
+        width 0s step-start;
+    }
+  }
+
+  @media (width >= stops.$width-s) {
+    &__backdrop {
+      display: none;
+    }
+    &__mobile-controls {
+      display: none;
+    }
+  }
 }
 
 .sa-menutab {
