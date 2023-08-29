@@ -6,12 +6,15 @@ import ModuleRow from '../../../models/module';
 
 import Add from './add.vue';
 import Edit from './edit.vue';
+import summaryCard from './summaryCard.vue';
 import gradesCard from './gradesCard.vue';
 import Grade from '../../../models/grade';
 
 const modules: Ref<Module[]> = ref([]);
+const completedModulesCounter: Ref<number> = ref(0);
 const points: Ref<number> = ref(0);
 const weightedPercentage: Ref<number> = ref(0);
+const averageGrade: Ref<number> = ref(0);
 const addDialog: Ref<InstanceType<typeof Add> | null> = ref(null);
 const editDialog: Ref<InstanceType<typeof Edit> | null> = ref(null);
 
@@ -44,29 +47,35 @@ function getModulePoints(m: Module) {
 
 function getModuleWeight(m: Module) {
   if (m.code.substring(0, 3) == 'CM1') {
-    // deal with final project double weight
-    return 100 / 70;
+    return 100 / 72;
   } else if (m.code.substring(0, 3) == 'CM2') {
-    return 3 * (100 / 70);
+    return 3 * (100 / 72);
+  // deal with final project double weight
   } else if (m.code.substring(0, 6) == 'CM3070') {
-    return 10 * (100 / 70);
-  } else return 5 * (100 / 70);
+    return 10 * (100 / 72);
+  } else return 5 * (100 / 72);
 }
 
 async function reload() {
   const rows = (await controllers.module.index()) as ModuleRow[];
   modules.value = rows.map(moduleRowtoModule);
+  completedModulesCounter.value = 0;
   // calc points for degree program
   points.value = 0;
   weightedPercentage.value = 0;
+  averageGrade.value = 0;
   modules.value.forEach((m) => {
     if (modulePassed(m)) {
+      completedModulesCounter.value++;
       points.value += getModulePoints(m);
       if (m.total?.grade) {
         weightedPercentage.value += (m.total?.grade * getModuleWeight(m)) / 100;
+        averageGrade.value += m.total?.grade;
       }
     }
   });
+  averageGrade.value /= completedModulesCounter.value;
+  completedModulesCounter.value = (completedModulesCounter.value / 23) * 100;
 }
 
 onBeforeMount(reload);
@@ -107,8 +116,15 @@ async function deleteGrade(grade: Grade) {
 </script>
 
 <template>
-  <h5>Points: {{ points }}</h5>
-  <h5>Weighted Percentage: {{ weightedPercentage }}</h5>
+  <main>
+    <summaryCard
+      :modules="modules"
+      :points="points"
+      :completedPercent="completedModulesCounter"
+      :weightedPercent="weightedPercentage"
+      :gradeAverage="averageGrade"
+    />
+  </main>
   <main class="sa-gradelist">
     <gradesCard
       v-for="mod in modules"

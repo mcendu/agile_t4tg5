@@ -97,7 +97,7 @@ const editing = ref(false);
 .gc-card {
   text-align: left;
   width: 100%;
-  padding: 10px;
+  padding: 1em;
   border-radius: 5px;
   background-color: var(--c-bg);
   box-shadow: var(--shadow);
