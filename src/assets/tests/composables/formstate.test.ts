@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest';
 import { ref, computed, Ref, watch, nextTick } from 'vue';
-import FormState from '../js/composables/formstate';
+import FormState from '../../js/composables/formstate';
 
 it('constructor', () => {
     const r = ref({ foo: 'bar' });

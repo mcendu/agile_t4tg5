@@ -1,7 +1,7 @@
 import { beforeAll, afterAll, afterEach, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
-import getIcon from '../js/geticon';
+import getIcon from '../../js/geticon';
 
 const handlers = Object.freeze([
     rest.get('https://example.com/', (req, res, ctx) => {
