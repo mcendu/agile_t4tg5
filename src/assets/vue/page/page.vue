@@ -34,19 +34,11 @@ async function updateWidget(w: Widget, data: object) {
   w.data = data;
 }
 
-async function addWidget() {
+async function addWidget(w: Widget) {
   if (props.page === undefined) {
     return;
   }
 
-  const w: Widget = {
-    id: -1n,
-    type: 'LinkWidget',
-    data: {
-      title: 'New link',
-      target: 'https://example.com/',
-    },
-  };
   w.id = (await controllers.widget.add(props.page.id, w)).id;
   widgets.value?.push(w);
 }
@@ -83,7 +75,7 @@ watch(() => props.page?.id, loadPage);
       @update="(data: object) => updateWidget(w, data)"
       @delete="() => deleteWidget(w)"
     />
-    <AddWidget @click="addWidget" />
+    <AddWidget @addWidget="addWidget" />
   </main>
 </template>
 

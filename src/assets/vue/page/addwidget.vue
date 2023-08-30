@@ -1,22 +1,61 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import Widget from '../../../models/widget';
+
+const showIcons = ref(false);
+
+const emit = defineEmits<{
+  addWidget: [w: Widget];
+}>();
+
+function addLinkWidget() {
+  emit('addWidget', {
+    id: -1n,
+    type: 'LinkWidget',
+    data: {
+      title: 'New link',
+      target: 'https://example.com/',
+    },
+  });
+}
+
+function addTodoWidget() {
+  emit('addWidget', {
+    id: -1n,
+    type: 'TodoListWidget',
+    data: {
+      title: 'New link',
+      target: 'https://example.com/',
+    },
+  });
+}
+
+function addDeadlineWidget() {
+  const week = 7 * 24 * 60 * 60 * 1000;
+  emit('addWidget', {
+    id: -1n,
+    type: 'DeadlineWidget',
+    data: {
+      title: 'New link',
+      start: new Date(),
+      deadline: new Date(new Date().valueOf() + week),
+    },
+  });
+}
+</script>
+
 <template>
   <button class="sa-addwidget" aria-label="Create a new widget" @mouseover="showIcons = true"
     @mouseout="showIcons = false">
     <p class="sa-addwidget__icon" :class="{ 'show-icons': showIcons }">add</p>
     <div class="sa-addwidget__div" :class="{ 'show-icons': showIcons }">
-      <p class="sa-addwidget__icon">captive_portal</p>
-      <p class="sa-addwidget__icon">checklist</p>
-      <p class="sa-addwidget__icon">event</p>
-      <p class="sa-addwidget__icon">format_paint</p>
+      <p class="sa-addwidget__icon" @click="addLinkWidget">captive_portal</p>
+      <p class="sa-addwidget__icon" @click="addTodoWidget">checklist</p>
+      <p class="sa-addwidget__icon" @click="addDeadlineWidget">event</p>
     </div>
     <p class="sa-addwidget__text">Create a new widget</p>
   </button>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-
-const showIcons = ref(false);
-</script>
 
 <style lang="scss">
 .sa-addwidget {

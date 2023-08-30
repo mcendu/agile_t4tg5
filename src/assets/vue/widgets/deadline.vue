@@ -4,9 +4,10 @@ import WidgetBase from './base.vue';
 import FormState from '../../js/composables/formstate';
 import '../../css/form.scss';
 
-interface DeadlineWidgetData {
+interface Deadline {
   title: string;
-  target: string;
+  start: string;
+  deadline: string;
 }
 
 defineOptions({
@@ -14,81 +15,86 @@ defineOptions({
 });
 
 const props = defineProps<{
-  data: DeadlineWidgetData;
+  data: Deadline;
 }>();
 
-const data = computed<DeadlineWidgetData>({
+const emit = defineEmits<{
+  update: [value: Deadline];
+}>();
+
+const formState = new FormState(computed<Deadline>({
   get() {
     return props.data;
   },
   set(value) {
+    if (!value.title)
+      return;
     emit('update', value);
   },
-});
-
-const emit = defineEmits<{
-  update: [value: DeadlineWidgetData];
-}>();
+}));
 
 const widgetBase = ref<InstanceType<typeof WidgetBase> | undefined>(undefined);
-const showIcons = ref(false);
 
-const deadlines = ref([
-  { title: 'Project Proposal', date: '2023-09-15' },
-  { title: 'Midterm Exam', date: '2023-09-30' },
-  // Add more deadlines here...
-]);
+function getCountdownText(deadline: string | Date): string {
+  const now = new Date();
+  const deadlineDate = new Date(deadline); // normalize
+  const timeDiff = deadlineDate.getTime() - now.getTime();
 
-const newTitle = ref('');
-const newDate = ref('');
-
-const addDeadline = () => {
-  if (newTitle.value.trim() !== '' && newDate.value.trim() !== '') {
-    deadlines.value.push({ title: newTitle.value, date: newDate.value });
-    newTitle.value = '';
-    newDate.value = '';
+  const hour = 60 * 60 * 1000;
+  const hourThreshold = 48 * hour;
+  if (timeDiff < 0) {
+    return 'Deadline passed';
+  } else if (timeDiff < hourThreshold) {
+    return `${Math.floor(timeDiff / hour)} hours left`;
+  } else {
+    // we don't need to take leap seconds into account
+    return `${Math.floor(timeDiff / (24 * hour))} days left`;
   }
 };
-
-const editDeadline = (index: number) => {
-  // Implement edit functionality here
-};
-
-const removeDeadline = (index: number) => {
-  deadlines.value.splice(index, 1);
-};
-
-const getCountdown = (deadlineDate: string) => {
-  const now = new Date();
-  const targetDate = new Date(deadlineDate);
-  const timeDiff = targetDate.getTime() - now.getTime();
-  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  return days >= 0 ? `${days} days left` : 'Deadline passed';
-};
-
-const formState = new FormState(data);
-
 </script>
 
 <template>
-  <WidgetBase ref="widgetBase" class="sa-link-widget" @edit="() => formState.reset()">
-    <div class="sa-link-widget__content">
-      <h3>Upcoming Deadlines</h3>
-      <ul>
-        <li v-for="(deadline, index) in deadlines" :key="index">
-          <span>{{ deadline.title }} </span><br>
-          <span>{{ deadline.date }} | </span>
-          <span>{{ getCountdown(deadline.date) }}</span><br>
-          <!-- <button @click="removeDeadline(index)">Remove</button> -->
-          <span @click="removeDeadline(index)" class="material-symbols-outlined">delete</span>
-        </li>
-      </ul>
-      <div class="sa-link-widget__content">
-        <input v-model="newTitle" placeholder="Title" />
-        <input type="date" v-model="newDate" />
-        <button @click="addDeadline">Add Deadline</button>
-      </div>
-    </div>
+  <WidgetBase
+    ref="widgetBase"
+    class="sa-deadline-widget"
+    @edit="() => formState.reset()"
+  >
+    <h3>{{ data.title }}</h3>
+    <p>Due {{ new Date(data.deadline).toLocaleDateString('en-US') }}</p>
+    <p>{{ getCountdownText(data.deadline) }}</p>
+    <p>
+      <progress
+        :value="new Date().valueOf() - new Date(data.start).valueOf()" 
+        :max="new Date(data.deadline).valueOf() - new Date(data.start).valueOf()"
+      ></progress>
+    </p>
+    <template #dialog>
+      <h2 class="sa-form-heading">Deadline widget</h2>
+      <label class="sa-form-field">
+        <span class="sa-labeltext">Title</span>
+        <input type="text" required v-model="formState.data.title" />
+      </label>
+      <label class="sa-form-field">
+        <span class="sa-labeltext">Start date</span>
+        <input type="datetime-local" required v-model="formState.data.start" />
+      </label>
+      <label class="sa-form-field">
+        <span class="sa-labeltext">Due date</span>
+        <input type="datetime-local" required v-model="formState.data.deadline" />
+      </label>
+      <p class="sa-form-actions">
+        <button
+          class="form-button submit"
+          type="submit"
+          @click="() => formState.save()"
+        >
+          Save
+        </button>
+        <button class="form-button" @click="() => widgetBase?.closeEditForm()">
+          Cancel
+        </button>
+      </p>
+    </template>
   </WidgetBase>
 </template>
 
