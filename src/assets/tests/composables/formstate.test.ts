@@ -1,8 +1,8 @@
-import { expect, it, vi } from 'vitest';
+import { it, vi } from 'vitest';
 import { ref, computed, Ref, watch, nextTick } from 'vue';
 import FormState from '../../js/composables/formstate';
 
-it('constructor', () => {
+it('constructor', ({ expect }) => {
     const r = ref({ foo: 'bar' });
 
     expect(r.value.foo).toEqual('bar');
@@ -11,7 +11,7 @@ it('constructor', () => {
     expect(f.data.foo).toEqual(r.value.foo);
 });
 
-it('change form data', () => {
+it('change form data', ({ expect }) => {
     const setter = vi.fn();
     const r: Ref<{ foo: string }> = computed({
         get: () => Object({ foo: 'bar' }),
@@ -27,7 +27,7 @@ it('change form data', () => {
     expect(f.data.foo).toEqual(r.value.foo);
 });
 
-it('submit', () => {
+it('submit', ({ expect }) => {
     const setter = vi.fn();
     const r: Ref<{ foo: string }> = computed({
         get: () => Object({ foo: 'bar' }),
@@ -44,7 +44,7 @@ it('submit', () => {
     expect(setter).toHaveBeenCalledWith(data);
 });
 
-it('reactivity', async () => {
+it('reactivity', async ({ expect }) => {
     const r = ref({ foo: 'bar' });
     const f = new FormState(r);
     const watchCallback = vi.fn<[unknown, unknown, unknown], void>();

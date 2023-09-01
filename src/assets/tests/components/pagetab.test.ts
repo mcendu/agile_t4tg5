@@ -1,10 +1,10 @@
-import { expect, it } from 'vitest';
+import { it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Page from '../../js/page';
 import PageTab from '../../vue/pagelist/pagetab.vue';
 
-it('basic', () => {
+it('basic', ({ expect }) => {
     const pagename = 'Test page';
     const tab = mount(PageTab, {
         props: {
@@ -16,7 +16,7 @@ it('basic', () => {
     expect(tab.find('[data-testlabel=name]').text()).toContain(pagename);
 });
 
-it.concurrent('select', async () => {
+it.concurrent('select', async ({ expect }) => {
     const tab = mount(PageTab, {
         props: {
             page: new Page(0n, 'Test page'),
@@ -41,7 +41,7 @@ it.concurrent('select', async () => {
     expect(tab.emitted('select')).toHaveLength(1);
 });
 
-it.concurrent('actions', async () => {
+it.concurrent('actions', async ({ expect }) => {
     const tab = mount(PageTab, {
         props: {
             page: new Page(0n, 'Test page'),

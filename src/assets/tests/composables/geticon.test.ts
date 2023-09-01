@@ -1,4 +1,4 @@
-import { describe, beforeAll, afterAll, afterEach, expect, it } from 'vitest';
+import { describe, beforeAll, afterAll, afterEach, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 import getIcon from '../../js/geticon';
@@ -73,12 +73,12 @@ describe.skip('getIcon', () => {
         });
     });
 
-    it('<link rel="icon">', async () => {
+    it('one icon, one icon', async ({ expect }) => {
         const url = await getIcon('https://example.com/');
         expect(url?.pathname).toEqual('/favicon.png');
     });
 
-    it('<link rel="icon" sizes="{single entry}">', async () => {
+    it('multiple icons, multiple files', async ({ expect }) => {
         // default to 16px
         const url = await getIcon('https://example.com/multisize');
         expect(url?.pathname).toEqual('/favicon16.png');
@@ -104,7 +104,7 @@ describe.skip('getIcon', () => {
         expect(url56?.pathname).toEqual('/favicon64.png');
     });
 
-    it('<link rel="icon" sizes="{multiple entries}">', async () => {
+    it('multiple icons, single file', async ({ expect }) => {
         const url16 = await getIcon('https://example.com/multisize-ico', {
             resolution: 16,
         });
@@ -121,7 +121,7 @@ describe.skip('getIcon', () => {
         expect(url64?.pathname).toEqual('/favicon.ico');
     });
 
-    it('favicon.ico', async () => {
+    it('favicon.ico', async ({ expect }) => {
         const url = await getIcon('https://example.com/fallback');
         expect(url?.pathname).toEqual('/favicon.ico');
 
