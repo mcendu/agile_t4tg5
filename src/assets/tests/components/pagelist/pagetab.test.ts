@@ -1,8 +1,8 @@
 import { it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-import Page from '../../js/page';
-import PageTab from '../../vue/pagelist/pagetab.vue';
+import Page from '../../../js/page';
+import PageTab from '../../../vue/pagelist/pagetab.vue';
 
 it('basic', ({ expect }) => {
     const pagename = 'Test page';
