@@ -24,6 +24,7 @@ export default function setupIpcMainHandles(db: Database) {
 
     const module = new ModuleController(db);
     ipcMain.handle('module.index', () => module.index());
+    ipcMain.handle('module.indexEnabled', () => module.indexEnabled());
 
     const grade = new GradeController(db);
     ipcMain.handle('grade.getGrades', (e, id) => grade.getGrades(id));

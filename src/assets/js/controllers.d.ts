@@ -24,6 +24,7 @@ declare global {
 
         namespace module {
             function index(): Promise<Module[]>;
+            function indexEnabled(): Promise<Module[]>;
         }
 
         namespace grade {
