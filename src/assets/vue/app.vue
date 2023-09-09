@@ -3,10 +3,19 @@ import PageList from './pagelist/pagelist.vue';
 import PageView from './page/page.vue';
 
 import Page from '../js/page';
-import { Ref, ref } from 'vue';
+import Module from '../js/module';
+import { Ref, onBeforeMount, provide, ref, watchEffect } from 'vue';
 
 const currentPage: Ref<Page | undefined> = ref(undefined);
+const enabledModules: Ref<Module[]> = ref([]);
+
+onBeforeMount(async () => {
+  enabledModules.value = await controllers.module.indexEnabled();
+});
+
 const menuVisible = ref(false);
+
+provide('enabledModules', enabledModules);
 </script>
 
 <template>
