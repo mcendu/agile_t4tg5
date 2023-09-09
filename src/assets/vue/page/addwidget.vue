@@ -24,8 +24,10 @@ function addTodoWidget() {
     id: -1n,
     type: 'TodoListWidget',
     data: {
-      title: 'New link',
-      target: 'https://example.com/',
+       title: 'My To-Do List',
+        items: [
+          { description: 'Example Task', completed: false },
+        ],
     },
   });
 }
@@ -36,7 +38,7 @@ function addDeadlineWidget() {
     id: -1n,
     type: 'DeadlineWidget',
     data: {
-      title: 'New link',
+      title: 'Deadline Title',
       start: new Date(),
       deadline: new Date(new Date().valueOf() + week),
     },

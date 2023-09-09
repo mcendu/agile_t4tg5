@@ -59,6 +59,7 @@ function getCountdownText(deadline: string | Date): string {
     class="sa-deadline-widget"
     @edit="() => formState.reset()"
   >
+  <div class="sa-deadline-widget__content">
     <h3>{{ data.title }}</h3>
     <p>Due {{ new Date(data.deadline).toLocaleDateString('en-US') }}</p>
     <p>{{ getCountdownText(data.deadline) }}</p>
@@ -68,6 +69,8 @@ function getCountdownText(deadline: string | Date): string {
         :max="new Date(data.deadline).valueOf() - new Date(data.start).valueOf()"
       ></progress>
     </p>
+  </div>
+  
     <template #dialog>
       <h2 class="sa-form-heading">Deadline widget</h2>
       <label class="sa-form-field">
@@ -99,7 +102,7 @@ function getCountdownText(deadline: string | Date): string {
 </template>
 
 <style lang="scss">
-.sa-link-widget {
+.sa-deadline-widget {
   padding: 0;
 
   &__content {
@@ -120,11 +123,23 @@ function getCountdownText(deadline: string | Date): string {
       text-decoration: inherit;
     }
   }
+}
 
-  &__link {
-    font-size: 0.75em;
-    max-width: max-content;
-    white-space: nowrap;
-  }
+progress[value] {
+  --color: #31c6f7;
+  --background: rgb(44, 42, 42); /* the background color */
+  height: 20px;
+  border-radius: 5em;
+  background: var(--background);
+
+}
+progress[value]::-webkit-progress-bar {
+  border-radius: 5em;
+  background: var(--background);
+  box-shadow: inset 4px 4px 4px rgba(0,0,0,0.5);
+}
+progress[value]::-webkit-progress-value {
+  border-radius: 5em;
+  background: var(--color);
 }
 </style>

@@ -1,113 +1,222 @@
 <script setup lang="ts">
-import { ref, computed, Ref } from 'vue';
-import FormState from '../../js/composables/formstate';
+import { ref, computed, Ref, reactive, watch } from 'vue';
 import WidgetBase from './base.vue';
+import FormState from '../../js/composables/formstate';
 import '../../css/form.scss';
 
-defineOptions({
-    name: 'TodoListWidget',
-});
-
-interface TodoWidgetData {
-    title: string;
-    target: string;
+interface ToDoItem {
+  title: string;
+  items: ToDoItemDetail[];
 }
+
+interface ToDoItemDetail {
+  description: string;
+  completed: boolean;
+}
+
+defineOptions({
+  name: 'ToDoWidget',
+});
 
 const props = defineProps<{
-    data: TodoWidgetData;
-}>();
-const emit = defineEmits<{
-    update: [value: TodoWidgetData];
+  data: ToDoItem;
 }>();
 
-const data = computed({
+const emit = defineEmits<{
+  update: [value: ToDoItem];
+}>();
+
+const formState = new FormState(
+  computed<ToDoItem>({
     get() {
-        return props.data;
+      return props.data;
     },
     set(value) {
-        emit('update', value);
+      if (!value.title) return;
+      //emit('update', value);
     },
-});
+  }),
+);
+
 const widgetBase: Ref<typeof WidgetBase | undefined> = ref(undefined);
-const showIcons = ref(false);
 
-function urlSummary(link: URL | string) {
-    try {
-        const url = new URL(link);
-        return url.origin;
-    } catch (e) {
-        return 'invalid URL';
-    }
+// Use a reactive object for formState.data
+const formStateData = reactive(props.data);
+
+// Create a computed property for items
+const items = ref(formStateData.items);
+
+function addItem() {
+  // Create a new item
+  const newItem = { description: 'Example Task', completed: false };
+
+  // Push the new item to the items array
+  items.value.push(newItem);
 }
 
-function formValid(data: TodoWidgetData): boolean {
-    if (!data.title) return false;
-    try {
-        new URL(data.target);
-    } catch {
-        return false;
-    }
-    return true;
+async function saveData() {
+   // Clone the items array before updating formStateData.items
+  const clonedItems = items.value.map((item) => ({ ...item }));
+
+  // Clone the form state data
+  const updatedData = { ...formStateData, items: JSON.parse(JSON.stringify(clonedItems)) };
+
+  // Assign the updated items to formState.data
+//  formState.data.items = ref(formStateData.items).value;
+  formState.data.items.splice(0, formState.data.items.length, ...formStateData.items);
+
+  emit('update', updatedData);
+
+  // Save the form state
+  await formState.save();
 }
 
-const formState = new FormState(data);
-const newTask = ref('');
-const tasks = ref<string[]>([]);
+function removeItem(index: number) {
+  // Remove the item from the items array
+  items.value.splice(index, 1);
+}
 
-const addTask = () => {
-    if (newTask.value.trim() !== '') {
-        tasks.value.push(newTask.value);
-        newTask.value = '';
-    }
-};
 
-const removeTask = (index: number) => {
-    tasks.value.splice(index, 1);
-};
 
 </script>
+
 <template>
-    <WidgetBase ref="widgetBase" class="sa-link-widget" @edit="() => formState.reset()">
-        <div class="sa-link-widget__content">
-            <h3>To-Do List</h3>
-            <input v-model="newTask" @keyup.enter="addTask" placeholder="Add a task" />
-            <ul>
-                <li v-for="(task, index) in tasks" :key="index">
-                    {{ task }}
-                    <span @click="removeTask(index)" class="material-symbols-outlined">check</span>
-                </li>
-            </ul>
+  <WidgetBase
+    ref="widgetBase"
+    class="sa-todo-widget"
+    @edit="() => formState.reset()"
+  >
+    <div class="sa-todo-widget__content">
+      <h3>{{ data.title }}</h3>
+      <div v-for="(item, index) in items" :key="index">
+        <div class="todo-item">
+          <div class="item-row">
+            <input
+              type="checkbox"
+              v-model="item.completed"
+              class="item-checkbox"
+            />
+            <label class="item-label">{{ item.description }}</label>
+          </div>
         </div>
-    </WidgetBase>
+        <!-- <p>Status: {{ item.completed ? 'Completed' : 'Pending' }}</p> -->
+      </div>
+    </div>
+
+    <template #dialog>
+      <h2 class="sa-form-heading">To-Do List Widget</h2>
+      <label class="sa-form-field">
+        <span class="sa-labeltext">Title</span>
+        <input type="text" required v-model="formState.data.title" />
+      </label>
+      <div v-for="(item, index) in items" :key="index">
+        <h3>Item {{ index + 1 }}</h3>
+        <label class="sa-form-field">
+          <span class="sa-labeltext">Description</span>
+          <textarea required v-model="item.description"></textarea>
+        </label>
+        <label class="sa-form-field">
+          <span class="sa-labeltext">Status</span>
+          <select v-model="item.completed">
+            <option value="false">Pending</option>
+            <option value="true">Completed</option>
+          </select>
+        </label>
+        <span class="material-symbols-outlined" @click="removeItem(index)"
+          >delete</span
+        >
+      </div>
+      <p class="sa-form-actions">
+        <button class="form-button submit" type="submit" @click="saveData">
+          Save
+        </button>
+        <button class="form-button" @click="() => widgetBase?.closeEditForm()">
+          Close
+        </button>
+        <button class="form-button" type="button" @click="addItem">
+          Add Item
+        </button>
+      </p>
+    </template>
+  </WidgetBase>
 </template>
 
 <style lang="scss">
-.sa-link-widget {
-    padding: 0;
+.sa-todo-widget {
+  padding: 0;
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    overflow: clip;
+    text-overflow: ellipsis;
+    color: inherit;
+    text-decoration: inherit;
 
-        padding: 1em;
-        overflow: clip;
-        text-overflow: ellipsis;
-        color: inherit;
-        text-decoration: inherit;
-
-        &:hover {
-            text-decoration: inherit;
-        }
+    &:hover {
+      text-decoration: inherit;
     }
+  }
+}
 
-    &__link {
-        font-size: 0.75em;
-        max-width: max-content;
-        white-space: nowrap;
-    }
+.todo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Vertically center the content */
+}
+.item-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Vertically center the content */
+}
+
+/* Add styles for item-checkbox and adjust as needed */
+.item-checkbox {
+  margin-right: 10px; /* Adjust margin as needed */
+  vertical-align: middle; /* Align the checkbox vertically in the middle */
+  margin-top: 1.0lh;
+
+}
+
+/* Add styles for item-label and adjust as needed */
+.item-label {
+  vertical-align: middle; /* Align the label (description) vertically in the middle */
+  
+}
+
+/* Style the checkbox container to set its size */
+input[type="checkbox"] {
+  width: 20px; /* Set the width of the checkbox */
+  height: 20px; /* Set the height of the checkbox */
+  position: relative; /* Create a stacking context for pseudo-element */
+  appearance: none; /* Hide the default appearance */
+  background-color: transparent; /* Set the background color to transparent */
+  border: 1px solid var(--c-a4); /* Add a border for the checkbox */
+  border-radius: 4px; /* Add rounded corners */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+/* Style the pseudo-element to create the blue square */
+input[type="checkbox"]::before {
+  content: ""; /* Create an empty content for the pseudo-element */
+  position: absolute; /* Position the pseudo-element */
+  top: 0;
+  left: 0;
+  width: 100%; /* Set width to fill the checkbox */
+  height: 100%; /* Set height to fill the checkbox */
+  background-color: var(--c-a4); /* Set the background color to blue */
+  opacity: 0; /* Initially hide the pseudo-element */
+  border-radius: 4px; /* Add rounded corners */
+  transition: opacity 0.2s ease-in-out; /* Add a transition for smooth animation */
+}
+
+/* Style the checked state of the checkbox */
+input[type="checkbox"]:checked::before {
+  opacity: 1; /* Show the pseudo-element when checked */
 }
 </style>
