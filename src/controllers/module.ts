@@ -8,7 +8,7 @@ export default class ModuleController extends Controller {
     #indexModules: Statement;
     #indexEnabled: Statement;
     #getGradesModules: Statement<bigint>;
-    #toggle: Statement<{ id: bigint; enabled: boolean }>;
+    #toggle: Statement<{ id: bigint; enabled: bigint }>;
 
     constructor(db: Database) {
         super(db);
@@ -73,6 +73,6 @@ export default class ModuleController extends Controller {
     }
 
     toggle(id: number | bigint, enabled: boolean) {
-        this.#toggle.run({ id: BigInt(id), enabled });
+        this.#toggle.run({ id: BigInt(id), enabled: BigInt(enabled) });
     }
 }

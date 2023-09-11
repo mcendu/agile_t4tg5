@@ -18,13 +18,16 @@ const form = new FormState(
     get() {
       return allModules.value;
     },
-    set(modules) {
-      modules.forEach((m, i) => {
+    async set(modules) {
+      modules.forEach(async (m, i) => {
         // assume that the number of modules does not change
         if (m.enabled != allModules.value[i].enabled)
-          controllers.module.toggle(m.id, m.enabled);
+          await controllers.module.toggle(m.id, m.enabled);
       });
+
       allModules.value = modules;
+      if (enabledModules)
+        enabledModules.value = await controllers.module.indexEnabled();
     },
   }),
 );
