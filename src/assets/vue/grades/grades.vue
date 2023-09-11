@@ -50,7 +50,7 @@ function getModuleWeight(m: Module) {
     return 100 / 72;
   } else if (m.code.substring(0, 3) == 'CM2') {
     return 3 * (100 / 72);
-  // deal with final project double weight
+    // deal with final project double weight
   } else if (m.code.substring(0, 6) == 'CM3070') {
     return 10 * (100 / 72);
   } else return 5 * (100 / 72);
