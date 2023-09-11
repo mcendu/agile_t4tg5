@@ -40,7 +40,10 @@ async function getUserPages() {
 const enabledModules: Ref<Module[]> = inject(enabledModulesKey, ref([]));
 watch(enabledModules, getModulePages);
 
-onBeforeMount(() => Promise.all([getModulePages(), getUserPages()]));
+onBeforeMount(() => {
+  changePage(homePage);
+  return Promise.all([getModulePages(), getUserPages()]);
+});
 
 async function newPage() {
   const page = pageRowToPage(await controllers.page.add());
