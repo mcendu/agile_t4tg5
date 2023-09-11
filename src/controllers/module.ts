@@ -33,10 +33,13 @@ export default class ModuleController extends Controller {
     }
 
     /**
-     * Add grade information to a module object.
+     * Transform database rows for consumption by frontend.
      * @param row The raw module data.
      */
-    #addGradeInfo(row: Module): Module {
+    #transform(row: Module): Module {
+        // SQLite stores booleans as integers
+        row.enabled = Boolean(row.enabled);
+
         const grade_result = this.#getGradesModules.all(row.id) as Grade[];
         let overall_grade: TotalGrade = {
             grade: 0,
@@ -58,7 +61,7 @@ export default class ModuleController extends Controller {
      */
     index(): Module[] {
         const rows = this.#indexModules.all() as Module[];
-        return rows.map((row) => this.#addGradeInfo(row));
+        return rows.map((row) => this.#transform(row));
     }
 
     /**
@@ -66,7 +69,7 @@ export default class ModuleController extends Controller {
      */
     indexEnabled(): Module[] {
         const rows = this.#indexEnabled.all() as Module[];
-        return rows.map((row) => this.#addGradeInfo(row));
+        return rows.map((row) => this.#transform(row));
     }
 
     toggle(id: number | bigint, enabled: boolean) {
