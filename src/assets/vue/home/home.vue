@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { inject, ref, Ref } from 'vue';
-import Module from '../../js/module';
+import Module, { enabledModulesKey } from '../../js/module';
 
-const enabledModules: Ref<Module[]> | undefined = inject('enabledModules');
+const enabledModules: Ref<Module[]> | undefined = inject(enabledModulesKey);
 </script>
 
 <template>

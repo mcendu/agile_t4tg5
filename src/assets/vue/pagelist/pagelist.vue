@@ -5,7 +5,7 @@ import PageRow from '../../../models/page';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
-import Module from '../../js/module';
+import Module, { enabledModulesKey } from '../../js/module';
 
 const props = defineProps<{
   modelValue?: Page;
@@ -37,7 +37,7 @@ async function getUserPages() {
   user_pages.value = user_rows.map(pageRowToPage);
 }
 
-const enabledModules: Ref<Module[]> = inject('enabledModules', ref([]));
+const enabledModules: Ref<Module[]> = inject(enabledModulesKey, ref([]));
 watch(enabledModules, getModulePages);
 
 onBeforeMount(() => Promise.all([getModulePages(), getUserPages()]));

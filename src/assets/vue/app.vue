@@ -3,7 +3,7 @@ import PageList from './pagelist/pagelist.vue';
 import PageView from './page/page.vue';
 
 import Page from '../js/page';
-import Module from '../js/module';
+import Module, { enabledModulesKey } from '../js/module';
 import { Ref, onBeforeMount, provide, ref, watchEffect } from 'vue';
 
 const currentPage: Ref<Page | undefined> = ref(undefined);
@@ -15,7 +15,7 @@ onBeforeMount(async () => {
 
 const menuVisible = ref(false);
 
-provide('enabledModules', enabledModules);
+provide(enabledModulesKey, enabledModules);
 </script>
 
 <template>
