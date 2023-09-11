@@ -3,13 +3,68 @@ import MobileHeader from './header.vue';
 import HomePage from '../home/home.vue';
 import GradesPage from '../grades/grades.vue';
 import AddWidget from './addwidget.vue';
-	@@ -10,8 +9,6 @@ import widgetTable from '../widgets/index';
+
+import Page from '../../js/page';
+import Widget from '../../../models/widget';
+import widgetTable from '../widgets/index';
 import { Ref, onBeforeMount, ref, watch } from 'vue';
+
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{ menu: [] }>();
+
 const widgets: Ref<Widget[] | undefined> = ref(undefined);
+
 function getWidget(type: string) {
-	@@ -68,56 +65,49 @@ watch(() => props.page?.id, loadPage);
+  if (type in widgetTable) {
+    return widgetTable[type];
+  }
+  console.warn(
+    `An unknown widget of type "${type}" is found. The widget is not rendered.`,
+  );
+  return;
+}
+
+async function loadPage() {
+  if (props.page === undefined) {
+    return;
+  }
+
+  widgets.value = await controllers.page.show(props.page.id);
+}
+
+async function updateWidget(w: Widget, data: object) {
+  await controllers.widget.edit(w.id, data);
+  w.data = data;
+}
+
+async function addWidget() {
+  if (props.page === undefined) {
+    return;
+  }
+
+  const w: Widget = {
+    id: -1n,
+    type: 'LinkWidget',
+    data: {
+      title: 'New link',
+      target: 'https://example.com/',
+    },
+  };
+  w.id = (await controllers.widget.add(props.page.id, w)).id;
+  widgets.value?.push(w);
+}
+
+async function deleteWidget(w: Widget) {
+  if (!widgets.value) return;
+  const index = widgets.value.indexOf(w);
+  if (index == -1) return;
+
+  await controllers.widget.del(w.id);
+  widgets.value.splice(index, 1);
+}
+
+onBeforeMount(loadPage);
+watch(() => props.page?.id, loadPage);
 </script>
 
 <template>
@@ -40,14 +95,17 @@ function getWidget(type: string) {
 
 <style lang="scss">
 @use '/css/stops';
+
 .sa-page {
   display: flex;
   flex-direction: column;
+
   height: 100vh;
   overflow: hidden;
   background-color: var(--c-b1);
   grid-area: content;
 }
+
 .sa-content {
   height: 100vh;
   display: grid;
@@ -55,19 +113,31 @@ function getWidget(type: string) {
   grid-auto-flow: column;
   grid-auto-columns: 12em;
   gap: 8px;
+
   padding: 1em;
   overflow: auto;
+
   @media (height >= stops.$height-s) {
     grid-auto-columns: 16em;
   }
-	@@ -132,10 +122,14 @@ watch(() => props.page?.id, loadPage);
+
+  @media (stops.$height-m <= height < stops.$height-l) {
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  @media (height >= stops.$height-l) {
+    grid-template-rows: repeat(4, 1fr);
+  }
+
   @media (width < stops.$width-xs) {
     grid-auto-columns: calc(100vw - 2em);
   }
+
   @media (width < stops.$width-s) {
     height: calc(100vh - 40px);
   }
 }
+
 .sa-nopages {
   display: flex;
   flex-direction: column;

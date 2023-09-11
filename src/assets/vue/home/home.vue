@@ -7,4 +7,5 @@
 <style lang="scss">
 .sa-home {
   padding: 1em;
+}
 </style>

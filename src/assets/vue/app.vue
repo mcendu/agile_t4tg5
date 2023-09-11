@@ -4,6 +4,7 @@ import PageView from './page/page.vue';
 
 import Page from '../js/page';
 import { Ref, ref } from 'vue';
+
 const currentPage: Ref<Page | undefined> = ref(undefined);
 const menuVisible = ref(false);
 </script>
