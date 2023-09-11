@@ -23,6 +23,8 @@ contextBridge.exposeInMainWorld('controllers', {
     module: {
         index: () => ipcRenderer.invoke('module.index'),
         indexEnabled: () => ipcRenderer.invoke('module.indexEnabled'),
+        toggle: (id: unknown, enabled: unknown) =>
+            ipcRenderer.invoke('module.toggle', id, enabled),
     },
     grade: {
         getGrades: (id: unknown) => ipcRenderer.invoke('grade.getGrades', id),

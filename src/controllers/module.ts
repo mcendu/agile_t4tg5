@@ -8,6 +8,7 @@ export default class ModuleController extends Controller {
     #indexModules: Statement;
     #indexEnabled: Statement;
     #getGradesModules: Statement<bigint>;
+    #toggle: Statement<{ id: bigint; enabled: boolean }>;
 
     constructor(db: Database) {
         super(db);
@@ -24,6 +25,10 @@ export default class ModuleController extends Controller {
 
         this.#getGradesModules = db.prepare(
             'SELECT * FROM grades WHERE module_id=?;',
+        );
+
+        this.#toggle = db.prepare(
+            'UPDATE modules SET enabled=:enabled WHERE id=:id;',
         );
     }
 
@@ -62,5 +67,9 @@ export default class ModuleController extends Controller {
     indexEnabled(): Module[] {
         const rows = this.#indexEnabled.all() as Module[];
         return rows.map((row) => this.#addGradeInfo(row));
+    }
+
+    toggle(id: number | bigint, enabled: boolean) {
+        this.#toggle.run({ id: BigInt(id), enabled });
     }
 }
