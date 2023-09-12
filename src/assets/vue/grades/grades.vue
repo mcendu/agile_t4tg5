@@ -117,7 +117,8 @@ async function deleteGrade(grade: Grade) {
 
 <template>
   <main>
-    <summaryCard class="sa-gradesummary"
+    <summaryCard
+      class="sa-gradesummary"
       :modules="modules"
       :points="points"
       :completedPercent="completedModulesCounter"
