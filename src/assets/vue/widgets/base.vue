@@ -31,19 +31,33 @@ defineExpose({
     <slot></slot>
     <div class="sa-widget__actions">
       <slot name="actions">
-        <button class="icon-button sa-widget__action" @click="showEditForm">
+        <button
+          data-testlabel="edit"
+          class="icon-button sa-widget__action"
+          @click="showEditForm"
+        >
           <span class="material-symbols-outlined">edit</span>
         </button>
       </slot>
-      <button class="icon-button sa-widget__action" @click="$emit('delete')">
+      <button
+        data-testlabel="delete"
+        class="icon-button sa-widget__action"
+        @click="$emit('delete')"
+      >
         <span class="material-symbols-outlined">delete</span>
       </button>
     </div>
-    <dialog class="sa-dialog" ref="editDialog">
+    <dialog class="sa-dialog" data-testlabel="dialog" ref="editDialog">
       <form class="sa-form" method="dialog">
         <slot name="dialog">
           <p class="sa-form-actions">
-            <button class="form-button" type="submit">Cancel</button>
+            <button
+              class="form-button"
+              data-testlabel="close"
+              @click="closeEditForm"
+            >
+              Cancel
+            </button>
           </p>
         </slot>
       </form>
