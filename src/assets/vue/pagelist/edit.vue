@@ -1,36 +1,40 @@
 <script setup lang="ts">
 import Page from '../../js/page';
-import { computed, ref, Ref, watch } from 'vue';
+import { computed, nextTick, ref, Ref, watch } from 'vue';
 import '../../css/form.scss';
+import FormState from '../../js/composables/formstate';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{
   (e: 'submit', page: Page, name: string): void;
 }>();
 
-const name: Ref<string | undefined> = ref(props.page?.name);
-const dialog: Ref<HTMLDialogElement | null> = ref(null);
+interface PageEditFormData {
+  name: string;
+}
 
-watch(
-  () => props.page?.name,
-  (newName) => {
-    name.value = newName;
-  },
+const form = new FormState<PageEditFormData>(
+  computed({
+    get: () =>
+      Object({
+        name: props.page?.name ?? '',
+      }),
+    set: (value) => {
+      if (props.page) emit('submit', props.page, value.name);
+    },
+  }),
 );
 
 function rename(e: Event) {
-  if (!props.page) return;
-
   // validate
-  if (name.value) emit('submit', props.page, name.value);
+  if (props.page && form.data.name) form.save();
   else e.preventDefault();
 }
 
-function cancel() {
-  name.value = props.page?.name;
-}
+const dialog: Ref<HTMLDialogElement | null> = ref(null);
 
 function showModal() {
+  form.reset();
   dialog.value?.showModal();
 }
 
@@ -41,24 +45,36 @@ defineExpose({
 
 <template>
   <dialog class="sa-dialog" ref="dialog">
-    <form class="sa-form" method="dialog">
-      <h2 class="sa-form-heading">Editing {{ page?.name }}</h2>
+    <form class="sa-form" method="dialog" data-testlabel="form">
+      <h2 class="sa-form-heading" data-testlabel="heading">
+        Editing {{ page?.name }}
+      </h2>
       <label class="sa-form-field">
         <span class="sa-labeltext">Name</span>
         <input
+          data-testlabel="name"
           type="text"
           name="name"
           required
           min-length="1"
           placeholder="Page name"
-          v-model="name"
+          v-model="form.data.name"
         />
       </label>
       <p class="sa-form-actions">
-        <button class="form-button submit" type="submit" @click="rename">
+        <button
+          class="form-button submit"
+          data-testlabel="save"
+          type="submit"
+          @click="rename"
+        >
           Save
         </button>
-        <button class="form-button" type="submit" @click="cancel">
+        <button
+          class="form-button"
+          data-testlabel="cancel"
+          @click="() => dialog?.close()"
+        >
           Cancel
         </button>
       </p>
