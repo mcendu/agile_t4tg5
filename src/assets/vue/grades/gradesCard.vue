@@ -66,7 +66,7 @@ const editing = ref(false);
           <td
             v-else-if="module.total?.weight == 100 && passed"
             class="gc-card__table-data"
-            style="color: greenyellow"
+            style="color: lime"
           >
             {{ module.total?.grade }}
           </td>

@@ -37,7 +37,7 @@ const props = defineProps<{
     margin-top: 0.5em;
     font-size: 1.1em;
     font-weight: bold;
-    color: var(--c-tl);
+    color: var(--c-fg-t);
   }
 
   &__table {

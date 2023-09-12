@@ -117,7 +117,7 @@ async function deleteGrade(grade: Grade) {
 
 <template>
   <main>
-    <summaryCard
+    <summaryCard class="sa-gradesummary"
       :modules="modules"
       :points="points"
       :completedPercent="completedModulesCounter"
@@ -125,7 +125,7 @@ async function deleteGrade(grade: Grade) {
       :gradeAverage="averageGrade"
     />
   </main>
-  <main class="sa-gradelist">
+  <div class="sa-grades">
     <gradesCard
       v-for="mod in modules"
       :module="mod"
@@ -135,16 +135,26 @@ async function deleteGrade(grade: Grade) {
       @editGrade="editGradeDialog"
       @deleteGrade="deleteGrade"
     />
-  </main>
+  </div>
   <Add ref="addDialog" @add="addGrade" />
   <Edit ref="editDialog" @edit="editGrade" />
 </template>
 
 <style lang="scss">
-.sa-gradelist {
+.sa-gradesummary {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  margin-bottom: 0;
+  padding: 1em;
+}
+
+.sa-grades {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 1em;
   gap: 10px;
+  overflow-y: auto;
 }
 </style>
