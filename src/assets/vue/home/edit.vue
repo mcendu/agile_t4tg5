@@ -41,17 +41,21 @@ defineExpose({ showModal });
 </script>
 <template>
   <dialog class="sa-dialog sa-module-select" ref="dialog">
-    <form method="dialog">
-      <h3 class="sa-form-heading">Module selection</h3>
+    <form class="sa-module-select__form" method="dialog">
+      <h3 class="sa-form-heading sa-module-select__heading">
+        Module selection
+      </h3>
       <ul class="sa-module-select__list">
         <li v-for="m in form.data">
-          <label>
+          <label class="sa-module-select__item">
             <input type="checkbox" v-model="m.enabled" />
-            <span>{{ m.code }} &ndash; {{ m.name }}</span>
+            <span class="sa-module-select__item-text"
+              >{{ m.code }} &ndash; {{ m.name }}</span
+            >
           </label>
         </li>
       </ul>
-      <p class="sa-form-actions">
+      <p class="sa-form-actions sa-module-select__actions">
         <button
           class="form-button submit"
           type="submit"
@@ -66,3 +70,50 @@ defineExpose({ showModal });
     </form>
   </dialog>
 </template>
+
+<style lang="scss">
+.sa-module-select {
+  width: 90vw;
+  max-width: max-content;
+
+  &__form {
+    height: 90cqb;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  &__heading {
+    grid-row: 1;
+  }
+
+  &__list {
+    list-style-type: none;
+
+    grid-row: 2;
+    margin: 0;
+    padding: 1em;
+
+    overflow-y: auto;
+
+    li {
+      &::marker {
+        content: '';
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    &-text {
+      flex: 1;
+    }
+  }
+
+  &__actions {
+    grid-row: 3;
+  }
+}
+</style>
