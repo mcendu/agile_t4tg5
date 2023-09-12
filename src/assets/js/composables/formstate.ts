@@ -15,7 +15,7 @@ export default class FormState<T> {
     constructor(data: Ref<T>) {
         this.#data = toRef(data);
         // ref() has a weird return type annotation
-        this.#formdata = ref(cloneDeep(this.#data.value)) as Ref<T>;
+        this.#formdata = ref(cloneDeep(data.value)) as Ref<T>;
     }
 
     /**

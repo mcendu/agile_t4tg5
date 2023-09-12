@@ -6,6 +6,7 @@ import Grade from '../../../models/grade';
 
 const props = defineProps<{
   module: Module;
+  passed?: boolean;
   selected: boolean;
 }>();
 const emit = defineEmits<{
@@ -19,7 +20,7 @@ const editing = ref(false);
 
 <template>
   <div class="gc-card">
-    <h3>{{ module.code }} {{ module.name }}</h3>
+    <h6>{{ module.code }} {{ module.name }}</h6>
     <table class="gc-card__table">
       <thead>
         <tr>
@@ -55,7 +56,21 @@ const editing = ref(false);
       <tfoot>
         <tr>
           <th>Total</th>
-          <td class="gc-card__table-data">{{ module.total?.grade }}</td>
+          <td
+            v-if="module.total?.weight == 100 && !passed"
+            class="gc-card__table-data"
+            style="color: red"
+          >
+            {{ module.total?.grade }}
+          </td>
+          <td
+            v-else-if="module.total?.weight == 100 && passed"
+            class="gc-card__table-data"
+            style="color: lime"
+          >
+            {{ module.total?.grade }}
+          </td>
+          <td v-else class="gc-card__table-data">{{ module.total?.grade }}</td>
           <td class="gc-card__table-data">{{ module.total?.weight }}</td>
           <td v-show="editing"></td>
         </tr>
@@ -82,7 +97,7 @@ const editing = ref(false);
 .gc-card {
   text-align: left;
   width: 100%;
-  padding: 10px;
+  padding: 1em;
   border-radius: 5px;
   background-color: var(--c-bg);
   box-shadow: var(--shadow);
@@ -110,6 +125,14 @@ const editing = ref(false);
       th,
       td {
         border-bottom: 1px solid var(--c-fg-tl);
+      }
+    }
+
+    tbody {
+      th,
+      td {
+        text-transform: capitalize;
+        font-size: smaller;
       }
     }
 
