@@ -116,7 +116,7 @@ async function deleteGrade(grade: Grade) {
 </script>
 
 <template>
-  <main>
+  <div class="sa-grades">
     <summaryCard
       class="sa-gradesummary"
       :modules="modules"
@@ -125,8 +125,6 @@ async function deleteGrade(grade: Grade) {
       :weightedPercent="weightedPercentage"
       :gradeAverage="averageGrade"
     />
-  </main>
-  <div class="sa-grades">
     <gradesCard
       v-for="mod in modules"
       :module="mod"

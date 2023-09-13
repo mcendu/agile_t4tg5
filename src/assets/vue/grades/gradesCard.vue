@@ -29,7 +29,7 @@ function colorTotal() {
 
 <template>
   <div class="gc-card">
-    <h6>{{ module.code }} {{ module.name }}</h6>
+    <h3>{{ module.code }} {{ module.name }}</h3>
     <table class="gc-card__table">
       <thead>
         <tr>

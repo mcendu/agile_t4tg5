@@ -13,14 +13,23 @@ const props = defineProps<{
 </script>
 
 <template>
-  <main class="sc-card">
-    <p class="sc-card__text">Degree Credits: {{ points }}</p>
-    <p class="sc-card__text">Completion: {{ completedPercent.toFixed(2) }}%</p>
+  <section class="sc-card">
     <p class="sc-card__text">
-      Current Grade: {{ weightedPercent.toFixed(2) }}%
+      <span class="sc-card__item-title">Degree Credits:</span> {{ points }}
     </p>
-    <p class="sc-card__text">Grade Average: {{ gradeAverage.toFixed(2) }}%</p>
-  </main>
+    <p class="sc-card__text">
+      <span class="sc-card__item-title">Completion:</span>
+      {{ completedPercent.toFixed(2) }}%
+    </p>
+    <p class="sc-card__text">
+      <span class="sc-card__item-title">Current Grade:</span>
+      {{ weightedPercent.toFixed(2) }}%
+    </p>
+    <p class="sc-card__text">
+      <span class="sc-card__item-title">Grade Average:</span>
+      {{ gradeAverage.toFixed(2) }}%
+    </p>
+  </section>
 </template>
 
 <style lang="scss">
@@ -35,9 +44,10 @@ const props = defineProps<{
 
   &__text {
     margin-top: 0.5em;
-    font-size: 1.1em;
+  }
+
+  &__item-title {
     font-weight: bold;
-    color: var(--c-fg-t);
   }
 
   &__table {
