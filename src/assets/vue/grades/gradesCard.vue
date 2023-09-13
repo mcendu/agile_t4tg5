@@ -6,6 +6,7 @@ import Grade from '../../../models/grade';
 
 const props = defineProps<{
   module: Module;
+  passed?: boolean;
   selected: boolean;
 }>();
 const emit = defineEmits<{
@@ -15,6 +16,15 @@ const emit = defineEmits<{
 }>();
 
 const editing = ref(false);
+
+function colorTotal() {
+  const weight = props.module.total?.weight;
+  if (weight != 100) return '';
+
+  return props.passed
+    ? 'gc-card__total-grade--passed'
+    : 'gc-card__total-grade--failed';
+}
 </script>
 
 <template>
@@ -55,7 +65,12 @@ const editing = ref(false);
       <tfoot>
         <tr>
           <th>Total</th>
-          <td class="gc-card__table-data">{{ module.total?.grade }}</td>
+          <td
+            class="gc-card__table-data gc-card__total-grade"
+            :class="colorTotal()"
+          >
+            {{ module.total?.grade }}
+          </td>
           <td class="gc-card__table-data">{{ module.total?.weight }}</td>
           <td v-show="editing"></td>
         </tr>
@@ -79,10 +94,12 @@ const editing = ref(false);
 </template>
 
 <style lang="scss">
+@use '../../css/dark' as *;
+
 .gc-card {
   text-align: left;
   width: 100%;
-  padding: 10px;
+  padding: 1em;
   border-radius: 5px;
   background-color: var(--c-bg);
   box-shadow: var(--shadow);
@@ -113,6 +130,14 @@ const editing = ref(false);
       }
     }
 
+    tbody {
+      th,
+      td {
+        text-transform: capitalize;
+        font-size: smaller;
+      }
+    }
+
     tfoot {
       font-weight: bold;
 
@@ -125,6 +150,16 @@ const editing = ref(false);
 
   &__table-data {
     text-align: right;
+  }
+
+  &__total-grade {
+    &--passed {
+      color: hsl(120deg 80% 40%);
+    }
+
+    &--failed {
+      color: hsl(2deg 80% 50%);
+    }
   }
 
   &__data-column {
