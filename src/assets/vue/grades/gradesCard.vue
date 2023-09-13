@@ -16,6 +16,15 @@ const emit = defineEmits<{
 }>();
 
 const editing = ref(false);
+
+function colorTotal() {
+  const weight = props.module.total?.weight;
+  if (weight != 100) return '';
+
+  return props.passed
+    ? 'gc-card__total-grade--passed'
+    : 'gc-card__total-grade--failed';
+}
 </script>
 
 <template>
@@ -57,20 +66,11 @@ const editing = ref(false);
         <tr>
           <th>Total</th>
           <td
-            v-if="module.total?.weight == 100 && !passed"
-            class="gc-card__table-data"
-            style="color: red"
+            class="gc-card__table-data gc-card__total-grade"
+            :class="colorTotal()"
           >
             {{ module.total?.grade }}
           </td>
-          <td
-            v-else-if="module.total?.weight == 100 && passed"
-            class="gc-card__table-data"
-            style="color: lime"
-          >
-            {{ module.total?.grade }}
-          </td>
-          <td v-else class="gc-card__table-data">{{ module.total?.grade }}</td>
           <td class="gc-card__table-data">{{ module.total?.weight }}</td>
           <td v-show="editing"></td>
         </tr>
@@ -94,6 +94,8 @@ const editing = ref(false);
 </template>
 
 <style lang="scss">
+@use '../../css/dark' as *;
+
 .gc-card {
   text-align: left;
   width: 100%;
@@ -148,6 +150,16 @@ const editing = ref(false);
 
   &__table-data {
     text-align: right;
+  }
+
+  &__total-grade {
+    &--passed {
+      color: hsl(120deg 80% 40%);
+    }
+
+    &--failed {
+      color: hsl(2deg 80% 50%);
+    }
   }
 
   &__data-column {
