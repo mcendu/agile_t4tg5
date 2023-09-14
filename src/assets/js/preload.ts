@@ -22,5 +22,25 @@ contextBridge.exposeInMainWorld('controllers', {
     },
     module: {
         index: () => ipcRenderer.invoke('module.index'),
+        indexEnabled: () => ipcRenderer.invoke('module.indexEnabled'),
+        toggle: (id: unknown, enabled: unknown) =>
+            ipcRenderer.invoke('module.toggle', id, enabled),
+    },
+    grade: {
+        getGrades: (id: unknown) => ipcRenderer.invoke('grade.getGrades', id),
+        addGrade: (
+            id: unknown,
+            session: unknown,
+            grade: unknown,
+            weight: unknown,
+        ) => ipcRenderer.invoke('grade.addGrade', id, session, grade, weight),
+        editGrade: (
+            id: unknown,
+            session: unknown,
+            grade: unknown,
+            weight: unknown,
+        ) => ipcRenderer.invoke('grade.editGrade', id, session, grade, weight),
+        deleteGrade: (id: unknown) =>
+            ipcRenderer.invoke('grade.deleteGrade', id),
     },
 });

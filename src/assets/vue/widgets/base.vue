@@ -31,19 +31,33 @@ defineExpose({
     <slot></slot>
     <div class="sa-widget__actions">
       <slot name="actions">
-        <button class="sa-widget__action" @click="showEditForm">
+        <button
+          data-testlabel="edit"
+          class="icon-button sa-widget__action"
+          @click="showEditForm"
+        >
           <span class="material-symbols-outlined">edit</span>
         </button>
       </slot>
-      <button class="sa-widget__action" @click="$emit('delete')">
+      <button
+        data-testlabel="delete"
+        class="icon-button sa-widget__action"
+        @click="$emit('delete')"
+      >
         <span class="material-symbols-outlined">delete</span>
       </button>
     </div>
-    <dialog class="sa-dialog" ref="editDialog">
+    <dialog class="sa-dialog" data-testlabel="dialog" ref="editDialog">
       <form class="sa-form" method="dialog">
         <slot name="dialog">
           <p class="sa-form-actions">
-            <button class="form-button" type="submit">Cancel</button>
+            <button
+              class="form-button"
+              data-testlabel="close"
+              @click="closeEditForm"
+            >
+              Cancel
+            </button>
           </p>
         </slot>
       </form>
@@ -68,38 +82,18 @@ defineExpose({
   }
 
   &__action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     padding: 2px;
     border-radius: 4px;
-
-    font-size: 1em;
-    border: none;
-    color: var(--c-fg-t);
-    transition:
-      color 0.2s,
-      background-color 0.2s;
-
-    &:active {
-      color: var(--c-fg);
-      background-color: var(--c-bg-ta);
-    }
   }
 
   @media (hover: hover) {
     &__action {
-      color: transparent;
+      opacity: 0;
     }
 
     &:hover &__action,
     &:focus-within &__action {
-      color: var(--c-fg-t);
-
-      &:hover {
-        color: var(--c-fg);
-      }
+      opacity: 1;
     }
   }
 }

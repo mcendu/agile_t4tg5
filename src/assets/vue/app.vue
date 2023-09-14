@@ -3,15 +3,29 @@ import PageList from './pagelist/pagelist.vue';
 import PageView from './page/page.vue';
 
 import Page from '../js/page';
-import { Ref, ref } from 'vue';
+import Module, { enabledModulesKey } from '../js/module';
+import { Ref, onBeforeMount, provide, ref, watchEffect } from 'vue';
 
 const currentPage: Ref<Page | undefined> = ref(undefined);
+const enabledModules: Ref<Module[]> = ref([]);
+
+onBeforeMount(async () => {
+  enabledModules.value = await controllers.module.indexEnabled();
+});
+
+const menuVisible = ref(false);
+
+provide(enabledModulesKey, enabledModules);
 </script>
 
 <template>
   <div class="sa-book">
-    <PageList v-model="currentPage" />
-    <PageView :page="currentPage" />
+    <PageList
+      v-model="currentPage"
+      :visible="menuVisible"
+      @close="menuVisible = false"
+    />
+    <PageView :page="currentPage" @menu="menuVisible = true" />
   </div>
 </template>
 
