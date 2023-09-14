@@ -188,35 +188,4 @@ function removeItem(index: number) {
   vertical-align: middle; /* Align the label (description) vertically in the middle */
   
 }
-
-/* Style the checkbox container to set its size */
-input[type="checkbox"] {
-  width: 20px; /* Set the width of the checkbox */
-  height: 20px; /* Set the height of the checkbox */
-  position: relative; /* Create a stacking context for pseudo-element */
-  appearance: none; /* Hide the default appearance */
-  background-color: transparent; /* Set the background color to transparent */
-  border: 1px solid var(--c-a4); /* Add a border for the checkbox */
-  border-radius: 4px; /* Add rounded corners */
-  cursor: pointer; /* Change cursor on hover */
-}
-
-/* Style the pseudo-element to create the blue square */
-input[type="checkbox"]::before {
-  content: ""; /* Create an empty content for the pseudo-element */
-  position: absolute; /* Position the pseudo-element */
-  top: 0;
-  left: 0;
-  width: 100%; /* Set width to fill the checkbox */
-  height: 100%; /* Set height to fill the checkbox */
-  background-color: var(--c-a4); /* Set the background color to blue */
-  opacity: 0; /* Initially hide the pseudo-element */
-  border-radius: 4px; /* Add rounded corners */
-  transition: opacity 0.2s ease-in-out; /* Add a transition for smooth animation */
-}
-
-/* Style the checked state of the checkbox */
-input[type="checkbox"]:checked::before {
-  opacity: 1; /* Show the pseudo-element when checked */
-}
 </style>
