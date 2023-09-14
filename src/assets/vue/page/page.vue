@@ -8,6 +8,7 @@ import Page from '../../js/page';
 import Widget from '../../../models/widget';
 import widgetTable from '../widgets/index';
 import { Ref, onBeforeMount, ref, watch } from 'vue';
+import { cloneDeep } from 'lodash';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{ menu: [] }>();
@@ -33,7 +34,8 @@ async function loadPage() {
 }
 
 async function updateWidget(w: Widget, data: object) {
-  await controllers.widget.edit(w.id, data);
+  /* proxies cannot be ipc'd through electron */
+  await controllers.widget.edit(w.id, cloneDeep(data));
   w.data = data;
 }
 
