@@ -75,7 +75,7 @@ watch(() => props.page?.id, loadPage);
     <article class="sa-content" v-else>
       <component v-for="w of widgets" :is="getWidget(w.type)" :data="w.data"
         @update="(data: object) => updateWidget(w, data)" @delete="() => deleteWidget(w)" />
-      <AddWidget @click="addWidget" />
+      <AddWidget @add-widget="addWidget" />
     </article>
   </main>
 </template>
