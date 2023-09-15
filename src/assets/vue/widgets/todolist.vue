@@ -78,6 +78,12 @@ async function saveData() {
   await formState.save();
 }
 
+function setItem(e: Event, item: ToDoItemDetail) {
+  const target = e.target as HTMLInputElement;
+  item.completed = target.checked;
+  saveData();
+}
+
 function removeItem(index: number) {
   // Remove the item from the items array
   items.value.splice(index, 1);
@@ -95,7 +101,11 @@ function removeItem(index: number) {
       <ul class="sa-checklist sa-todo-widget__checklist">
         <li v-for="item in items">
           <label class="sa-checklist-item">
-            <input type="checkbox" v-model="item.completed" />
+            <input
+              type="checkbox"
+              v-model="item.completed"
+              @input="(e) => setItem(e, item)"
+            />
             <span class="sa-checklist-item__label">{{ item.description }}</span>
           </label>
         </li>
