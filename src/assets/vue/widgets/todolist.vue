@@ -48,22 +48,29 @@ const items = ref(formStateData.items);
 
 function addItem() {
   // Create a new item
-  const newItem = { description: 'Example Task', completed: false };
+  const newItem = { description: 'New Task', completed: false };
 
   // Push the new item to the items array
   items.value.push(newItem);
 }
 
 async function saveData() {
-   // Clone the items array before updating formStateData.items
+  // Clone the items array before updating formStateData.items
   const clonedItems = items.value.map((item) => ({ ...item }));
 
   // Clone the form state data
-  const updatedData = { ...formStateData, items: JSON.parse(JSON.stringify(clonedItems)) };
+  const updatedData = {
+    ...formStateData,
+    items: JSON.parse(JSON.stringify(clonedItems)),
+  };
 
   // Assign the updated items to formState.data
-//  formState.data.items = ref(formStateData.items).value;
-  formState.data.items.splice(0, formState.data.items.length, ...formStateData.items);
+  //  formState.data.items = ref(formStateData.items).value;
+  formState.data.items.splice(
+    0,
+    formState.data.items.length,
+    ...formStateData.items,
+  );
 
   emit('update', updatedData);
 
@@ -75,9 +82,6 @@ function removeItem(index: number) {
   // Remove the item from the items array
   items.value.splice(index, 1);
 }
-
-
-
 </script>
 
 <template>
@@ -88,19 +92,14 @@ function removeItem(index: number) {
   >
     <div class="sa-todo-widget__content">
       <h3>{{ data.title }}</h3>
-      <div v-for="(item, index) in items" :key="index">
-        <div class="todo-item">
-          <div class="item-row">
-            <input
-              type="checkbox"
-              v-model="item.completed"
-              class="item-checkbox"
-            />
-            <label class="item-label">{{ item.description }}</label>
-          </div>
-        </div>
-        <!-- <p>Status: {{ item.completed ? 'Completed' : 'Pending' }}</p> -->
-      </div>
+      <ul class="sa-checklist sa-todo-widget__checklist">
+        <li v-for="item in items">
+          <label class="sa-checklist-item">
+            <input type="checkbox" v-model="item.completed" />
+            <span class="sa-checklist-item__label">{{ item.description }}</span>
+          </label>
+        </li>
+      </ul>
     </div>
 
     <template #dialog>
@@ -162,30 +161,11 @@ function removeItem(index: number) {
       text-decoration: inherit;
     }
   }
-}
 
-.todo-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Vertically center the content */
-}
-.item-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* Vertically center the content */
-}
-
-/* Add styles for item-checkbox and adjust as needed */
-.item-checkbox {
-  margin-right: 10px; /* Adjust margin as needed */
-  vertical-align: middle; /* Align the checkbox vertically in the middle */
-  margin-top: 1.0lh;
-
-}
-
-/* Add styles for item-label and adjust as needed */
-.item-label {
-  vertical-align: middle; /* Align the label (description) vertically in the middle */
-  
+  &__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375lh;
+  }
 }
 </style>
