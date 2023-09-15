@@ -4,12 +4,12 @@ import WidgetBase from './base.vue';
 import FormState from '../../js/composables/formstate';
 import '../../css/form.scss';
 
-interface ToDoItem {
+interface TodoList {
   title: string;
-  items: ToDoItemDetail[];
+  items: TodoItem[];
 }
 
-interface ToDoItemDetail {
+interface TodoItem {
   description: string;
   completed: boolean;
 }
@@ -19,15 +19,15 @@ defineOptions({
 });
 
 const props = defineProps<{
-  data: ToDoItem;
+  data: TodoList;
 }>();
 
 const emit = defineEmits<{
-  update: [value: ToDoItem];
+  update: [value: TodoList];
 }>();
 
 const formState = new FormState(
-  computed<ToDoItem>({
+  computed<TodoList>({
     get() {
       return props.data;
     },
@@ -49,7 +49,7 @@ function addItem() {
   formState.data.items.push(newItem);
 }
 
-function setItem(e: Event, item: ToDoItemDetail) {
+function setItem(e: Event, item: TodoItem) {
   const target = e.target as HTMLInputElement;
   item.completed = target.checked;
   formState.save();
@@ -76,12 +76,12 @@ function closeEditForm() {
     <div class="sa-todo-widget__content">
       <h3>{{ data.title }}</h3>
       <ul class="sa-checklist sa-todo-widget__checklist">
-        <li v-for="item in formState.data.items">
+        <li v-for="(item, i) in props.data.items">
           <label class="sa-checklist-item">
             <input
               type="checkbox"
-              v-model="item.completed"
-              @input="(e) => setItem(e, item)"
+              :checked="formState.data.items[i]?.completed ?? item.completed"
+              @input="(e) => setItem(e, formState.data.items[i])"
             />
             <span class="sa-checklist-item__label">{{ item.description }}</span>
           </label>
