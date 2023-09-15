@@ -27,14 +27,17 @@ const changeBackgroundColor = () => {
 };
 
 const formState = new FormState(ref(props.data));
-
 </script>
 
 <template>
-  <WidgetBase ref="widgetBase" class="sa-link-widget" @edit="() => formState.reset()">
+  <WidgetBase
+    ref="widgetBase"
+    class="sa-link-widget"
+    @edit="() => formState.reset()"
+  >
     <div class="sa-link-widget__content">
-      <h3 style="align-items: center;">Background Color Changer</h3>
-      <input type="color" v-model="selectedColor" /><br>
+      <h3 style="align-items: center">Background Color Changer</h3>
+      <input type="color" v-model="selectedColor" /><br />
       <!-- <button class="btn" @click="changeBackgroundColor">Change Background Color</button> -->
       <span class="material-symbols-outlined" @click="changeBackgroundColor">
         format_color_fill
@@ -71,6 +74,5 @@ const formState = new FormState(ref(props.data));
     max-width: max-content;
     white-space: nowrap;
   }
-
 }
 </style>

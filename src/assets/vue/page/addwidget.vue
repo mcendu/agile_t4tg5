@@ -24,10 +24,8 @@ function addTodoWidget() {
     id: -1n,
     type: 'TodoListWidget',
     data: {
-       title: 'My To-Do List',
-        items: [
-          { description: 'Example Task', completed: false },
-        ],
+      title: 'My To-Do List',
+      items: [{ description: 'Example Task', completed: false }],
     },
   });
 }
@@ -47,8 +45,12 @@ function addDeadlineWidget() {
 </script>
 
 <template>
-  <button class="sa-addwidget" aria-label="Create a new widget" @mouseover="showIcons = true"
-    @mouseout="showIcons = false">
+  <button
+    class="sa-addwidget"
+    aria-label="Create a new widget"
+    @mouseover="showIcons = true"
+    @mouseout="showIcons = false"
+  >
     <p class="sa-addwidget__icon" :class="{ 'show-icons': showIcons }">add</p>
     <div class="sa-addwidget__div" :class="{ 'show-icons': showIcons }">
       <p class="sa-addwidget__icon" @click="addLinkWidget">captive_portal</p>

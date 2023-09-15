@@ -22,16 +22,17 @@ const emit = defineEmits<{
   update: [value: Deadline];
 }>();
 
-const formState = new FormState(computed<Deadline>({
-  get() {
-    return props.data;
-  },
-  set(value) {
-    if (!value.title)
-      return;
-    emit('update', value);
-  },
-}));
+const formState = new FormState(
+  computed<Deadline>({
+    get() {
+      return props.data;
+    },
+    set(value) {
+      if (!value.title) return;
+      emit('update', value);
+    },
+  }),
+);
 
 const widgetBase = ref<InstanceType<typeof WidgetBase> | undefined>(undefined);
 
@@ -50,7 +51,7 @@ function getCountdownText(deadline: string | Date): string {
     // we don't need to take leap seconds into account
     return `${Math.floor(timeDiff / (24 * hour))} days left`;
   }
-};
+}
 </script>
 
 <template>
@@ -59,18 +60,20 @@ function getCountdownText(deadline: string | Date): string {
     class="sa-deadline-widget"
     @edit="() => formState.reset()"
   >
-  <div class="sa-deadline-widget__content">
-    <h3>{{ data.title }}</h3>
-    <p>Due {{ new Date(data.deadline).toLocaleDateString('en-US') }}</p>
-    <p>{{ getCountdownText(data.deadline) }}</p>
-    <p>
-      <progress
-        :value="new Date().valueOf() - new Date(data.start).valueOf()" 
-        :max="new Date(data.deadline).valueOf() - new Date(data.start).valueOf()"
-      ></progress>
-    </p>
-  </div>
-  
+    <div class="sa-deadline-widget__content">
+      <h3>{{ data.title }}</h3>
+      <p>Due {{ new Date(data.deadline).toLocaleDateString('en-US') }}</p>
+      <p>{{ getCountdownText(data.deadline) }}</p>
+      <p>
+        <progress
+          :value="new Date().valueOf() - new Date(data.start).valueOf()"
+          :max="
+            new Date(data.deadline).valueOf() - new Date(data.start).valueOf()
+          "
+        ></progress>
+      </p>
+    </div>
+
     <template #dialog>
       <h2 class="sa-form-heading">Deadline widget</h2>
       <label class="sa-form-field">
@@ -83,7 +86,11 @@ function getCountdownText(deadline: string | Date): string {
       </label>
       <label class="sa-form-field">
         <span class="sa-labeltext">Due date</span>
-        <input type="datetime-local" required v-model="formState.data.deadline" />
+        <input
+          type="datetime-local"
+          required
+          v-model="formState.data.deadline"
+        />
       </label>
       <p class="sa-form-actions">
         <button
@@ -131,12 +138,11 @@ progress[value] {
   height: 20px;
   border-radius: 5em;
   background: var(--background);
-
 }
 progress[value]::-webkit-progress-bar {
   border-radius: 5em;
   background: var(--background);
-  box-shadow: inset 4px 4px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 progress[value]::-webkit-progress-value {
   border-radius: 5em;
