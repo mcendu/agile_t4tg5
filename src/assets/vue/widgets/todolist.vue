@@ -33,60 +33,37 @@ const formState = new FormState(
     },
     set(value) {
       if (!value.title) return;
-      //emit('update', value);
+      emit('update', value);
     },
   }),
 );
 
-const widgetBase: Ref<typeof WidgetBase | undefined> = ref(undefined);
-
-// Use a reactive object for formState.data
-const formStateData = reactive(props.data);
-
-// Create a computed property for items
-const items = ref(formStateData.items);
+const widgetBase: Ref<InstanceType<typeof WidgetBase> | undefined> =
+  ref(undefined);
 
 function addItem() {
   // Create a new item
   const newItem = { description: 'New Task', completed: false };
 
   // Push the new item to the items array
-  items.value.push(newItem);
-}
-
-async function saveData() {
-  // Clone the items array before updating formStateData.items
-  const clonedItems = items.value.map((item) => ({ ...item }));
-
-  // Clone the form state data
-  const updatedData = {
-    ...formStateData,
-    items: JSON.parse(JSON.stringify(clonedItems)),
-  };
-
-  // Assign the updated items to formState.data
-  //  formState.data.items = ref(formStateData.items).value;
-  formState.data.items.splice(
-    0,
-    formState.data.items.length,
-    ...formStateData.items,
-  );
-
-  emit('update', updatedData);
-
-  // Save the form state
-  await formState.save();
+  formState.data.items.push(newItem);
 }
 
 function setItem(e: Event, item: ToDoItemDetail) {
   const target = e.target as HTMLInputElement;
   item.completed = target.checked;
-  saveData();
+  formState.save();
 }
 
 function removeItem(index: number) {
   // Remove the item from the items array
-  items.value.splice(index, 1);
+  formState.data.items.splice(index, 1);
+}
+
+function closeEditForm() {
+  // to-do list functionality is implemented on the formstate
+  formState.reset();
+  widgetBase.value?.closeEditForm();
 }
 </script>
 
@@ -99,7 +76,7 @@ function removeItem(index: number) {
     <div class="sa-todo-widget__content">
       <h3>{{ data.title }}</h3>
       <ul class="sa-checklist sa-todo-widget__checklist">
-        <li v-for="item in items">
+        <li v-for="item in formState.data.items">
           <label class="sa-checklist-item">
             <input
               type="checkbox"
@@ -118,30 +95,35 @@ function removeItem(index: number) {
         <span class="sa-labeltext">Title</span>
         <input type="text" required v-model="formState.data.title" />
       </label>
-      <div v-for="(item, index) in items" :key="index">
-        <h3>Item {{ index + 1 }}</h3>
-        <label class="sa-form-field">
-          <span class="sa-labeltext">Description</span>
-          <textarea required v-model="item.description"></textarea>
-        </label>
-        <label class="sa-form-field">
-          <span class="sa-labeltext">Status</span>
-          <select v-model="item.completed">
-            <option value="false">Pending</option>
-            <option value="true">Completed</option>
-          </select>
-        </label>
-        <span class="material-symbols-outlined" @click="removeItem(index)"
-          >delete</span
+      <ul class="sa-checklist sa-todo-widget__checklist">
+        <li
+          v-for="(item, index) in formState.data.items"
+          :key="index"
+          class="sa-checklist-item"
         >
-      </div>
+          <button
+            class="icon-button sa-todo-widget__delete-item"
+            type="button"
+            @click="removeItem(index)"
+          >
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+          <input
+            type="text"
+            class="sa-todo-widget__edit-item"
+            v-model="item.description"
+          />
+        </li>
+      </ul>
       <p class="sa-form-actions">
-        <button class="form-button submit" type="submit" @click="saveData">
+        <button
+          class="form-button submit"
+          type="submit"
+          @click="formState.save()"
+        >
           Save
         </button>
-        <button class="form-button" @click="() => widgetBase?.closeEditForm()">
-          Close
-        </button>
+        <button class="form-button" @click="closeEditForm()">Close</button>
         <button class="form-button" type="button" @click="addItem">
           Add Item
         </button>
@@ -176,6 +158,15 @@ function removeItem(index: number) {
     display: flex;
     flex-direction: column;
     gap: 0.375lh;
+  }
+
+  &__delete-item {
+    border-radius: 4px;
+    user-select: none;
+  }
+
+  &__edit-item {
+    width: 100%;
   }
 }
 </style>
