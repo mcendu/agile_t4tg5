@@ -128,6 +128,32 @@ input[type='checkbox'] {
   }
 }
 
+.sa-checklist {
+  list-style-type: none;
+
+  grid-row: 2;
+  margin: 0;
+  padding: 1em;
+
+  overflow-y: auto;
+
+  li {
+    &::marker {
+      content: '';
+    }
+  }
+}
+
+.sa-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  &__label {
+    flex: 1;
+  }
+}
+
 .icon-button {
   display: flex;
   align-items: center;

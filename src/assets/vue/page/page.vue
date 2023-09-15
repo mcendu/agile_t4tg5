@@ -8,6 +8,7 @@ import Page from '../../js/page';
 import Widget from '../../../models/widget';
 import widgetTable from '../widgets/index';
 import { Ref, onBeforeMount, ref, watch } from 'vue';
+import { cloneDeep } from 'lodash';
 
 const props = defineProps<{ page?: Page }>();
 const emit = defineEmits<{ menu: [] }>();
@@ -33,23 +34,16 @@ async function loadPage() {
 }
 
 async function updateWidget(w: Widget, data: object) {
-  await controllers.widget.edit(w.id, data);
+  /* proxies cannot be ipc'd through electron */
+  await controllers.widget.edit(w.id, cloneDeep(data));
   w.data = data;
 }
 
-async function addWidget() {
+async function addWidget(w: Widget) {
   if (props.page === undefined) {
     return;
   }
 
-  const w: Widget = {
-    id: -1n,
-    type: 'LinkWidget',
-    data: {
-      title: 'New link',
-      target: 'https://example.com/',
-    },
-  };
   w.id = (await controllers.widget.add(props.page.id, w)).id;
   widgets.value?.push(w);
 }
@@ -81,14 +75,9 @@ watch(() => props.page?.id, loadPage);
       <GradesPage v-else-if="page.name == 'Grades'" />
     </template>
     <article class="sa-content" v-else>
-      <component
-        v-for="w of widgets"
-        :is="getWidget(w.type)"
-        :data="w.data"
-        @update="(data: object) => updateWidget(w, data)"
-        @delete="() => deleteWidget(w)"
-      />
-      <AddWidget @click="addWidget" />
+      <component v-for="w of widgets" :is="getWidget(w.type)" :data="w.data"
+        @update="(data: object) => updateWidget(w, data)" @delete="() => deleteWidget(w)" />
+      <AddWidget @add-widget="addWidget" />
     </article>
   </main>
 </template>
@@ -117,15 +106,15 @@ watch(() => props.page?.id, loadPage);
   padding: 1em;
   overflow: auto;
 
-  @media (height >= stops.$height-s) {
+  @media (height >=stops.$height-s) {
     grid-auto-columns: 16em;
   }
 
-  @media (stops.$height-m <= height < stops.$height-l) {
+  @media (stops.$height-m <=height < stops.$height-l) {
     grid-template-rows: repeat(3, 1fr);
   }
 
-  @media (height >= stops.$height-l) {
+  @media (height >=stops.$height-l) {
     grid-template-rows: repeat(4, 1fr);
   }
 

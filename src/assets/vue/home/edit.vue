@@ -45,11 +45,11 @@ defineExpose({ showModal });
       <h3 class="sa-form-heading sa-module-select__heading">
         Module selection
       </h3>
-      <ul class="sa-module-select__list">
+      <ul class="sa-checklist">
         <li v-for="m in form.data">
-          <label class="sa-module-select__item">
+          <label class="sa-checklist-item">
             <input type="checkbox" v-model="m.enabled" />
-            <span class="sa-module-select__item-text"
+            <span class="sa-checklist-item__label"
               >{{ m.code }} &ndash; {{ m.name }}</span
             >
           </label>
@@ -84,32 +84,6 @@ defineExpose({ showModal });
 
   &__heading {
     grid-row: 1;
-  }
-
-  &__list {
-    list-style-type: none;
-
-    grid-row: 2;
-    margin: 0;
-    padding: 1em;
-
-    overflow-y: auto;
-
-    li {
-      &::marker {
-        content: '';
-      }
-    }
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: 1em;
-
-    &-text {
-      flex: 1;
-    }
   }
 
   &__actions {
