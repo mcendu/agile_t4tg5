@@ -4,3 +4,6 @@
 # Node autogens
 **/node_modules
 **/.webpack
+
+# Yarn
+.yarn/

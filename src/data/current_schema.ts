@@ -32,6 +32,7 @@ CREATE TABLE modules(\
     grades TEXT DEFAULT NULL \
 ); \
 CREATE INDEX module_list ON modules(id ASC); \
+CREATE INDEX modules_enabled ON modules(enabled); \
 CREATE TABLE grades(\
     id INTEGER PRIMARY KEY, \
     type TEXT, \
@@ -42,7 +43,7 @@ CREATE TABLE grades(\
 ); \
 CREATE INDEX grade_list ON grades(id ASC); \
 \
-INSERT INTO sa_metadata(key, value) VALUES('schema_version', 2);";
+INSERT INTO sa_metadata(key, value) VALUES('schema_version', 3);";
 
 /**
  * Create a SQLite database with the latest schema revision.

@@ -1,3 +1,4 @@
+import { InjectionKey, Ref } from 'vue';
 import Grade from '../../models/grade';
 import TotalGrade from '../../models/totalGrade';
 
@@ -43,3 +44,5 @@ export default class Module {
         this.total = total;
     }
 }
+
+export const enabledModulesKey: InjectionKey<Ref<Module[]>> = Symbol();
