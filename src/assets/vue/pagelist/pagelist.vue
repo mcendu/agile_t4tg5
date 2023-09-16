@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Ref, onBeforeMount, ref } from 'vue';
+import { Ref, inject, onBeforeMount, ref, watch } from 'vue';
 import Page from '../../js/page';
 import PageRow from '../../../models/page';
 
 import Edit from './edit.vue';
 import Pagetab from './pagetab.vue';
+import Module, { enabledModulesKey } from '../../js/module';
 
 const props = defineProps<{
   modelValue?: Page;
@@ -26,12 +27,22 @@ function pageRowToPage(row: PageRow): Page {
   return new Page(row.id, row.name);
 }
 
-onBeforeMount(async () => {
-  emit('update:modelValue', homePage);
+async function getModulePages() {
   const rows = await controllers.page.indexAppCreated();
   pages.value = rows.map(pageRowToPage);
+}
+
+async function getUserPages() {
   const user_rows = await controllers.page.indexUserCreated();
   user_pages.value = user_rows.map(pageRowToPage);
+}
+
+const enabledModules: Ref<Module[]> = inject(enabledModulesKey, ref([]));
+watch(enabledModules, getModulePages);
+
+onBeforeMount(() => {
+  changePage(homePage);
+  return Promise.all([getModulePages(), getUserPages()]);
 });
 
 async function newPage() {
@@ -46,7 +57,7 @@ function changePage(page: Page) {
   emit('close');
 }
 
-function isModelPage(page: Page) {
+function isSelectedPage(page: Page) {
   if (props.modelValue === undefined) return false;
   return page.id === props.modelValue.id;
 }
@@ -98,12 +109,12 @@ async function deletePage(page: Page) {
     <menu class="sa-pagebar__section">
       <Pagetab
         :page="homePage"
-        :selected="isModelPage(homePage)"
+        :selected="isSelectedPage(homePage)"
         @select="changePage(homePage)"
       />
       <Pagetab
         :page="gradesPage"
-        :selected="isModelPage(gradesPage)"
+        :selected="isSelectedPage(gradesPage)"
         @select="changePage(gradesPage)"
       />
     </menu>
@@ -112,7 +123,7 @@ async function deletePage(page: Page) {
       <Pagetab
         v-for="page in pages"
         :page="page"
-        :selected="isModelPage(page)"
+        :selected="isSelectedPage(page)"
         @select="changePage(page)"
       />
     </menu>
@@ -122,7 +133,7 @@ async function deletePage(page: Page) {
         v-for="page in user_pages"
         editable
         :page="page"
-        :selected="isModelPage(page)"
+        :selected="isSelectedPage(page)"
         @select="changePage(page)"
         @edit="editDialog?.showModal()"
         @delete="deletePage(page)"
