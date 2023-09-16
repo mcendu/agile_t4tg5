@@ -42,6 +42,16 @@ function addDeadlineWidget() {
     },
   });
 }
+
+function addTimerWidget() {
+  emit('addWidget', {
+    id: -1n,
+    type: 'TimerWidget',
+    data: {
+      minutes: 30,
+    },
+  });
+}
 </script>
 
 <template>
@@ -56,6 +66,7 @@ function addDeadlineWidget() {
       <p class="sa-addwidget__icon" @click="addLinkWidget">captive_portal</p>
       <p class="sa-addwidget__icon" @click="addTodoWidget">checklist</p>
       <p class="sa-addwidget__icon" @click="addDeadlineWidget">event</p>
+      <p class="sa-addwidget__icon" @click="addTimerWidget">timer</p>
     </div>
     <p class="sa-addwidget__text">Create a new widget</p>
   </button>
