@@ -20,6 +20,10 @@ const props = defineProps<{
   data: TimerWidgetData;
 }>();
 
+const emit = defineEmits<{
+  update: [value: TimerWidgetData];
+}>();
+
 const data = computed({
   get() {
     return props.data;
@@ -27,6 +31,7 @@ const data = computed({
   set(value) {
     timeRemaining.value = value.minutes * 60 * 1000;
     timerLength.value = value.minutes;
+    emit('update', value);
   },
 });
 
@@ -35,11 +40,10 @@ const widgetBase: Ref<typeof WidgetBase | undefined> = ref(undefined);
 const isRunning = ref(false);
 const isPaused = ref(false);
 const timerStart = ref<number | null>(Date.now());
-const timerStartTime = ref<number | null>();
 const formState = new FormState(data);
 
-// The default time is 30 minutes
-const timerLength = ref<number>(30);
+// save widget timer length
+const timerLength = ref<number>(data.value.minutes);
 
 //Calculation of remaining time in seconds
 const timeRemaining = ref<number>(timerLength.value * 60 * 1000);

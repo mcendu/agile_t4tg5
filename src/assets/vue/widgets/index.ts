@@ -8,7 +8,7 @@ const widgetTable: Record<string, Component> = {
     LinkWidget,
     TodoListWidget,
     DeadlineWidget,
-    TimerWidget
+    TimerWidget,
 };
 
 export default widgetTable;
