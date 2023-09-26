@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { join } from 'path';
 import { app } from 'electron';
 import Database from 'better-sqlite3';

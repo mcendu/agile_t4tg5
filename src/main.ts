@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import getDatabase from './data/init';

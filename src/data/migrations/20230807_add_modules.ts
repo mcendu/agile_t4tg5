@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { Database } from 'better-sqlite3';
 import { insertModules } from '../../utils/insert_modules';
 

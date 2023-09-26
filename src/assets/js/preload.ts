@@ -1,5 +1,8 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('controllers', {

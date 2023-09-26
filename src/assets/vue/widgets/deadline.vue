@@ -1,3 +1,8 @@
+<!--
+Copyright (C) 2023 Goldsmiths, University of London.
+All rights reserved.
+-->
+
 <script setup lang="ts">
 import { ref, computed, Ref } from 'vue';
 import WidgetBase from './base.vue';

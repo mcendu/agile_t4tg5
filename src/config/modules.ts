@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 const modules = [
     { name: 'Introduction to Programming I', code: 'CM1005', enabled: 1 },
     { name: 'Introduction to Programming II', code: 'CM1010', enabled: 1 },

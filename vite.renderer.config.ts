@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import path from 'path';
 import { defineConfig } from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';

@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { it } from 'vitest';
 import { mount } from '@vue/test-utils';
 

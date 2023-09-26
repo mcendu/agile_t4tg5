@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { describe, beforeAll, afterAll, afterEach, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { rest } from 'msw';

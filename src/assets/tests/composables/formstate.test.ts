@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { it, vi } from 'vitest';
 import { ref, computed, Ref, watch, nextTick } from 'vue';
 import FormState from '../../js/composables/formstate';

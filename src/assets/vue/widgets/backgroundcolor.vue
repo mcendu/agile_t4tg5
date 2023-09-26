@@ -1,3 +1,8 @@
+<!--
+Copyright (C) 2023 Goldsmiths, University of London.
+All rights reserved.
+-->
+
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import FormState from '../../js/composables/formstate';

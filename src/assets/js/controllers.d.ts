@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import Module from '../../models/module';
 import Page from '../../models/page';
 import Widget from '../../models/widget';

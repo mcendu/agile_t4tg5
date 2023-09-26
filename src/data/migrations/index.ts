@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { Database } from 'better-sqlite3';
 
 import m20230714_InitialRevision from './20230714_initial_revision';

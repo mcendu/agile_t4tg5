@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import { ref, Ref, toRef } from 'vue';
 import { cloneDeep } from 'lodash';
 

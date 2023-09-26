@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Goldsmiths, University of London.
+ * All rights reserved.
+ */
+
 import type { Database, Statement } from 'better-sqlite3';
 import Controller from './controller';
 import Widget from '../models/widget';
